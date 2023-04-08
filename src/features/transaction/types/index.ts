@@ -15,3 +15,16 @@ export type Transaction = {
   note: string;
   items: TransactionItem[];
 };
+
+export type TransactionItemRequest = {
+  amount: number;
+  product: number;
+  price?: number;
+};
+
+export type TransactionRequest = {
+  customer: string;
+  note: string;
+  category: 'pembelian' | 'penjualan';
+  items: TransactionItemRequest[];
+};

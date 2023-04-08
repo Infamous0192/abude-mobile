@@ -20,9 +20,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="px-5 my-6">
-        <h2 className="font-semibold text-gray-900 text-base mb-3">Menu Utama</h2>
-
+      <section className="px-5 my-8">
         <MenuList
           navigations={[
             {
@@ -36,7 +34,7 @@ export const Home: React.FC = () => {
               icon: '/images/penjualan.svg',
             },
             {
-              title: 'Riwayat Transaksi',
+              title: 'Riwayat',
               href: '/images/riwayat.svg',
               icon: '/images/riwayat.svg',
             },
