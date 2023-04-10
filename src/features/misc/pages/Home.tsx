@@ -1,6 +1,9 @@
+import { Button } from '@mantine/core';
 import { IconUser } from '@tabler/icons';
+import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
+import { TransactionList } from '@/features/transaction';
 import { dayjs } from '@/lib/dayjs';
 
 export const Home: React.FC = () => {
@@ -35,16 +38,33 @@ export const Home: React.FC = () => {
             },
             {
               title: 'Riwayat',
-              href: '/images/riwayat.svg',
+              href: '/transaction',
               icon: '/images/riwayat.svg',
             },
             {
               title: 'Barang',
-              href: '/images/barang.svg',
+              href: '/product',
               icon: '/images/barang.svg',
             },
+            // {
+            //   title: 'Supplier',
+            //   href: '/supplier',
+            //   icon: '/images/supplier.svg',
+            // },
           ]}
         />
+      </section>
+
+      <section className="my-6">
+        <div className="px-5 flex justify-between">
+          <h2 className="text-lg font-bold mb-1">Transaksi Terbaru</h2>
+        </div>
+        <TransactionList />
+        <div className="px-5">
+          <Button variant="subtle" fullWidth component={Link} to="/transaction">
+            Lihat Semua
+          </Button>
+        </div>
       </section>
     </main>
   );

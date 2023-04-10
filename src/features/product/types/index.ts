@@ -8,6 +8,16 @@ export type Product = {
   name: string;
   price: number;
   unit: string;
-  default: boolean;
-  supplier: Supplier;
+  category: 'penjualan' | 'pembelian';
+  default?: boolean;
+  supplier?: Supplier;
+};
+
+export type ProductRequest = {
+  name: string;
+  price: number;
+  unit: string;
+  category: 'penjualan' | 'pembelian';
+  default?: boolean;
+  supplier?: number;
 };

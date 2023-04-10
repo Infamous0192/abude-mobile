@@ -2,7 +2,7 @@ import { ActionIcon, Button, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { closeAllModals, openModal } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
-import { IconArrowLeft, IconCirclePlus } from '@tabler/icons';
+import { IconChevronLeft, IconCirclePlus } from '@tabler/icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Product, Supplier } from '@/features/product';
@@ -22,6 +22,7 @@ const products: Product[] = [
     price: 15000,
     default: true,
     supplier: supplier,
+    category: 'penjualan',
     unit: 'Gelas',
   },
   {
@@ -30,6 +31,7 @@ const products: Product[] = [
     price: 2000,
     default: true,
     supplier: supplier,
+    category: 'penjualan',
     unit: 'Tusuk',
   },
 ];
@@ -88,17 +90,17 @@ export const Sales: React.FC = () => {
   }
 
   return (
-    <main>
-      <header className="px-4 sticky top-0 z-10 bg-white py-3.5 border-b border-gray-200">
-        <div className="flex items-center">
-          <ActionIcon variant="transparent" component={Link} to="/">
-            <IconArrowLeft className="text-gray-800" />
+    <main className="mb-32">
+      <header className="px-4 sticky top-0 z-10 bg-white py-3.5">
+        <Link to="/" className="flex items-center">
+          <ActionIcon variant="transparent">
+            <IconChevronLeft className="text-gray-800" />
           </ActionIcon>
-          <h1 className="text-xl font-bold ml-6">Penjualan</h1>
-        </div>
+          <div className="font-bold ml-4">Penjualan</div>
+        </Link>
       </header>
 
-      <section className="px-5 py-5">
+      <section className="px-5 pb-3 mt-3">
         <TextInput
           {...form.getInputProps('customer')}
           label="Nama Customer"

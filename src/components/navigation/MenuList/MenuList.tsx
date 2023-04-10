@@ -1,7 +1,7 @@
 import { useId } from '@mantine/hooks';
 import { Link } from 'react-router-dom';
 
-export type Navigation = {
+type Navigation = {
   title: string;
   href: string;
   icon: string;

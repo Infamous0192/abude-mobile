@@ -1,6 +1,7 @@
 import { Product } from '@/features/product';
 
 export type TransactionItem = {
+  id: number;
   product: Product;
   price: number;
   amount: number;
@@ -8,23 +9,28 @@ export type TransactionItem = {
 };
 
 export type Transaction = {
+  id: number;
   customer: string;
   code: string;
-  total: string;
+  total: number;
   category: 'pembelian' | 'penjualan';
   note: string;
   items: TransactionItem[];
-};
-
-export type TransactionItemRequest = {
-  amount: number;
-  product: number;
-  price?: number;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type TransactionRequest = {
   customer: string;
   note: string;
   category: 'pembelian' | 'penjualan';
-  items: TransactionItemRequest[];
+  items: {
+    amount: number;
+    product: number;
+    price?: number;
+  }[];
+};
+
+export type TransactionQuery = {
+  category?: 'pembelian' | 'penjualan';
 };

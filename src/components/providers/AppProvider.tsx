@@ -9,6 +9,7 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { AuthProvider } from '@/features/auth';
 import { queryClient } from '@/lib/react-query';
 
+import { DateProvider } from './DateProvider';
 import { ErrorProvider } from './ErrorProvider';
 
 import '@/styles/globals.css';
@@ -33,6 +34,15 @@ const theme: MantineThemeOverride = {
   headings: {
     fontFamily: 'Nunito, sans-serif',
   },
+  components: {
+    Modal: {
+      styles: {
+        'mantine-Modal-title': {
+          fontWeight: 800,
+        },
+      },
+    },
+  },
 };
 
 export const AppProvider: React.FC<Props> = ({ children }) => {
@@ -41,11 +51,21 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
       <QueryClientProvider client={queryClient}>
         <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
           <Notifications autoClose={5000} />
-          <ModalsProvider labels={{ confirm: 'Konfirmasi', cancel: 'Batal' }}>
+          <ModalsProvider
+            modalProps={{
+              styles: {
+                title: {
+                  fontWeight: 600,
+                  fontSize: 16,
+                },
+              },
+            }}
+            labels={{ confirm: 'Konfirmasi', cancel: 'Batal' }}
+          >
             <AuthProvider>
               <Router>
                 <HelmetProvider>
-                  {children}
+                  <DateProvider>{children}</DateProvider>
                   <ScrollToTop />
                 </HelmetProvider>
               </Router>
