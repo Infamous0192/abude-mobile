@@ -3,13 +3,13 @@ import { openModal } from '@mantine/modals';
 import { IconChevronLeft } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 
-import { ProductCreateForm, ProductList } from '../components';
+import { SupplierForm, SupplierList } from '../components';
 
-export const Products: React.FC = () => {
+export const Suppliers: React.FC = () => {
   function handleAdd() {
     openModal({
-      title: 'Tambah Barang',
-      children: <ProductCreateForm />,
+      title: 'Tambah Supplier',
+      children: <SupplierForm />,
     });
   }
 
@@ -25,13 +25,13 @@ export const Products: React.FC = () => {
       </header>
 
       <section className="flex items-center justify-between px-5 mt-7 mb-4">
-        <h1 className="text-lg font-bold">Data Barang</h1>
+        <h1 className="text-lg font-bold">Data Supplier</h1>
         <Button size="xs" onClick={handleAdd}>
           Tambah
         </Button>
       </section>
 
-      <ProductList />
+      <SupplierList />
     </main>
   );
 };

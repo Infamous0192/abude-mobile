@@ -13,6 +13,10 @@ export type Product = {
   supplier?: Supplier;
 };
 
+export type SupplierRequest = {
+  name: string;
+};
+
 export type ProductRequest = {
   name: string;
   price: number;

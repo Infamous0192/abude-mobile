@@ -46,11 +46,16 @@ export const Home: React.FC = () => {
               href: '/product',
               icon: '/images/barang.svg',
             },
-            // {
-            //   title: 'Supplier',
-            //   href: '/supplier',
-            //   icon: '/images/supplier.svg',
-            // },
+            {
+              title: 'Supplier',
+              href: '/supplier',
+              icon: '/images/supplier.svg',
+            },
+            {
+              title: 'Kehadiran',
+              href: '/attendance',
+              icon: '/images/attendance.svg',
+            },
           ]}
         />
       </section>

@@ -1,6 +1,6 @@
-import { Badge } from '@mantine/core';
-import { IconCheck, IconChevronLeft } from '@tabler/icons';
-import { useNavigate } from 'react-router-dom';
+import { ActionIcon, Badge, Button, Menu } from '@mantine/core';
+import { IconArrowBarToDown, IconChevronLeft, IconDots } from '@tabler/icons';
+import { Link } from 'react-router-dom';
 
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
@@ -10,7 +10,7 @@ import { Transaction } from '../types';
 const transaction: Transaction = {
   id: 1,
   code: 'BJM-123',
-  category: 'pembelian',
+  category: 'penjualan',
   customer: 'Umum',
   items: [
     {
@@ -47,22 +47,22 @@ const transaction: Transaction = {
 };
 
 export const TransactionDetail: React.FC = () => {
-  const navigate = useNavigate();
-
   return (
-    <main className="bg-white min-h-screen">
-      <header className="px-5 py-4 mb-6">
-        <div onClick={() => navigate(-1)} aria-hidden className="flex items-center">
-          <IconChevronLeft />
+    <main className="bg-white min-h-screen pb-6 relative">
+      <header className="px-4 sticky top-0 z-10 bg-white py-3.5">
+        <Link to="/" className="flex items-center">
+          <ActionIcon variant="transparent">
+            <IconChevronLeft className="text-gray-800" />
+          </ActionIcon>
           <div className="font-bold ml-4">Kembali</div>
-        </div>
+        </Link>
       </header>
 
-      <section className="flex flex-col items-center justify-center">
-        <div className="bg-green-100 p-2 rounded-full">
-          <IconCheck className="text-green-600 w-8 h-8" />
+      <section className="flex flex-col items-center justify-center mt-8">
+        <div className="bg-blue-100 text-blue-600 p-2 rounded-lg">
+          <IconArrowBarToDown className="w-8 h-8" />
         </div>
-        <div className="font-bold text-lg mt-2">Pembelian</div>
+        <div className="font-bold text-lg mt-2">Penjualan</div>
       </section>
 
       <section className="px-5 py-4">
@@ -91,7 +91,7 @@ export const TransactionDetail: React.FC = () => {
           {transaction.items.map((item) => (
             <div key={item.id} className="flex items-center justify-between mb-3 last:mb-0">
               <div>
-                <div className="text-gray-700 font-bold">Cincau</div>
+                <div className="text-gray-700 font-bold">{item.product.name}</div>
                 <div className="text-gray-500 text-xs font-medium">
                   {item.amount} {item.product.unit} x {formatCurrency(item.price)}
                 </div>
@@ -106,6 +106,21 @@ export const TransactionDetail: React.FC = () => {
           <div className="font-bold">{formatCurrency(transaction.total)}</div>
         </div>
       </section>
+
+      <div className="fixed bottom-0 bg-white max-w-md py-4 px-5 flex w-full items-center space-x-4 border-t border-gray-200">
+        <Button fullWidth>Cetak</Button>
+        <Menu position="top-end" width={200}>
+          <Menu.Target>
+            <ActionIcon variant="outline" color="gray" size="lg">
+              <IconDots />
+            </ActionIcon>
+          </Menu.Target>
+
+          <Menu.Dropdown>
+            <Menu.Item color="red">Batalkan Pesanan</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </div>
     </main>
   );
 };

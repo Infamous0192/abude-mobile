@@ -34,15 +34,6 @@ const theme: MantineThemeOverride = {
   headings: {
     fontFamily: 'Nunito, sans-serif',
   },
-  components: {
-    Modal: {
-      styles: {
-        'mantine-Modal-title': {
-          fontWeight: 800,
-        },
-      },
-    },
-  },
 };
 
 export const AppProvider: React.FC<Props> = ({ children }) => {
@@ -55,7 +46,7 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
             modalProps={{
               styles: {
                 title: {
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: 16,
                 },
               },
