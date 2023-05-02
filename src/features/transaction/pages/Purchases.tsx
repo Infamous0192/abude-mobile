@@ -2,7 +2,7 @@ import { ActionIcon, Button, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { closeAllModals, openModal } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
-import { IconChevronLeft, IconCirclePlus } from '@tabler/icons';
+import { IconChevronLeft, IconCirclePlus } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Product, Supplier } from '@/features/product';

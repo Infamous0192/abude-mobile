@@ -16,6 +16,7 @@ module.exports = {
           typescript: {},
         },
       },
+      plugins: ['react-refresh'],
       env: {
         browser: true,
         node: true,
@@ -33,6 +34,7 @@ module.exports = {
         'plugin:prettier/recommended',
       ],
       rules: {
+        'react-refresh/only-export-components': 'warn',
         'no-restricted-imports': [
           'error',
           {
@@ -57,6 +59,7 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
 
         'jsx-a11y/anchor-is-valid': 'off',
+        'jsx-a11y/aria-role': 'off',
 
         '@typescript-eslint/no-unused-vars': ['warn'],
 

@@ -1,6 +1,6 @@
 import { ActionIcon } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { IconChevronLeft } from '@tabler/icons';
+import { IconChevronLeft } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

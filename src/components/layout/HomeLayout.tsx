@@ -1,4 +1,4 @@
-import { IconClock, IconHome, IconUser } from '@tabler/icons';
+import { IconClock, IconHome, IconUser } from '@tabler/icons-react';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 

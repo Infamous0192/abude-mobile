@@ -1,4 +1,4 @@
-import { IconArrowBarToDown, IconArrowBarUp, IconChevronRight } from '@tabler/icons';
+import { IconArrowBarToDown, IconArrowBarUp, IconChevronRight } from '@tabler/icons-react';
 
 import { clsx, formatCurrency } from '@/utils/format';
 

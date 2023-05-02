@@ -1,6 +1,6 @@
 import { Anchor, Button, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconAt, IconLock } from '@tabler/icons';
+import { IconAt, IconLock } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useLogin } from '../api';

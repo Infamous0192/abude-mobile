@@ -1,6 +1,6 @@
 import { ActionIcon, Button } from '@mantine/core';
 import { openModal } from '@mantine/modals';
-import { IconChevronLeft } from '@tabler/icons';
+import { IconChevronLeft } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { ProductCreateForm, ProductList } from '../components';

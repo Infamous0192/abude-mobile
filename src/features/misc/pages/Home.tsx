@@ -1,46 +1,48 @@
 import { Button } from '@mantine/core';
-import { IconUser } from '@tabler/icons';
+import { IconArrowBarToDown, IconArrowBarUp, IconReceipt } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
 import { TransactionList } from '@/features/transaction';
-import { dayjs } from '@/lib/dayjs';
 
 export const Home: React.FC = () => {
   return (
     <main>
-      <section className="px-5 mt-8 flex">
-        <div className="flex-grow">
-          <h1 className="font-bold text-lg">Abude Group</h1>
-          <div className="text-sm text-gray-500 font-medium">
-            {dayjs(new Date()).format('D MMMM YYYY | HH.mm')}
-          </div>
-        </div>
-        <div className="flex-shrink-0">
-          <div className="bg-blue-100 p-2 text-blue-700 rounded-full">
-            <IconUser className="w-6 h-6" />
-          </div>
+      <section className="bg-blue-800 w-full rounded-b-xl px-5 pt-8 pb-20">
+        <span className="bg-blue-400 text-blue-50 px-2 py-1 rounded-full text-xs mb-3 inline-block">
+          Outlet Banjarmasin Utara
+        </span>
+
+        <div className="text-white font-black text-xl">Dwa Meizadewa</div>
+        <div className="text-sm font-semibold text-white">Admin Outlet</div>
+      </section>
+
+      <section className="bg-white mx-auto max-w-xs w-full -mt-14 shadow shadow-gray-200 rounded-xl">
+        <div className="w-full grid grid-cols-3 divide-x divide-gray-300 py-4">
+          <Link to="/sales" className="px-4 flex flex-col items-center justify-center">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+              <IconArrowBarUp className="w-7 h-7" />
+            </div>
+            <div className="text-xs mt-1">Penjualan</div>
+          </Link>
+          <Link to="/purchases" className="px-4 flex flex-col items-center justify-center">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+              <IconArrowBarToDown className="w-7 h-7" />
+            </div>
+            <div className="text-xs mt-1">Pembelian</div>
+          </Link>
+          <Link to="/transaction" className="px-4 flex flex-col items-center justify-center">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+              <IconReceipt className="w-7 h-7" />
+            </div>
+            <div className="text-xs mt-1">Riwayat</div>
+          </Link>
         </div>
       </section>
 
       <section className="px-5 my-8">
         <MenuList
           navigations={[
-            {
-              title: 'Pembelian',
-              href: '/purchases',
-              icon: '/images/pembelian.svg',
-            },
-            {
-              title: 'Penjualan',
-              href: '/sales',
-              icon: '/images/penjualan.svg',
-            },
-            {
-              title: 'Riwayat',
-              href: '/transaction',
-              icon: '/images/riwayat.svg',
-            },
             {
               title: 'Barang',
               href: '/product',
@@ -60,7 +62,7 @@ export const Home: React.FC = () => {
         />
       </section>
 
-      <section className="my-6">
+      <section className="my-6 pb-24">
         <div className="px-5 flex justify-between">
           <h2 className="text-lg font-bold mb-1">Transaksi Terbaru</h2>
         </div>

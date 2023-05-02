@@ -1,19 +1,13 @@
-# Belyesha Frontend
+# Abude Outlet
 
-Aplikasi Landing Page Belyesha
+Aplikasi Admin Abude Group
 
 ## Project Information
 
 ### App Name
 
 ```
-Belyesha Frontend
-```
-
-### URL
-
-```
-http://belyesha.com
+Abude Outlet
 ```
 
 ## Getting Started

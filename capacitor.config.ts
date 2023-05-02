@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'id.munzalan.oat',
-  appName: 'Masjid Munzalan',
+  appId: 'com.tpaz.abude.outlet2',
+  appName: 'Abude Outlet 2',
   webDir: 'dist',
   bundledWebRuntime: false,
 };

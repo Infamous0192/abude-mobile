@@ -1,4 +1,4 @@
-import { IconArrowBarToDown, IconArrowBarUp } from '@tabler/icons';
+import { IconArrowBarToDown, IconArrowBarUp } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { dayjs } from '@/lib/dayjs';

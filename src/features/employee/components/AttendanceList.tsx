@@ -12,7 +12,7 @@ const attendances: Attendance[] = [
     status: 'absent',
     employee: {
       id: 3,
-      name: 'Koswara',
+      name: 'Ujang Pratama',
       phonenumber: '+6284523476732',
       address: 'lorem ipsum dolor sit amet',
     },
@@ -38,7 +38,7 @@ const attendances: Attendance[] = [
     status: 'present',
     employee: {
       id: 1,
-      name: 'Ujang Pratama',
+      name: 'Koswara',
       phonenumber: '+6289691786852',
       address: 'lorem ipsum dolor sit amet',
     },

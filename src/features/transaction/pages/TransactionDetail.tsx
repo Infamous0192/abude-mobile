@@ -1,5 +1,5 @@
 import { ActionIcon, Badge, Button, Menu } from '@mantine/core';
-import { IconArrowBarToDown, IconChevronLeft, IconDots } from '@tabler/icons';
+import { IconArrowBarUp, IconChevronLeft, IconDots } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { dayjs } from '@/lib/dayjs';
@@ -60,7 +60,7 @@ export const TransactionDetail: React.FC = () => {
 
       <section className="flex flex-col items-center justify-center mt-8">
         <div className="bg-blue-100 text-blue-600 p-2 rounded-lg">
-          <IconArrowBarToDown className="w-8 h-8" />
+          <IconArrowBarUp className="w-8 h-8" />
         </div>
         <div className="font-bold text-lg mt-2">Penjualan</div>
       </section>

@@ -1,5 +1,5 @@
 import { ActionIcon, NumberInput } from '@mantine/core';
-import { IconMinus, IconPlus } from '@tabler/icons';
+import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Product } from '@/features/product';

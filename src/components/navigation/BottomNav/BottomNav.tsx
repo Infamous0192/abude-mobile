@@ -1,11 +1,11 @@
-import { TablerIcon } from '@tabler/icons';
+import { Icon } from '@tabler/icons-react';
 
 import { NavItem } from './NavItem';
 
 export type Navigation = {
   title: string;
   href: string;
-  icon: TablerIcon;
+  icon: Icon;
 };
 
 interface Props {

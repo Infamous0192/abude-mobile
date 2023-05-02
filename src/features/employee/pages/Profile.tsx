@@ -1,5 +1,5 @@
 import { UnstyledButton } from '@mantine/core';
-import { IconChevronRight, IconLogout, IconSettings, IconUser } from '@tabler/icons';
+import { IconChevronRight, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 
 export const Profile: React.FC = () => {
   return (
