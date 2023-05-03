@@ -1,6 +1,6 @@
 import { LoginForm } from '../components';
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
   return (
     <main className="w-full mx-auto px-6 py-16 pb-14">
       <h1 className="text-2xl font-bold mb-6">Login</h1>
@@ -9,5 +9,3 @@ const Login: React.FC = () => {
     </main>
   );
 };
-
-export default Login;

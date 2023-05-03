@@ -1,17 +1,12 @@
+import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { createContext } from 'react';
 
 import { Creds } from '../types';
 
-export interface AuthContextValue<Error = unknown> {
-  creds: Creds | undefined;
+export type AuthContextValue = {
+  creds: Creds | null;
   isLoading: boolean;
-  logout: () => void;
-  error: Error | null;
-}
+  logout: UseMutateAsyncFunction<any, any, void, any>;
+};
 
-export const AuthContext = createContext<AuthContextValue>({
-  logout: () => {},
-  error: null,
-  creds: undefined,
-  isLoading: true,
-});
+export const AuthContext = createContext<AuthContextValue>({} as AuthContextValue);

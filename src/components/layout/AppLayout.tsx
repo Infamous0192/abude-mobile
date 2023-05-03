@@ -1,9 +1,15 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+
+import { useAuth } from '@/features/auth';
 
 import { LoadingScreen } from '../elements';
 
 export const AppLayout: React.FC = () => {
+  const { creds } = useAuth();
+
+  if (!creds) return <Navigate to="/login" replace />;
+
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Outlet />

@@ -5,13 +5,13 @@ import { useMemo } from 'react';
 import { logout, useCreds } from '../api';
 import { AuthContext } from '../contexts';
 
-interface Props {
+type Props = {
   children: React.ReactNode;
-}
+};
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const queryClient = useQueryClient();
-  const { data, error, status, isLoading, isSuccess } = useCreds();
+  const { data, isLoading } = useCreds();
 
   const logoutMutation = useMutation(logout, {
     onSuccess: () => {
@@ -21,12 +21,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      creds: data?.creds,
-      error,
+      creds: data ?? null,
       isLoading,
       logout: logoutMutation.mutateAsync,
     }),
-    [data, error, logoutMutation.mutateAsync, isLoading]
+    [data, logoutMutation.mutateAsync, isLoading]
   );
 
   if (isLoading || logoutMutation.isLoading)
@@ -36,9 +35,5 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       </Center>
     );
 
-  if (isSuccess) {
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-  }
-
-  return <div>Unhandled status: {status}</div>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

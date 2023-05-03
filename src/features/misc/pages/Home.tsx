@@ -3,15 +3,21 @@ import { IconArrowBarToDown, IconArrowBarUp, IconReceipt } from '@tabler/icons-r
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
+import { useAuth } from '@/features/auth';
 import { TransactionList } from '@/features/transaction';
 
 export const Home: React.FC = () => {
+  const { logout } = useAuth();
+
   return (
     <main>
       <section className="bg-blue-800 w-full rounded-b-xl px-5 pt-8 pb-20">
-        <span className="bg-blue-400 text-blue-50 px-2 py-1 rounded-full text-xs mb-3 inline-block">
+        <button
+          onClick={() => logout()}
+          className="bg-blue-400 text-blue-50 px-2 py-1 rounded-full text-xs mb-3 inline-block"
+        >
           Outlet Banjarmasin Utara
-        </span>
+        </button>
 
         <div className="text-white font-black text-xl">Dwa Meizadewa</div>
         <div className="text-sm font-semibold text-white">Admin Outlet</div>

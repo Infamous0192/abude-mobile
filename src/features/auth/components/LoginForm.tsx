@@ -1,25 +1,32 @@
 import { Anchor, Button, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import { IconAt, IconLock } from '@tabler/icons-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useLogin } from '../api';
 
 export const LoginForm: React.FC = () => {
   const form = useForm({ initialValues: { username: '', password: '' } });
-  const navigate = useNavigate();
-  const login = useLogin({
-    config: {
-      onError: ({ response }) => {
-        form.setErrors((response?.data as any).errors);
-      },
-    },
-  });
+  const loginMutation = useLogin();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    navigate('/');
-    // await login.mutateAsync({ data: form.values });
+    await loginMutation.mutateAsync(
+      { data: form.values },
+      {
+        onError: ({ response, message }) => {
+          if (response?.data.errors) {
+            form.setErrors(response.data.errors);
+          } else {
+            notifications.show({
+              message,
+              color: 'red',
+            });
+          }
+        },
+      }
+    );
   }
 
   return (
@@ -47,7 +54,7 @@ export const LoginForm: React.FC = () => {
         </Anchor>
       </div>
 
-      <Button type="submit" fullWidth loading={login.isLoading}>
+      <Button type="submit" fullWidth loading={loginMutation.isLoading}>
         Masuk
       </Button>
     </form>
