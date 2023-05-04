@@ -7,10 +7,10 @@ import { Creds } from '../types';
 
 export const CREDS_KEY = 'creds';
 
-export async function getCreds() {
-  const res = await axios.get<Creds>('/auth/me');
+export async function getCreds(): Promise<Creds> {
+  const { data } = await axios.get<Creds>('/auth/me');
 
-  return res.data;
+  return data;
 }
 
 export async function loadCreds() {

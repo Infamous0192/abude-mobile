@@ -4,22 +4,18 @@ import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
 import { useAuth } from '@/features/auth';
+import { OutletPick } from '@/features/outlet';
 import { TransactionList } from '@/features/transaction';
 
 export const Home: React.FC = () => {
-  const { logout } = useAuth();
+  const { creds } = useAuth();
 
   return (
     <main>
       <section className="bg-blue-800 w-full rounded-b-xl px-5 pt-8 pb-20">
-        <button
-          onClick={() => logout()}
-          className="bg-blue-400 text-blue-50 px-2 py-1 rounded-full text-xs mb-3 inline-block"
-        >
-          Outlet Banjarmasin Utara
-        </button>
+        <OutletPick />
 
-        <div className="text-white font-black text-xl">Dwa Meizadewa</div>
+        <div className="text-white font-black text-xl">{creds?.name}</div>
         <div className="text-sm font-semibold text-white">Admin Outlet</div>
       </section>
 

@@ -2,6 +2,8 @@ import { Center, Loader } from '@mantine/core';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
+import { useEmployee } from '@/features/employee';
+
 import { logout, useCreds } from '../api';
 import { AuthContext } from '../contexts';
 
@@ -11,7 +13,8 @@ type Props = {
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const queryClient = useQueryClient();
-  const { data, isLoading } = useCreds();
+  const credsQuery = useCreds();
+  const employeeQuery = useEmployee({ config: { enabled: false } });
 
   const logoutMutation = useMutation(logout, {
     onSuccess: () => {
@@ -21,14 +24,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      creds: data ?? null,
-      isLoading,
+      creds: credsQuery.data ?? null,
+      employee: employeeQuery.data ?? null,
       logout: logoutMutation.mutateAsync,
     }),
-    [data, logoutMutation.mutateAsync, isLoading]
+    [credsQuery, employeeQuery, logoutMutation.mutateAsync]
   );
 
-  if (isLoading || logoutMutation.isLoading)
+  if (credsQuery.isLoading || employeeQuery.isFetching || logoutMutation.isLoading)
     return (
       <Center className="w-full h-screen bg-body">
         <Loader />

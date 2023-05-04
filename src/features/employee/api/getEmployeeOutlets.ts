@@ -6,27 +6,27 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { ResultResponse } from '@/types/api';
 
 type EmployeesDTO = {
-  id: number;
+  id: number | 'me';
 };
 
-export async function getEmployeeOutlets({ id }: EmployeesDTO) {
+export async function getEmployeeOutlet({ id }: EmployeesDTO) {
   const res = await axios.get<ResultResponse<Outlet>>(`/employee/${id}/outlet`);
 
   return res.data;
 }
 
-type QueryFnType = typeof getEmployeeOutlets;
+type QueryFnType = typeof getEmployeeOutlet;
 
 type UseEmployeesOptions = {
-  id: number;
+  id?: number | 'me';
   config?: QueryConfig<QueryFnType>;
 };
 
-export function useEmployeeOutlets({ config, id }: UseEmployeesOptions) {
+export function useEmployeeOutlet({ id = 'me', config }: UseEmployeesOptions = {}) {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: ['employee-outlets', id],
-    queryFn: () => getEmployeeOutlets({ id }),
+    queryFn: () => getEmployeeOutlet({ id }),
     keepPreviousData: true,
   });
 }

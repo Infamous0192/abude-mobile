@@ -7,6 +7,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 
 import { AuthProvider } from '@/features/auth';
+import { OutletProvider } from '@/features/outlet';
 import { queryClient } from '@/lib/react-query';
 
 import { DateProvider } from './DateProvider';
@@ -54,12 +55,14 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
             labels={{ confirm: 'Konfirmasi', cancel: 'Batal' }}
           >
             <AuthProvider>
-              <Router>
-                <HelmetProvider>
-                  <DateProvider>{children}</DateProvider>
-                  <ScrollToTop />
-                </HelmetProvider>
-              </Router>
+              <OutletProvider>
+                <Router>
+                  <HelmetProvider>
+                    <DateProvider>{children}</DateProvider>
+                    <ScrollToTop />
+                  </HelmetProvider>
+                </Router>
+              </OutletProvider>
             </AuthProvider>
           </ModalsProvider>
         </MantineProvider>
