@@ -1,15 +1,21 @@
 import { ActionIcon, Button } from '@mantine/core';
-import { openModal } from '@mantine/modals';
+import { modals } from '@mantine/modals';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
+
+import { useOutletContext } from '@/features/outlet';
 
 import { ProductCreateForm, ProductList } from '../components';
 
 export const Products: React.FC = () => {
+  const { outlet } = useOutletContext();
+
   function handleAdd() {
-    openModal({
+    if (!outlet?.company.id) return;
+
+    modals.open({
       title: 'Tambah Barang',
-      children: <ProductCreateForm />,
+      children: <ProductCreateForm company={outlet.company.id} />,
     });
   }
 

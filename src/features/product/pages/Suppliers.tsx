@@ -3,13 +3,19 @@ import { openModal } from '@mantine/modals';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
-import { SupplierForm, SupplierList } from '../components';
+import { useOutletContext } from '@/features/outlet';
+
+import { SupplierCreateForm, SupplierList } from '../components';
 
 export const Suppliers: React.FC = () => {
+  const { outlet } = useOutletContext();
+
   function handleAdd() {
+    if (!outlet?.company.id) return;
+
     openModal({
       title: 'Tambah Supplier',
-      children: <SupplierForm />,
+      children: <SupplierCreateForm company={outlet.company.id} />,
     });
   }
 

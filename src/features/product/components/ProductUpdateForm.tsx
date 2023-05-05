@@ -4,32 +4,33 @@ import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
 
-import { useCreateProduct, useSuppliers } from '../api';
-import { ProductRequest } from '../types';
+import { useUpdateProduct, useSuppliers } from '../api';
+import { Product, ProductRequest } from '../types';
 
 type Props = {
+  product: Product;
   company: number;
   onSuccess?: VoidFunction;
 };
 
-export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
+export const ProductUpdateForm: React.FC<Props> = ({ product, company, onSuccess }) => {
   const form = useForm<ProductRequest>({
     initialValues: {
-      name: '',
-      description: '',
-      price: 0,
-      unit: '',
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      unit: product.unit,
       company,
-      category: undefined,
-      supplier: undefined,
+      category: product.category,
+      supplier: product.supplier?.id,
     },
   });
-  const { mutateAsync, isLoading } = useCreateProduct();
+  const { mutateAsync, isLoading } = useUpdateProduct();
   const { data } = useSuppliers({ params: { limit: -1 } });
 
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(
-      { data: values },
+      { id: product.id, data: values },
       {
         onError({ response }) {
           form.setErrors((response?.data as any).errors);
@@ -39,7 +40,7 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
             onSuccess();
           }
           notifications.show({
-            message: 'Produk berhasil dibuat',
+            message: 'Produk berhasil diubah',
             color: 'green',
             icon: <IconCheck />,
           });
@@ -101,7 +102,7 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
           Batal
         </Button>
         <Button type="submit" loading={isLoading}>
-          Tambah
+          Simpan
         </Button>
       </div>
     </form>
