@@ -1,14 +1,21 @@
+import { Button } from '@mantine/core';
 import { useState } from 'react';
 
-import { TransactionList, TransactionTab } from '../components';
-import { TransactionQuery } from '../types';
-
-const defaultQuery: TransactionQuery = {
-  category: undefined,
-};
+import { PurchaseList, SaleList } from '../components';
 
 export const Transactions: React.FC = () => {
-  const [query, setQuery] = useState(defaultQuery);
+  const [selected, setSelected] = useState('sale');
+
+  function renderItem() {
+    switch (selected) {
+      case 'sale':
+        return <SaleList />;
+      case 'purchase':
+        return <PurchaseList />;
+      default:
+        return null;
+    }
+  }
 
   return (
     <main>
@@ -16,16 +23,26 @@ export const Transactions: React.FC = () => {
         <h1 className="font-bold text-xl">Riwayat Transaksi</h1>
       </header>
 
-      <TransactionTab
-        onChange={(status) => {
-          const category = status == '' ? undefined : (status as TransactionQuery['category']);
-          setQuery({ category });
-        }}
-      />
-
-      <section>
-        <TransactionList query={query} />
+      <section className="flex items-center px-5 mb-4">
+        <Button
+          radius="lg"
+          variant={selected == 'sale' ? 'filled' : 'light'}
+          onClick={() => setSelected('sale')}
+          className="mr-2"
+        >
+          Penjualan
+        </Button>
+        <Button
+          radius="lg"
+          variant={selected == 'purchase' ? 'filled' : 'light'}
+          onClick={() => setSelected('purchase')}
+          className="mr-2"
+        >
+          Pembelian
+        </Button>
       </section>
+
+      <section>{renderItem()}</section>
     </main>
   );
 };

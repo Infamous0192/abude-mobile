@@ -2,15 +2,15 @@ import { Button } from '@mantine/core';
 
 import { formatCurrency } from '@/utils/format';
 
-import { TransactionRequest } from '../types';
+import { SaleRequest } from '../types';
 
 type Props = {
-  items: TransactionRequest['items'];
+  items: SaleRequest['items'];
   onSubmit: () => void;
 };
 
-export const TransactionSubmit: React.FC<Props> = ({ items, onSubmit }) => {
-  const total = items.reduce((prev, curr) => prev + curr.amount * (curr.price || 0), 0);
+export const SaleSubmit: React.FC<Props> = ({ items, onSubmit }) => {
+  const total = items.reduce((prev, curr) => prev + curr.quantity * (curr.price || 0), 0);
 
   return (
     <div className="max-w-md bottom-0 fixed bg-white py-4 w-full border-t border-gray-50 px-5">

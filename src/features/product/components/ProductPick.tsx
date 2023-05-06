@@ -1,8 +1,9 @@
 import { Button } from '@mantine/core';
 import { useState } from 'react';
 
-import { Product } from '@/features/product';
 import { clsx, formatCurrency } from '@/utils/format';
+
+import { Product } from '../types';
 
 type ProductItemProps = {
   product: Product;

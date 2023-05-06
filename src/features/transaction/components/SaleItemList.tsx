@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { Product } from '@/features/product';
 import { formatCurrency } from '@/utils/format';
 
-import { TransactionRequest } from '../types';
+import { SaleRequest } from '../types';
 
 type ItemProps = {
   product: Product;
   onChange: (amount: number) => void;
 };
 
-const ProductItem: React.FC<ItemProps> = ({ product, onChange }) => {
+const SaleItem: React.FC<ItemProps> = ({ product, onChange }) => {
   const [value, setValue] = useState(1);
 
   function handleChange(v: number) {
@@ -65,21 +65,21 @@ const ProductItem: React.FC<ItemProps> = ({ product, onChange }) => {
 
 type Props = {
   products: Product[];
-  items: TransactionRequest['items'];
-  onChange: (item: TransactionRequest['items']) => void;
+  items: SaleRequest['items'];
+  onChange: (item: SaleRequest['items']) => void;
 };
 
-export const ItemPick: React.FC<Props> = ({ products, items, onChange }) => {
+export const SaleItemList: React.FC<Props> = ({ products, items, onChange }) => {
   function handleChange(product: Product) {
-    return (amount: number) => {
-      if (amount <= 0) {
+    return (quantity: number) => {
+      if (quantity <= 0) {
         return onChange(items.filter((item) => item.product != product.id));
       }
 
       onChange(
         items.map((item) => {
           if (item.product == product.id) {
-            return { ...item, amount };
+            return { ...item, quantity };
           }
 
           return item;
@@ -95,7 +95,7 @@ export const ItemPick: React.FC<Props> = ({ products, items, onChange }) => {
           return items.filter((item) => item.product == product.id).length > 0;
         })
         .map((product) => (
-          <ProductItem key={product.id} product={product} onChange={handleChange(product)} />
+          <SaleItem key={product.id} product={product} onChange={handleChange(product)} />
         ))}
     </>
   );

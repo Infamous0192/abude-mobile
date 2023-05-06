@@ -6,9 +6,9 @@ type Props = {
 };
 
 export const TransactionTab: React.FC<Props> = ({ onChange }) => {
-  const [selected, setSelected] = useState<string>('');
+  const [selected, setSelected] = useState<'penjualan' | 'pembelian'>('penjualan');
 
-  function handleClick(status: string) {
+  function handleClick(status: 'penjualan' | 'pembelian') {
     return () => {
       setSelected(status);
       onChange(status);
@@ -17,14 +17,6 @@ export const TransactionTab: React.FC<Props> = ({ onChange }) => {
 
   return (
     <section className="flex items-center px-5 mb-4">
-      <Button
-        radius="lg"
-        variant={selected == '' ? 'filled' : 'light'}
-        onClick={handleClick('')}
-        className="mr-2"
-      >
-        Semua
-      </Button>
       <Button
         radius="lg"
         variant={selected == 'penjualan' ? 'filled' : 'light'}

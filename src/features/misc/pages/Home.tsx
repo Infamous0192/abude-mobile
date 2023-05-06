@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { MenuList } from '@/components/navigation';
 import { useAuth } from '@/features/auth';
 import { OutletPick } from '@/features/outlet';
-import { TransactionList } from '@/features/transaction';
+import { SaleList } from '@/features/transaction';
 
 export const Home: React.FC = () => {
   const { creds } = useAuth();
@@ -21,13 +21,13 @@ export const Home: React.FC = () => {
 
       <section className="bg-white mx-auto max-w-xs w-full -mt-14 shadow shadow-gray-200 rounded-xl">
         <div className="w-full grid grid-cols-3 divide-x divide-gray-300 py-4">
-          <Link to="/sales" className="px-4 flex flex-col items-center justify-center">
+          <Link to="/sales/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarUp className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Penjualan</div>
           </Link>
-          <Link to="/purchases" className="px-4 flex flex-col items-center justify-center">
+          <Link to="/purchases/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarToDown className="w-7 h-7" />
             </div>
@@ -66,9 +66,9 @@ export const Home: React.FC = () => {
 
       <section className="my-6 pb-24">
         <div className="px-5 flex justify-between">
-          <h2 className="text-lg font-bold mb-1">Transaksi Terbaru</h2>
+          <h2 className="text-lg font-bold mb-1">Penjualan Terbaru</h2>
         </div>
-        <TransactionList />
+        <SaleList />
         <div className="px-5">
           <Button variant="subtle" fullWidth component={Link} to="/transaction">
             Lihat Semua

@@ -1,10 +1,10 @@
 import { Product } from '@/features/product';
 import { formatCurrency } from '@/utils/format';
 
-import { TransactionRequest } from '../types';
+import { SaleRequest } from '../types';
 
 type ItemProps = {
-  items: TransactionRequest['items'];
+  items: SaleRequest['items'];
   product: Product;
 };
 
@@ -16,20 +16,20 @@ const TransactionItem: React.FC<ItemProps> = ({ product, items }) => {
       <div>
         <div className="text-gray-700 font-bold">{product.name}</div>
         <div className="text-gray-500 text-xs font-medium">
-          {item?.amount} {product.unit} x {formatCurrency(product.price)}
+          {item?.quantity} {product.unit} x {formatCurrency(product.price)}
         </div>
       </div>
-      <div>{formatCurrency(product.price * (item?.amount ?? 1))}</div>
+      <div>{formatCurrency(product.price * (item?.quantity ?? 1))}</div>
     </div>
   );
 };
 
 type Props = {
-  items: TransactionRequest['items'];
+  items: SaleRequest['items'];
   products: Product[];
 };
 
-export const TransactionSummary: React.FC<Props> = ({ items, products }) => {
+export const SaleSummary: React.FC<Props> = ({ items, products }) => {
   if (items.length == 0) return null;
 
   return (
@@ -45,7 +45,7 @@ export const TransactionSummary: React.FC<Props> = ({ items, products }) => {
           <div>Total</div>
           <div>
             {formatCurrency(
-              items.reduce((prev, curr) => prev + curr.amount * (curr.price || 0), 0)
+              items.reduce((prev, curr) => prev + curr.quantity * (curr.price || 0), 0)
             )}
           </div>
         </div>

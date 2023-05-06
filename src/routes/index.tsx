@@ -11,13 +11,11 @@ const { Suppliers } = lazyImport(() => import('@/features/product'), 'Suppliers'
 const { Attendances } = lazyImport(() => import('@/features/employee'), 'Attendances');
 const { Outlets } = lazyImport(() => import('@/features/outlet'), 'Outlets');
 
-const { Sales } = lazyImport(() => import('@/features/transaction'), 'Sales');
-const { Purchases } = lazyImport(() => import('@/features/transaction'), 'Purchases');
 const { Transactions } = lazyImport(() => import('@/features/transaction'), 'Transactions');
-const { TransactionDetail } = lazyImport(
-  () => import('@/features/transaction'),
-  'TransactionDetail'
-);
+const { SaleCreate } = lazyImport(() => import('@/features/transaction'), 'SaleCreate');
+const { SaleDetail } = lazyImport(() => import('@/features/transaction'), 'SaleDetail');
+const { PurchaseCreate } = lazyImport(() => import('@/features/transaction'), 'PurchaseCreate');
+const { PurchaseDetail } = lazyImport(() => import('@/features/transaction'), 'PurchaseDetail');
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -29,12 +27,15 @@ export const AppRoutes: React.FC = () => {
           <Route path="profile" element={<Profile />} />
         </Route>
 
+        <Route path="sales/:id" element={<SaleDetail />} />
+        <Route path="sales/create" element={<SaleCreate />} />
+
+        <Route path="purchases/:id" element={<PurchaseDetail />} />
+        <Route path="purchases/create" element={<PurchaseCreate />} />
+
         <Route path="attendance" element={<Attendances />} />
         <Route path="product" element={<Products />} />
         <Route path="supplier" element={<Suppliers />} />
-        <Route path="purchases" element={<Purchases />} />
-        <Route path="sales" element={<Sales />} />
-        <Route path="transaction/:id" element={<TransactionDetail />} />
       </Route>
 
       <Route path="/" element={<PlainLayout />}>

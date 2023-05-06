@@ -38,4 +38,6 @@ export type ProductRequest = {
 
 export type ProductQuery = {
   keyword?: string;
+  company?: number;
+  category?: 'purchase' | 'sale';
 } & Pagination;
