@@ -18,7 +18,7 @@ const defaultParams: ProductQuery = {
 export const ProductList: React.FC = () => {
   const { outlet } = useOutletContext();
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteProducts({
-    params: { ...defaultParams },
+    params: { ...defaultParams, company: outlet?.company.id },
   });
 
   const products =

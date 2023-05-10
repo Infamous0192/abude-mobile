@@ -17,7 +17,7 @@ const defaultParams: SupplierQuery = {
 export const SupplierList: React.FC = () => {
   const { outlet } = useOutletContext();
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteSuppliers({
-    params: defaultParams,
+    params: { ...defaultParams, company: outlet?.company.id },
   });
 
   const suppliers =

@@ -74,7 +74,7 @@ export const PurchaseCreate: React.FC = () => {
           notifications.show({
             color: 'green',
             message: 'Pembelian berhasil dibuat',
-            autoClose: 500,
+            autoClose: 1000,
           });
           form.setValues({ ...form.values, ...initialValues });
         },
@@ -82,7 +82,7 @@ export const PurchaseCreate: React.FC = () => {
           notifications.show({
             color: 'red',
             message: 'Pembelian gagal dibuat',
-            autoClose: 500,
+            autoClose: 1000,
           });
         },
       }

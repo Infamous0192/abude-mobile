@@ -4,7 +4,7 @@ import { dayjs } from '@/lib/dayjs';
 
 import { Attendance } from '../types';
 
-const attendances: Attendance[] = [
+const attendances: any = [
   {
     id: 3,
     checkIn: new Date(),
@@ -53,7 +53,7 @@ type Props = {
 export const AttendanceList: React.FC<Props> = ({ date }) => {
   return (
     <section className="px-5 my-4 space-y-4">
-      {attendances.map((attendance) => (
+      {attendances.map((attendance: any) => (
         <div
           key={attendance.id}
           className="bg-white rounded-lg shadow-md shadow-gray-200 border border-gray-100 px-5 py-4"

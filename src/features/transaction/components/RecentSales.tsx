@@ -1,4 +1,4 @@
-import { Button, Loader } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { IconArrowBarUp } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
@@ -6,8 +6,20 @@ import { useOutletContext } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
-import { useInfiniteSales } from '../api';
+import { useSales } from '../api';
 import { Sale, SaleQuery } from '../types';
+
+const SaleSkeleton: React.FC = () => {
+  return (
+    <div className="w-full flex items-center px-5 py-2">
+      <div className="flex-shrink-0 w-10 h-10 bg-gray-200 animate-pulse rounded-lg"></div>
+      <div className="flex-grow px-3 flex flex-col justify-between">
+        <div className="h-4 w-24 bg-gray-200 animate-pulse mb-2 rounded"></div>
+        <div className="h-3 w-36 bg-gray-200 animate-pulse rounded"></div>
+      </div>
+    </div>
+  );
+};
 
 const SaleItem: React.FC<Sale> = (sale) => {
   return (
@@ -37,29 +49,33 @@ type Props = {
   query?: SaleQuery;
 };
 
-export const SaleList: React.FC<Props> = () => {
+export const RecentSales: React.FC<Props> = () => {
   const { outlet } = useOutletContext();
-  const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteSales({
-    params: { outlet: outlet?.id },
-  });
+  const { data, isLoading, isError } = useSales({ params: { outlet: outlet?.id } });
 
-  const sales = data?.pages.reduce((prev, { result }) => [...prev, ...result], [] as Sale[]);
+  if (isLoading || isError)
+    return (
+      <>
+        {Array(5)
+          .fill(0)
+          .map((_, i) => (
+            <SaleSkeleton key={`ssk_${i}`} />
+          ))}
+      </>
+    );
 
   return (
     <>
-      {sales?.length == 0 && <div className="px-5">Belum ada penjualan</div>}
-      {sales?.map((sale) => (
+      {data.result.map((sale) => (
         <SaleItem key={sale.id} {...sale} />
       ))}
-      <div className="px-5 flex items-center justify-center py-4">
-        {isFetching ? (
-          <Loader />
+      <div className="px-5 py-3">
+        {data.result.length > 0 ? (
+          <Button variant="subtle" fullWidth component={Link} to="/transaction">
+            Lihat Semua
+          </Button>
         ) : (
-          hasNextPage && (
-            <Button variant="subtle" fullWidth onClick={() => fetchNextPage()}>
-              Lihat Semua
-            </Button>
-          )
+          <p>Belum Ada penjualan</p>
         )}
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -29,5 +29,14 @@ export function usePurchases({ config, params }: UsePurchasesOptions = {}) {
     queryKey: ['purchases', params],
     queryFn: () => getPurchases({ params }),
     keepPreviousData: true,
+  });
+}
+
+export function useInfinitePurchases({ params }: UsePurchasesOptions = {}) {
+  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+    queryKey: ['purchases', { ...params, infinite: true }],
+    queryFn: ({ pageParam: page = 1 }) => getPurchases({ params: { ...params, page } }),
+    getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),
+    getPreviousPageParam: ({ metadata }) => (metadata.hasPrev ? metadata.page - 1 : undefined),
   });
 }

@@ -1,11 +1,10 @@
-import { Button } from '@mantine/core';
 import { IconArrowBarToDown, IconArrowBarUp, IconReceipt } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
 import { useAuth } from '@/features/auth';
 import { OutletPick } from '@/features/outlet';
-import { SaleList } from '@/features/transaction';
+import { RecentSales } from '@/features/transaction';
 
 export const Home: React.FC = () => {
   const { creds } = useAuth();
@@ -68,12 +67,7 @@ export const Home: React.FC = () => {
         <div className="px-5 flex justify-between">
           <h2 className="text-lg font-bold mb-1">Penjualan Terbaru</h2>
         </div>
-        <SaleList />
-        <div className="px-5">
-          <Button variant="subtle" fullWidth component={Link} to="/transaction">
-            Lihat Semua
-          </Button>
-        </div>
+        <RecentSales />
       </section>
     </main>
   );

@@ -1,4 +1,3 @@
-import { Button, Loader } from '@mantine/core';
 import { IconArrowBarToDown } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
@@ -6,8 +5,20 @@ import { useOutletContext } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
-import { useInfinitePurchases } from '../api';
+import { usePurchases } from '../api';
 import { Purchase, PurchaseQuery } from '../types';
+
+const PurchaseSkeleton: React.FC = () => {
+  return (
+    <div className="w-full flex items-center px-5 py-2">
+      <div className="flex-shrink-0 w-10 h-10 bg-gray-200 animate-pulse rounded-lg"></div>
+      <div className="flex-grow px-3 flex flex-col justify-between">
+        <div className="h-4 w-24 bg-gray-200 animate-pulse mb-2 rounded"></div>
+        <div className="h-3 w-36 bg-gray-200 animate-pulse rounded"></div>
+      </div>
+    </div>
+  );
+};
 
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
@@ -37,34 +48,26 @@ type Props = {
   query?: PurchaseQuery;
 };
 
-export const PurchaseList: React.FC<Props> = () => {
+export const RecentPurchase: React.FC<Props> = () => {
   const { outlet } = useOutletContext();
-  const { data, isFetching, hasNextPage, fetchNextPage } = useInfinitePurchases({
-    params: { outlet: outlet?.id },
-  });
+  const { data, isLoading, isError } = usePurchases({ params: { outlet: outlet?.id } });
 
-  const purchases = data?.pages.reduce(
-    (prev, { result }) => [...prev, ...result],
-    [] as Purchase[]
-  );
+  if (isLoading || isError)
+    return (
+      <>
+        {Array(5)
+          .fill(0)
+          .map((_, i) => (
+            <PurchaseSkeleton key={`ssk_${i}`} />
+          ))}
+      </>
+    );
 
   return (
     <>
-      {purchases?.length == 0 && <div className="px-5">Belum ada pembelian</div>}
-      {purchases?.map((purchase) => (
+      {data.result.map((purchase) => (
         <PurchaseItem key={purchase.id} {...purchase} />
       ))}
-      <div className="px-5 flex items-center justify-center py-4">
-        {isFetching ? (
-          <Loader />
-        ) : (
-          hasNextPage && (
-            <Button variant="subtle" fullWidth onClick={() => fetchNextPage()}>
-              Lihat Semua
-            </Button>
-          )
-        )}
-      </div>
     </>
   );
 };

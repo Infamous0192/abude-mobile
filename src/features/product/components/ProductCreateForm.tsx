@@ -25,7 +25,7 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
     },
   });
   const { mutateAsync, isLoading } = useCreateProduct();
-  const { data } = useSuppliers({ params: { limit: -1 } });
+  const { data } = useSuppliers({ params: { limit: -1, company } });
 
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(

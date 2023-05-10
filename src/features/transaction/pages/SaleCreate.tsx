@@ -70,7 +70,7 @@ export const SaleCreate: React.FC = () => {
           notifications.show({
             color: 'green',
             message: 'Penjualan berhasil dibuat',
-            autoClose: 500,
+            autoClose: 1000,
           });
           form.setValues({ ...form.values, ...initialValues });
         },
@@ -78,7 +78,7 @@ export const SaleCreate: React.FC = () => {
           notifications.show({
             color: 'red',
             message: 'Penjualan gagal dibuat',
-            autoClose: 500,
+            autoClose: 10000,
           });
         },
       }
