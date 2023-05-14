@@ -1,4 +1,5 @@
 import { User } from '@/features/auth';
+import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
 export type Employee = {
@@ -8,6 +9,17 @@ export type Employee = {
   address: string;
   user: User;
 } & BaseEntity;
+
+export type Shift = {
+  name: string;
+  description: string;
+  startTime: string;
+  endTime: string;
+} & BaseEntity;
+
+export type ShiftQuery = {
+  company?: number;
+} & Pagination;
 
 export type Attendance = {
   id: number;

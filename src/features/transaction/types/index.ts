@@ -12,9 +12,11 @@ export type SaleItem = {
 };
 
 export type Sale = {
+  code: string;
   customer: string;
   note: string;
   total: number;
+  status: 'approved' | 'accepted' | 'canceled';
   items: SaleItem[];
 } & BaseEntity;
 
@@ -32,6 +34,7 @@ export type SaleRequest = {
 
 export type SaleQuery = {
   outlet?: number;
+  status?: 'approved' | 'accepted' | 'canceled';
 } & Pagination;
 
 export type PurchaseItem = {
@@ -65,3 +68,16 @@ export type PurchaseRequest = {
 export type PurchaseQuery = {
   outlet?: number;
 } & Pagination;
+
+export type SalesSummary = {
+  date: string;
+  name: string;
+  quantity: number;
+  total: number;
+};
+
+export type SalesSummaryQuery = {
+  status?: 'approved' | 'accepted' | 'canceled';
+  outlet?: number;
+  date?: string; // string date
+};

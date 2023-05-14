@@ -12,7 +12,7 @@ export const MenuItem: React.FC<Navigation> = ({ title, href, icon }) => {
     <Link to={href}>
       <div className="cursor-pointer flex flex-col items-center justify-center">
         <img src={icon} alt="" width={30} />
-        <h3 className="text-xs text-gray-700 font-semibold mt-2 text-center">{title}</h3>
+        <h3 className="text-xs text-gray-700 font-semibold mt-2 text-center px-1">{title}</h3>
       </div>
     </Link>
   );
@@ -26,7 +26,7 @@ export const MenuList: React.FC<Props> = ({ navigations }) => {
   const id = useId();
 
   return (
-    <div className="grid grid-cols-4 gap-6">
+    <div className="grid grid-cols-3 gap-6">
       {navigations.map((nav, i) => (
         <MenuItem key={`${id}_${i}`} {...nav} />
       ))}

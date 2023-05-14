@@ -11,6 +11,8 @@ const { Suppliers } = lazyImport(() => import('@/features/product'), 'Suppliers'
 const { Attendances } = lazyImport(() => import('@/features/employee'), 'Attendances');
 const { Outlets } = lazyImport(() => import('@/features/outlet'), 'Outlets');
 
+const { Handovers } = lazyImport(() => import('@/features/handover'), 'Handovers');
+
 const { Transactions } = lazyImport(() => import('@/features/transaction'), 'Transactions');
 const { SaleCreate } = lazyImport(() => import('@/features/transaction'), 'SaleCreate');
 const { SaleDetail } = lazyImport(() => import('@/features/transaction'), 'SaleDetail');
@@ -32,6 +34,8 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="purchases/:id" element={<PurchaseDetail />} />
         <Route path="purchases/create" element={<PurchaseCreate />} />
+
+        <Route path="handover" element={<Handovers />} />
 
         <Route path="attendance" element={<Attendances />} />
         <Route path="product" element={<Products />} />

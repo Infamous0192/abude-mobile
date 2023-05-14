@@ -1,7 +1,7 @@
-import { Center, Loader } from '@mantine/core';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
+import { LoadingScreen } from '@/components/elements';
 import { useEmployee } from '@/features/employee';
 
 import { logout, useCreds } from '../api';
@@ -32,11 +32,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   );
 
   if (credsQuery.isLoading || employeeQuery.isFetching || logoutMutation.isLoading)
-    return (
-      <Center className="w-full h-screen bg-body">
-        <Loader />
-      </Center>
-    );
+    return <LoadingScreen />;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
