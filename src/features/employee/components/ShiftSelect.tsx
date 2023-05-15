@@ -1,14 +1,14 @@
 import { Select, SelectProps } from '@mantine/core';
 
 import { useShifts } from '@/features/employee';
-import { useOutletContext } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 
-type Props = Omit<SelectProps, 'data'>;
+type Props = {
+  company?: number;
+} & Omit<SelectProps, 'data'>;
 
-export const ShiftPick: React.FC<Props> = (props) => {
-  const { outlet } = useOutletContext();
-  const { data } = useShifts({ params: { limit: -1, company: outlet?.company.id } });
+export const ShiftSelect: React.FC<Props> = (props) => {
+  const { data } = useShifts({ params: { limit: -1, company: props.company } });
 
   return (
     <Select

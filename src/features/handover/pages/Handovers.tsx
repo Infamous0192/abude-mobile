@@ -1,96 +1,64 @@
-import { Button, NumberInput, Textarea } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
-import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+import { Button } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
+import { useState } from 'react';
 
 import { Navbar } from '@/components/navigation';
+import { ShiftSelect } from '@/features/employee';
 import { useOutletContext } from '@/features/outlet';
-import { SalesSummary } from '@/features/transaction';
 
-import { useCreateHandover } from '../api';
-import { ShiftPick } from '../components';
-import { HandoverRequest } from '../types';
+import { HandoverList, HandoverListProps } from '../components';
 
 export const Handovers: React.FC = () => {
   const { outlet } = useOutletContext();
-  const { mutateAsync, isLoading } = useCreateHandover();
-  const form = useForm<HandoverRequest>({
-    initialValues: {
-      cashReceived: 0,
-      cashReturned: 0,
-      note: '',
-      shift: 0,
-      date: new Date(),
-      outlet: outlet!.id,
-    },
-  });
+  const [params, setParams] = useState<HandoverListProps>({ outlet: outlet?.id });
 
-  async function handleSubmit() {
-    await mutateAsync(
-      { data: form.values },
-      {
-        onSuccess: () => {
-          notifications.show({
-            message: 'Laporan berhasil dibuat',
-            color: 'green',
-          });
-        },
-        onError: ({ response }) => {
-          form.setErrors((response?.data as any).errors);
-        },
-      }
-    );
+  function handleClear() {
+    setParams({ outlet: outlet?.id });
   }
 
   return (
     <main>
-      <Navbar title="Laporan Serah Terima" withBorder />
+      <Navbar withBorder to="/" />
 
-      <section className="px-5 space-y-2">
-        <DateInput
-          {...form.getInputProps('date')}
-          label="Tanggal"
-          readOnly
-          valueFormat="dddd, DD MMMM YYYY"
-        />
+      <section className="px-5">
+        <div className="space-y-2">
+          <ShiftSelect
+            label="Shift"
+            placeholder="Pilih Shift"
+            company={outlet?.company.id}
+            value={params.shift?.toString() ?? ''}
+            onChange={(v) => setParams({ ...params, shift: parseInt(v || '') })}
+          />
 
-        <ShiftPick
-          {...form.getInputProps('shift')}
-          value={form.values['shift'] != 0 ? form.values['shift'].toString() : ''}
-          onChange={(v) => form.setFieldValue('shift', parseInt(v ?? ''))}
-          required
-          label="Shift"
-          placeholder="Pilih Shift"
-        />
-
-        <NumberInput
-          {...form.getInputProps('cashReceived')}
-          required
-          label="Total Penerimaan"
-          icon={<span className="text-xs">Rp</span>}
-        />
-
-        <Textarea
-          {...form.getInputProps('note')}
-          required
-          label="Catatan"
-          placeholder="Tambahkan catatan"
-        />
-      </section>
-
-      <section className="px-5 my-4">
-        <div className="mb-3">
-          <h2 className="text-base font-semibold">Penjualan Terakhir</h2>
+          <DatePickerInput
+            type="range"
+            valueFormat="D MMMM YYYY"
+            label="Rentang Tanggal"
+            placeholder="Pilih Tanggal"
+            value={[params.startDate || null, params.endDate || null]}
+            onChange={([startDate, endDate]) =>
+              setParams({
+                ...params,
+                startDate: startDate || undefined,
+                endDate: endDate || undefined,
+              })
+            }
+          />
         </div>
 
-        <SalesSummary status="accepted" outlet={outlet?.id} />
+        <div className="flex items-center justify-end space-x-2 mt-4">
+          <Button size="xs" variant="default" onClick={handleClear}>
+            Clear
+          </Button>
+        </div>
       </section>
 
-      <div className="fixed bottom-0 w-full max-w-md px-5 bg-white py-4">
-        <Button fullWidth onClick={handleSubmit} loading={isLoading}>
-          Simpan
-        </Button>
-      </div>
+      <section className="mt-6">
+        <div className="px-5 mb-2">
+          <h2 className="font-bold">Rekap Serah Terima</h2>
+        </div>
+        <HandoverList {...params} />
+      </section>
     </main>
   );
 };

@@ -12,6 +12,7 @@ const { Attendances } = lazyImport(() => import('@/features/employee'), 'Attenda
 const { Outlets } = lazyImport(() => import('@/features/outlet'), 'Outlets');
 
 const { Handovers } = lazyImport(() => import('@/features/handover'), 'Handovers');
+const { HandoverCreate } = lazyImport(() => import('@/features/handover'), 'HandoverCreate');
 
 const { Transactions } = lazyImport(() => import('@/features/transaction'), 'Transactions');
 const { SaleCreate } = lazyImport(() => import('@/features/transaction'), 'SaleCreate');
@@ -36,6 +37,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="purchases/create" element={<PurchaseCreate />} />
 
         <Route path="handover" element={<Handovers />} />
+        <Route path="handover/create" element={<HandoverCreate />} />
 
         <Route path="attendance" element={<Attendances />} />
         <Route path="product" element={<Products />} />

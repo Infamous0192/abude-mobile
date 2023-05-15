@@ -64,6 +64,11 @@ export const Home: React.FC = () => {
             },
             {
               title: 'Laporan Serah Terima',
+              href: '/handover/create',
+              icon: '/images/attendance.svg',
+            },
+            {
+              title: 'Rekap Serah Terima',
               href: '/handover',
               icon: '/images/attendance.svg',
             },

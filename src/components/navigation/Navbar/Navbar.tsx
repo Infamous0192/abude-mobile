@@ -5,15 +5,15 @@ import { clsx } from '@/utils/format';
 
 type Props = {
   title?: string;
-  href?: string;
+  to?: string;
   withBorder?: boolean;
 };
 
-export const Navbar: React.FC<Props> = ({ title, href, withBorder }) => {
+export const Navbar: React.FC<Props> = ({ title, to, withBorder }) => {
   const navigate = useNavigate();
 
   function goBack() {
-    if (href) return navigate(href);
+    if (to) return navigate(to);
 
     if (window.history.length <= 1) {
       return navigate('/');
