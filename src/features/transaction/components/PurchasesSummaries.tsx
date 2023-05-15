@@ -4,15 +4,40 @@ import { useId } from 'react';
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
-import { useSalesSummary } from '../api';
-import { SalesSummaryQuery } from '../types';
+import { usePurchasesSummary } from '../api';
+import { PurchasesSummary, PurchasesSummaryQuery } from '../types';
 
-type Props = SalesSummaryQuery;
+type Props = {
+  withProduct?: boolean;
+} & PurchasesSummaryQuery;
 
-export const SalesSummary: React.FC<Props> = (params) => {
-  const { data, isLoading, isError } = useSalesSummary({ params });
-  const totalSales = data?.reduce((acc, summary) => acc + summary.total, 0);
+export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
+  const { data, isLoading, isError } = usePurchasesSummary({ params });
+  const total = data?.reduce(
+    (acc, summary) => [acc[0] + summary.quantity, acc[1] + summary.total],
+    [0, 0]
+  );
   const id = useId();
+
+  function productSummary() {
+    if (!withProduct || !data) return null;
+
+    return (data ?? []).reduce((acc, sale) => {
+      const existingSummary = acc.find((s) => s.id === sale.id);
+      if (existingSummary) {
+        existingSummary.quantity += sale.quantity;
+        existingSummary.total += sale.total;
+      } else {
+        acc.push({
+          id: sale.id,
+          name: sale.name,
+          quantity: sale.quantity,
+          total: sale.total,
+        });
+      }
+      return acc;
+    }, [] as Omit<PurchasesSummary, 'date'>[]);
+  }
 
   const ErrorState = () => (
     <tr>
@@ -43,12 +68,12 @@ export const SalesSummary: React.FC<Props> = (params) => {
   );
 
   return (
-    <div className="overflow-auto relative bg-white rounded-md">
+    <div className="overflow-auto relative shadow-lg shadow-gray-200 bg-white rounded-md">
       <Table>
         <thead>
           <tr>
             <th className="whitespace-nowrap">Tanggal</th>
-            <th>Barang</th>
+            <th className="whitespace-nowrap">Barang</th>
             <th>Jumlah</th>
             <th>Total</th>
           </tr>
@@ -66,15 +91,24 @@ export const SalesSummary: React.FC<Props> = (params) => {
                   <td>{formatCurrency(total)}</td>
                 </tr>
               ))}
-              {totalSales ? (
+              {productSummary()?.map((item) => (
+                <tr key={item.id} className="bg-gray-50 font-bold">
+                  <td colSpan={2} className=" text-center">
+                    {item.name}
+                  </td>
+                  <td className="">{item.quantity}</td>
+                  <td>
+                    <span className="">{formatCurrency(item.total)}</span>
+                  </td>
+                </tr>
+              ))}
+              {total ? (
                 <tr>
                   <td colSpan={3} className="w-full">
-                    <div className="font-bold text-center">Jumlah</div>
+                    <div className="font-bold text-center">Total</div>
                   </td>
                   <td>
-                    <span className="font-bold">
-                      {formatCurrency(data.reduce((acc, summary) => acc + summary.total, 0))}
-                    </span>
+                    <span className="font-bold">{formatCurrency(total[1])}</span>
                   </td>
                 </tr>
               ) : (

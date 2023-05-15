@@ -9,3 +9,4 @@ export * from './getPurchase';
 export * from './getPurchases';
 export * from './updatePurchase';
 export * from './getSalesSummary';
+export * from './getPurchasesSummary';

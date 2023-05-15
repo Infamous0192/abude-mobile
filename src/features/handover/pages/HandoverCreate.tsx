@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/navigation';
 import { ShiftSelect } from '@/features/employee';
 import { useOutletContext } from '@/features/outlet';
-import { SalesSummary } from '@/features/transaction';
+import { SalesSummaries } from '@/features/transaction';
 
 import { useCreateHandover } from '../api';
 import { HandoverRequest } from '../types';
@@ -87,7 +87,7 @@ export const HandoverCreate: React.FC = () => {
           <h2 className="text-base font-semibold">Penjualan Terakhir</h2>
         </div>
 
-        <SalesSummary status="accepted" outlet={outlet?.id} />
+        <SalesSummaries status="accepted" outlet={outlet?.id} />
       </section>
 
       <div className="fixed bottom-0 w-full max-w-md px-5 bg-white py-4">

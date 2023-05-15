@@ -72,6 +72,11 @@ export const Home: React.FC = () => {
               href: '/handover',
               icon: '/images/attendance.svg',
             },
+            {
+              title: 'Statistik Transaksi',
+              href: '/transaction/summary',
+              icon: '/images/attendance.svg',
+            },
           ]}
         />
       </section>

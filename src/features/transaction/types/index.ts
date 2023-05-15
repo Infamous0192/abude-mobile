@@ -70,6 +70,7 @@ export type PurchaseQuery = {
 } & Pagination;
 
 export type SalesSummary = {
+  id: number;
   date: string;
   name: string;
   quantity: number;
@@ -79,5 +80,20 @@ export type SalesSummary = {
 export type SalesSummaryQuery = {
   status?: 'approved' | 'accepted' | 'canceled';
   outlet?: number;
-  date?: string; // string date
+  startDate?: Date;
+  endDate?: Date;
+};
+
+export type PurchasesSummary = {
+  id: number;
+  date: string;
+  name: string;
+  quantity: number;
+  total: number;
+};
+
+export type PurchasesSummaryQuery = {
+  outlet?: number;
+  startDate?: Date;
+  endDate?: Date;
 };

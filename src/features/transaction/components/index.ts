@@ -8,4 +8,5 @@ export * from './RecentPurchase';
 export * from './TransactionTab';
 export * from './PurchaseItemList';
 export * from './PurchaseList';
-export * from './SalesSummary';
+export * from './SalesSummaries';
+export * from './PurchasesSummaries';
