@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Menu } from '@mantine/core';
+import { ActionIcon, Button, Menu } from '@mantine/core';
 import { IconArrowBarUp, IconChevronLeft, IconDots } from '@tabler/icons-react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useSale } from '../api';
+import { SaleStatus } from '../components';
 
 export const SaleDetail: React.FC = () => {
   const { id } = useParams<'id'>();
@@ -34,33 +35,43 @@ export const SaleDetail: React.FC = () => {
       <section className="px-5 py-4">
         <section className="border-b border-dashed border-gray-400 pb-4">
           <div className="flex items-center justify-between text-sm mb-3">
-            <div className="text-gray-500 font-medium">Customer</div>
+            <div className="text-gray-600 font-medium">Kode</div>
+            <div className="font-bold">{data.code}</div>
+          </div>
+          <div className="flex items-center justify-between text-sm mb-3">
+            <div className="text-gray-600 font-medium">Customer</div>
             <div className="font-bold">{data.customer}</div>
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
-            <div className="text-gray-500 font-medium">Tanggal Transaksi</div>
+            <div className="text-gray-600 font-medium">Tanggal Transaksi</div>
             <div className="font-bold">{dayjs(data.createdAt).format('D MMMM YYYY HH:mm')}</div>
           </div>
-          <div className="flex items-center justify-between text-sm">
-            <div className="text-gray-500 font-medium">Status</div>
-            <Badge color="green">Success</Badge>
+          <div className="flex items-center justify-between text-sm mb-3">
+            <div className="text-gray-600 font-medium">Status</div>
+            <SaleStatus status={data.status} />
+          </div>
+          <div className="flex items-center justify-between text-sm mb-3">
+            <div className="text-gray-600 font-medium">Pegawai</div>
+            <div className="font-bold">{data.user.name}</div>
           </div>
           <div className="text-sm mt-3">
-            <div className="text-gray-500 font-medium mb-1">Catatan</div>
-            <div className="text-gray-800 text-xs font-medium">{data.note}</div>
+            <div className="text-gray-600 font-medium mb-1">Catatan</div>
+            <div className="text-gray-800 text-xs font-medium">
+              {data.note || '(tidak ada catatan)'}
+            </div>
           </div>
         </section>
 
         <div className="py-3">
           {data.items.map((item) => (
-            <div key={item.id} className="flex items-center justify-between mb-3 last:mb-0">
+            <div key={item.id} className="flex justify-between mb-3 last:mb-0">
               <div>
-                <div className="text-gray-700 font-bold">{item.product.name}</div>
-                <div className="text-gray-500 text-xs font-medium">
+                <div className="font-bold">{item.product.name}</div>
+                <div className="text-gray-600 text-xs font-medium">
                   {item.quantity} {item.product.unit} x {formatCurrency(item.price)}
                 </div>
               </div>
-              <div className="font-bold text-sm">{formatCurrency(item.total)}</div>
+              <div className="font-bold">{formatCurrency(item.total)}</div>
             </div>
           ))}
         </div>

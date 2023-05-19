@@ -1,4 +1,4 @@
-import { Badge, Button, Drawer } from '@mantine/core';
+import { Badge, Button } from '@mantine/core';
 import { useState } from 'react';
 
 import { dayjs } from '@/lib/dayjs';
@@ -6,6 +6,8 @@ import { formatCurrency } from '@/utils/format';
 
 import { useInfiniteHandovers } from '../api';
 import { Handover, HandoverQuery } from '../types';
+
+import { HandoverDetail } from './HandoverDetail';
 
 export type HandoverListProps = Omit<HandoverQuery, 'page' | 'limit'>;
 
@@ -85,37 +87,7 @@ export const HandoverList: React.FC<HandoverListProps> = (params) => {
         )}
       </div>
 
-      <Drawer
-        opened={selected != null}
-        onClose={() => setSelected(null)}
-        title={<div className="font-bold">Detail Serah Terima</div>}
-        padding="lg"
-        position="bottom"
-        size="md"
-      >
-        {selected != null && (
-          <section>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <div className="text-gray-600">Total Penerimaan</div>
-                <div className="font-bold">{formatCurrency(selected.cashReceived)}</div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="text-gray-600">Total Penjualan</div>
-                <div className="font-bold">{formatCurrency(selected.salesTotal)}</div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="text-gray-600">Tanggal</div>
-                <div className="font-bold">{dayjs(selected.date).format('dddd, D MMMM YYYY')}</div>
-              </div>
-              <div>
-                <div className="text-gray-600 mb-1">Catatan</div>
-                <p className="text-sm">{selected.note || '-'}</p>
-              </div>
-            </div>
-          </section>
-        )}
-      </Drawer>
+      <HandoverDetail handoverId={selected?.id || null} onClose={() => setSelected(null)} />
     </>
   );
 };

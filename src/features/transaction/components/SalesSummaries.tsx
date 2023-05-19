@@ -88,7 +88,7 @@ export const SalesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
                   <td>{dayjs(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}</td>
                   <td>{name}</td>
                   <td>{quantity}</td>
-                  <td>{formatCurrency(total)}</td>
+                  <td className="text-right">{formatCurrency(total)}</td>
                 </tr>
               ))}
               {productSummary()?.map((item) => (
@@ -97,9 +97,7 @@ export const SalesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
                     {item.name}
                   </td>
                   <td className="">{item.quantity}</td>
-                  <td>
-                    <span className="">{formatCurrency(item.total)}</span>
-                  </td>
+                  <td className="text-right">{formatCurrency(item.total)}</td>
                 </tr>
               ))}
               {total && total[0] ? (
@@ -108,7 +106,7 @@ export const SalesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
                     <div className="font-bold text-center">Total</div>
                   </td>
                   <td>
-                    <span className="font-bold">{formatCurrency(total[1])}</span>
+                    <span className="font-bold text-right">{formatCurrency(total[1])}</span>
                   </td>
                 </tr>
               ) : (

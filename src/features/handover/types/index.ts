@@ -1,7 +1,7 @@
 import { User } from '@/features/auth';
 import { Shift } from '@/features/employee';
 import { Outlet } from '@/features/outlet';
-import { Sale } from '@/features/transaction';
+import { SaleItem } from '@/features/transaction';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
@@ -11,7 +11,7 @@ export type Handover = {
   cashReceived: number;
   cashReturned: number;
   date: Date;
-  sales: Sale[];
+  items: SaleItem[];
   outlet: Outlet;
   shift: Shift;
   user: User;

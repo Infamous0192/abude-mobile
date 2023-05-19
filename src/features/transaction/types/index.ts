@@ -14,9 +14,10 @@ export type SaleItem = {
 export type Sale = {
   code: string;
   customer: string;
+  status: 'approved' | 'accepted' | 'canceled';
   note: string;
   total: number;
-  status: 'approved' | 'accepted' | 'canceled';
+  user: User;
   items: SaleItem[];
 } & BaseEntity;
 
@@ -47,9 +48,11 @@ export type PurchaseItem = {
 };
 
 export type Purchase = {
+  code: string;
   note: string;
   total: number;
   items: PurchaseItem[];
+  status: 'success' | 'canceled';
   user: User;
 } & BaseEntity;
 
