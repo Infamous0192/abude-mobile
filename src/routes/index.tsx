@@ -5,6 +5,7 @@ import { lazyImport } from '@/utils/lazyImport';
 
 const { Login } = lazyImport(() => import('@/features/auth'), 'Login');
 const { Home } = lazyImport(() => import('@/features/misc'), 'Home');
+const { DataMaster } = lazyImport(() => import('@/features/misc'), 'DataMaster');
 const { Profile } = lazyImport(() => import('@/features/employee'), 'Profile');
 const { Products } = lazyImport(() => import('@/features/product'), 'Products');
 const { Suppliers } = lazyImport(() => import('@/features/product'), 'Suppliers');
@@ -32,6 +33,7 @@ export const AppRoutes: React.FC = () => {
           <Route index element={<Home />} />
           <Route path="transaction" element={<Transactions />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="data-master" element={<DataMaster />} />
         </Route>
 
         <Route path="transaction/summary" element={<TransactionSummary />} />

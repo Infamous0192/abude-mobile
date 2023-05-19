@@ -102,7 +102,7 @@ export const SalesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
                   </td>
                 </tr>
               ))}
-              {total ? (
+              {total && total[0] ? (
                 <tr>
                   <td colSpan={3} className="w-full">
                     <div className="font-bold text-center">Total</div>

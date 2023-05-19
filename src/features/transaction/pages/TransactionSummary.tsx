@@ -75,7 +75,7 @@ export const TransactionSummary: React.FC = () => {
 
   return (
     <main>
-      <Navbar title="Statistik Transaksi" withBorder to="/" />
+      <Navbar title="Statistik Harian" withBorder to="/" />
 
       <div className="px-5">
         <Tabs

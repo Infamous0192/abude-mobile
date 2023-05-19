@@ -23,7 +23,7 @@ export async function loadCreds() {
 export function useCreds() {
   return useQuery([CREDS_KEY], loadCreds, {
     onError: () => {
-      storage.clearToken();
+      storage.clear();
     },
   });
 }

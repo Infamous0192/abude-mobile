@@ -42,51 +42,47 @@ export const Home: React.FC = () => {
       </section>
 
       <section className="px-5 my-8">
-        <div className="mb-4">
-          <h2 className="text-sm text-gray-600 font-bold">Data Master</h2>
-        </div>
         <MenuList
           navigations={[
             {
-              title: 'Barang',
-              href: '/product',
-              icon: '/images/barang.svg',
+              title: 'Data Master',
+              href: '/data-master',
+              icon: '/images/cog.svg',
             },
             {
-              title: 'Supplier',
-              href: '/supplier',
-              icon: '/images/supplier.svg',
+              title: 'Laporan Serah Terima',
+              href: '/handover/create',
+              icon: '/images/investor.svg',
+            },
+            {
+              title: 'Rekap Serah Terima',
+              href: '/handover',
+              icon: '/images/postor.svg',
+            },
+            {
+              title: 'Statistik Harian',
+              href: '/transaction/summary',
+              icon: '/images/report-up.svg',
             },
             {
               title: 'Kehadiran',
               href: '/attendance',
               icon: '/images/attendance.svg',
             },
-            {
-              title: 'Laporan Serah Terima',
-              href: '/handover/create',
-              icon: '/images/attendance.svg',
-            },
-            {
-              title: 'Rekap Serah Terima',
-              href: '/handover',
-              icon: '/images/attendance.svg',
-            },
-            {
-              title: 'Statistik Transaksi',
-              href: '/transaction/summary',
-              icon: '/images/attendance.svg',
-            },
           ]}
         />
       </section>
 
-      <section className="my-6 pb-24">
+      <section className="my-6">
         <div className="px-5 flex justify-between">
           <h2 className="text-lg font-bold mb-1">Penjualan Terbaru</h2>
         </div>
         <RecentSales />
       </section>
+
+      <div className="flex items-center justify-center w-full pb-12">
+        <img src="/images/abude-logo.png" alt="" className="w-16" />
+      </div>
     </main>
   );
 };

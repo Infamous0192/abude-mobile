@@ -11,7 +11,7 @@ export const MenuItem: React.FC<Navigation> = ({ title, href, icon }) => {
   return (
     <Link to={href}>
       <div className="cursor-pointer flex flex-col items-center justify-center">
-        <img src={icon} alt="" width={30} />
+        <img src={icon} alt="" width={30} loading="eager" />
         <h3 className="text-xs text-gray-700 font-semibold mt-2 text-center px-1">{title}</h3>
       </div>
     </Link>
