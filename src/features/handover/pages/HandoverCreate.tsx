@@ -47,7 +47,7 @@ export const HandoverCreate: React.FC = () => {
 
   return (
     <main>
-      <Navbar title="Laporan Serah Terima" to="/" withBorder />
+      <Navbar title="Laporan Serah Terima" withBorder />
 
       <section className="px-5 space-y-2">
         <DateInput

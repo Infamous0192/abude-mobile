@@ -1,6 +1,7 @@
 import { Button } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Navbar } from '@/components/navigation';
 import { ShiftSelect } from '@/features/employee';
@@ -54,8 +55,12 @@ export const Handovers: React.FC = () => {
       </section>
 
       <section className="mt-6">
-        <div className="px-5 mb-2">
+        <div className="px-5 mb-4 flex items-center justify-between">
           <h2 className="font-bold">Rekap Serah Terima</h2>
+
+          <Button component={Link} to="/handover/create" size="xs">
+            Tambah
+          </Button>
         </div>
         <HandoverList {...params} />
       </section>

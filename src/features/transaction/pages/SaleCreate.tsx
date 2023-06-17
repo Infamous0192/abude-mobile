@@ -1,4 +1,5 @@
 import { ActionIcon, Button, TextInput, Textarea } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
@@ -96,13 +97,19 @@ export const SaleCreate: React.FC = () => {
         </Link>
       </header>
 
-      <section className="px-5 pb-3 mt-3">
+      <section className="px-5 space-y-3 pb-3 mt-3">
+        <DateInput
+          label="Tanggal"
+          variant="filled"
+          value={new Date()}
+          readOnly
+          valueFormat="D MMMM YYYY HH:mm"
+        />
         <TextInput
           {...form.getInputProps('customer')}
           label="Nama Customer"
           variant="filled"
           placeholder="Masukan nama customer"
-          className="mb-3"
           withAsterisk
         />
         <Textarea

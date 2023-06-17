@@ -4,6 +4,7 @@ import { HomeLayout, AuthLayout, AppLayout, PlainLayout } from '@/components/lay
 import { lazyImport } from '@/utils/lazyImport';
 
 const { Login } = lazyImport(() => import('@/features/auth'), 'Login');
+const { Development } = lazyImport(() => import('@/features/misc'), 'Development');
 const { Home } = lazyImport(() => import('@/features/misc'), 'Home');
 const { DataMaster } = lazyImport(() => import('@/features/misc'), 'DataMaster');
 const { Profile } = lazyImport(() => import('@/features/employee'), 'Profile');
@@ -50,6 +51,8 @@ export const AppRoutes: React.FC = () => {
         <Route path="attendance" element={<Attendances />} />
         <Route path="product" element={<Products />} />
         <Route path="supplier" element={<Suppliers />} />
+
+        <Route path="development" element={<Development />} />
       </Route>
 
       <Route path="/" element={<PlainLayout />}>
