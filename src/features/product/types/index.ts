@@ -24,6 +24,7 @@ export type Product = {
   unit: string;
   category: 'purchase' | 'sale';
   supplier?: Supplier;
+  isDefault: boolean;
 } & BaseEntity;
 
 export type ProductRequest = {
@@ -34,6 +35,7 @@ export type ProductRequest = {
   company: number;
   category?: 'purchase' | 'sale';
   supplier?: number;
+  isDefault: boolean;
 };
 
 export type ProductQuery = {

@@ -36,6 +36,7 @@ export const Handovers: React.FC = () => {
             valueFormat="D MMMM YYYY"
             label="Rentang Tanggal"
             placeholder="Pilih Tanggal"
+            allowSingleDateInRange
             value={[params.startDate || null, params.endDate || null]}
             onChange={([startDate, endDate]) =>
               setParams({

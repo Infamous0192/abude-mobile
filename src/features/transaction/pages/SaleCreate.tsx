@@ -4,6 +4,7 @@ import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconChevronLeft, IconCirclePlus } from '@tabler/icons-react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
@@ -34,6 +35,17 @@ export const SaleCreate: React.FC = () => {
   });
 
   const products = data?.result ?? [];
+
+  useEffect(() => {
+    if (!data) return;
+
+    form.setFieldValue('items', [
+      ...data.result
+        .filter(({ isDefault }) => isDefault)
+        .map(({ id, price }) => ({ product: id, quantity: 1, price })),
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   function handleItemChange(items: SaleRequest['items']) {
     form.setFieldValue('items', items);

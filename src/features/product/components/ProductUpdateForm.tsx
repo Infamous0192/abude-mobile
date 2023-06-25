@@ -23,6 +23,7 @@ export const ProductUpdateForm: React.FC<Props> = ({ product, company, onSuccess
       company,
       category: product.category,
       supplier: product.supplier?.id,
+      isDefault: product.isDefault,
     },
   });
   const { mutateAsync, isLoading } = useUpdateProduct();
@@ -78,6 +79,18 @@ export const ProductUpdateForm: React.FC<Props> = ({ product, company, onSuccess
             { label: 'Pembelian', value: 'purchase' },
             { label: 'Penjualan', value: 'sale' },
           ]}
+        />
+        <Select
+          {...form.getInputProps('isDefault')}
+          label="Default?"
+          required
+          withinPortal
+          data={[
+            { label: 'Ya', value: 'true' },
+            { label: 'Tidak', value: 'false' },
+          ]}
+          value={form.values['isDefault'] ? 'true' : 'false'}
+          onChange={(v) => form.setFieldValue('isDefault', v == 'true')}
         />
         <Select
           {...form.getInputProps('supplier')}
