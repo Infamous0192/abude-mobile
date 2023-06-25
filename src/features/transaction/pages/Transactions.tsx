@@ -42,7 +42,7 @@ export const Transactions: React.FC = () => {
         </Button>
       </section>
 
-      <section>{renderItem()}</section>
+      <section className="pb-24">{renderItem()}</section>
     </main>
   );
 };

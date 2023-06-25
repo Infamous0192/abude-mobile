@@ -36,6 +36,8 @@ export type SaleRequest = {
 export type SaleQuery = {
   outlet?: number;
   status?: 'approved' | 'accepted' | 'canceled';
+  startDate?: Date;
+  endDate?: Date;
 } & Pagination;
 
 export type PurchaseItem = {
@@ -70,6 +72,8 @@ export type PurchaseRequest = {
 
 export type PurchaseQuery = {
   outlet?: number;
+  startDate?: Date;
+  endDate?: Date;
 } & Pagination;
 
 export type SalesSummary = {

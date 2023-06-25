@@ -1,5 +1,7 @@
 import { Button, Loader } from '@mantine/core';
-import { IconArrowBarToDown } from '@tabler/icons-react';
+import { DatePickerInput } from '@mantine/dates';
+import { IconArrowBarToDown, IconCalendar } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
@@ -39,8 +41,12 @@ type Props = {
 
 export const PurchaseList: React.FC<Props> = () => {
   const { outlet } = useOutletContext();
+  const [params, setParams] = useState<PurchaseQuery>({});
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfinitePurchases({
-    params: { outlet: outlet?.id },
+    params: { ...params, outlet: outlet?.id },
+    config: {
+      enabled: (!params.startDate && !params.endDate) || (!!params.startDate && !!params.endDate),
+    },
   });
 
   const purchases = data?.pages.reduce(
@@ -50,6 +56,20 @@ export const PurchaseList: React.FC<Props> = () => {
 
   return (
     <>
+      <div className="px-5 mb-2">
+        <DatePickerInput
+          icon={<IconCalendar size={14} />}
+          placeholder="Rentang Tanggal"
+          type="range"
+          clearable
+          allowSingleDateInRange
+          valueFormat="D MMMM YYYY"
+          value={[params.startDate ?? null, params.endDate ?? null]}
+          onChange={(v) => {
+            setParams({ ...params, startDate: v[0] || undefined, endDate: v[1] || undefined });
+          }}
+        />
+      </div>
       {purchases?.length == 0 && <div className="px-5">Belum ada pembelian</div>}
       {purchases?.map((purchase) => (
         <PurchaseItem key={purchase.id} {...purchase} />
