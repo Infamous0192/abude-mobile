@@ -52,7 +52,7 @@ export const ProductPick: React.FC<Props> = ({ products, onSubmit }) => {
   }
 
   return (
-    <div>
+    <div className="relative">
       {products.map((product) => (
         <ProductItem
           key={product.id}
@@ -62,7 +62,7 @@ export const ProductPick: React.FC<Props> = ({ products, onSubmit }) => {
         />
       ))}
 
-      <div className="flex justify-end pt-2">
+      <div className="flex justify-end pt-2 sticky bottom-0 pb-2 bg-white">
         <Button disabled={selected == null} px="xl" onClick={handleSubmit}>
           Pilih
         </Button>

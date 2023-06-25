@@ -14,7 +14,7 @@ import { useCreatePurchase } from '../api';
 import { PurchaseItemList, PurchaseSummary } from '../components';
 import { PurchaseRequest } from '../types';
 
-const initialValues: Omit<PurchaseRequest, 'sourceId'> = {
+const initialValues: Omit<PurchaseRequest, 'sourceId' | 'date'> = {
   source: 'outlet',
   note: '',
   items: [],
@@ -30,6 +30,7 @@ export const PurchaseCreate: React.FC = () => {
     initialValues: {
       ...initialValues,
       sourceId: outlet?.id ?? 0,
+      date: new Date(),
     },
   });
 
@@ -77,7 +78,7 @@ export const PurchaseCreate: React.FC = () => {
             message: 'Pembelian berhasil dibuat',
             autoClose: 1000,
           });
-          form.setValues({ ...form.values, ...initialValues });
+          form.setValues({ ...form.values, date: new Date(), ...initialValues });
         },
         onError: () => {
           notifications.show({
@@ -103,10 +104,9 @@ export const PurchaseCreate: React.FC = () => {
 
       <section className="px-5 mt-3 space-y-3">
         <DateInput
+          {...form.getInputProps('date')}
           label="Tanggal"
           variant="filled"
-          value={new Date()}
-          readOnly
           valueFormat="D MMMM YYYY HH:mm"
         />
         <Textarea

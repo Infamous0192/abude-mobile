@@ -14,7 +14,7 @@ import { useCreateSale } from '../api';
 import { SaleItemList, SaleSubmit, SaleSummary } from '../components';
 import { SaleRequest } from '../types';
 
-const initialValues: Omit<SaleRequest, 'sourceId'> = {
+const initialValues: Omit<SaleRequest, 'sourceId' | 'date'> = {
   customer: 'Umum',
   source: 'outlet',
   note: '',
@@ -25,24 +25,24 @@ export const SaleCreate: React.FC = () => {
   const { outlet } = useOutletContext();
   const { data } = useProducts({
     params: { company: outlet?.company.id, limit: -1, category: 'sale' },
-  }); // TODO consider to move this in ProductPick
+  });
   const { mutateAsync } = useCreateSale();
   const form = useForm<SaleRequest>({
     initialValues: {
       ...initialValues,
       sourceId: outlet?.id ?? 0,
+      date: new Date(),
     },
   });
 
   const products = data?.result ?? [];
+  const defaults = data?.result.filter(({ isDefault }) => isDefault);
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || !defaults) return;
 
     form.setFieldValue('items', [
-      ...data.result
-        .filter(({ isDefault }) => isDefault)
-        .map(({ id, price }) => ({ product: id, quantity: 1, price })),
+      ...defaults.map(({ id, price }) => ({ product: id, quantity: 1, price })),
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
@@ -85,7 +85,14 @@ export const SaleCreate: React.FC = () => {
             message: 'Penjualan berhasil dibuat',
             autoClose: 1000,
           });
-          form.setValues({ ...form.values, ...initialValues });
+          form.setValues({
+            ...form.values,
+            date: new Date(),
+            ...initialValues,
+            items: [
+              ...(defaults ?? []).map(({ id, price }) => ({ product: id, quantity: 1, price })),
+            ],
+          });
         },
         onError: () => {
           notifications.show({
@@ -111,10 +118,9 @@ export const SaleCreate: React.FC = () => {
 
       <section className="px-5 space-y-3 pb-3 mt-3">
         <DateInput
+          {...form.getInputProps('date')}
           label="Tanggal"
           variant="filled"
-          value={new Date()}
-          readOnly
           valueFormat="D MMMM YYYY HH:mm"
         />
         <TextInput

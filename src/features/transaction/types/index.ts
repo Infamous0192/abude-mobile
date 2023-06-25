@@ -19,6 +19,7 @@ export type Sale = {
   total: number;
   user: User;
   items: SaleItem[];
+  date: Date;
 } & BaseEntity;
 
 export type SaleRequest = {
@@ -26,6 +27,7 @@ export type SaleRequest = {
   note: string;
   source: 'outlet' | 'warehouse';
   sourceId: number;
+  date: Date;
   items: Array<{
     price?: number;
     quantity: number;
@@ -56,12 +58,14 @@ export type Purchase = {
   items: PurchaseItem[];
   status: 'success' | 'canceled';
   user: User;
+  date: Date;
 } & BaseEntity;
 
 export type PurchaseRequest = {
   note: string;
   source: 'outlet' | 'warehouse';
   sourceId: number;
+  date: Date;
   items: Array<{
     price?: number;
     quantity: number;
