@@ -5,7 +5,7 @@ import { Product } from '@/features/product';
 
 import { PurchaseRequest } from '../types';
 
-type ItemValue = { price: number; quantity: number };
+type ItemValue = { price: number; quantity: number | '' };
 
 type ItemProps = {
   product: Product;
@@ -69,6 +69,8 @@ type Props = {
 export const PurchaseItemList: React.FC<Props> = ({ products, items, onChange }) => {
   function handleChange(product: Product) {
     return ({ price, quantity }: ItemValue) => {
+      if (quantity === '') return;
+
       if (quantity <= 0) {
         return onChange(items.filter((item) => item.product != product.id));
       }

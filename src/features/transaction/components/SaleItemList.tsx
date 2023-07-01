@@ -71,7 +71,9 @@ type Props = {
 
 export const SaleItemList: React.FC<Props> = ({ products, items, onChange }) => {
   function handleChange(product: Product) {
-    return (quantity: number) => {
+    return (quantity: number | '') => {
+      if (quantity === '') return;
+
       if (quantity <= 0) {
         return onChange(items.filter((item) => item.product != product.id));
       }
