@@ -15,7 +15,9 @@ type ItemProps = {
 const SaleItem: React.FC<ItemProps> = ({ product, onChange }) => {
   const [value, setValue] = useState(1);
 
-  function handleChange(v: number) {
+  function handleChange(v: number | '') {
+    if (v === '') return;
+
     setValue(v);
     onChange(v);
   }
