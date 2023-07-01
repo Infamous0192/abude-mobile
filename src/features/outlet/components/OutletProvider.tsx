@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { LoadingScreen } from '@/components/elements';
 import { useAuth } from '@/features/auth';
@@ -29,6 +29,13 @@ export const OutletProvider: React.FC<Props> = ({ children }) => {
     storage.setOutlet(filteredOutlet[0]);
     setSelected(filteredOutlet[0]);
   }
+
+  useEffect(() => {
+    if (creds == null) {
+      storage.clear();
+      setSelected(null);
+    }
+  }, [creds]);
 
   if (isLoading && creds != null) return <LoadingScreen />;
 
