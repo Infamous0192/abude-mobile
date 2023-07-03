@@ -104,6 +104,7 @@ export type PurchasesSummary = {
 };
 
 export type PurchasesSummaryQuery = {
+  status?: 'approved' | 'accepted' | 'canceled';
   outlet?: number;
   startDate?: Date;
   endDate?: Date;

@@ -11,6 +11,8 @@ import { formatCurrency } from '@/utils/format';
 import { useInfiniteSales } from '../api';
 import { Sale, SaleQuery } from '../types';
 
+import { SaleStatus } from './SaleStatus';
+
 const SaleItem: React.FC<Sale> = (sale) => {
   return (
     <Link
@@ -22,14 +24,15 @@ const SaleItem: React.FC<Sale> = (sale) => {
           <IconArrowBarUp className="w-6 h-6" />
         </div>
       </div>
-      <div className="flex-grow px-3 flex flex-col justify-between">
-        <div className="font-bold capitalize">Penjualan</div>
-        <div className="text-xs font-semibold text-gray-600">
-          {dayjs(sale.createdAt).format('D MMM YYYY HH:mm')}
-        </div>
+      <div className="flex-grow px-3">
+        <div className="font-bold text-sm capitalize">{sale.code}</div>
+        <SaleStatus status={sale.status} />
       </div>
       <div className="flex-grow text-right">
         <div className="font-bold">{formatCurrency(sale.total)}</div>
+        <div className="text-xs font-semibold text-gray-600">
+          {dayjs(sale.createdAt).format('D MMM YYYY HH:mm')}
+        </div>
       </div>
     </Link>
   );

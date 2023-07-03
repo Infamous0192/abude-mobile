@@ -9,11 +9,23 @@ type Props = {
 export const SaleStatus: React.FC<Props> = ({ status }) => {
   switch (status) {
     case 'approved':
-      return <Badge color="green">Approved</Badge>;
+      return (
+        <Badge color="green" radius="xs">
+          Diterima
+        </Badge>
+      );
     case 'accepted':
-      return <Badge color="gray">Diterima</Badge>;
+      return (
+        <Badge color="gray" radius="xs">
+          Pending
+        </Badge>
+      );
     case 'canceled':
-      return <Badge color="red">Dibatalkan</Badge>;
+      return (
+        <Badge color="red" radius="xs">
+          Batal
+        </Badge>
+      );
     default:
       return null;
   }

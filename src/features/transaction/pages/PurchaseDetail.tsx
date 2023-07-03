@@ -1,29 +1,56 @@
-import { ActionIcon, Button, Menu } from '@mantine/core';
-import { IconArrowBarToDown, IconChevronLeft, IconDots } from '@tabler/icons-react';
-import { Link, useParams } from 'react-router-dom';
+import { ActionIcon, Button, Menu, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconArrowBarToDown, IconCheck, IconDots } from '@tabler/icons-react';
+import { useParams } from 'react-router-dom';
 
+import { Navbar } from '@/components/navigation';
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
-import { usePurchase } from '../api';
+import { useCancelPurchase, usePurchase } from '../api';
 import { PurchaseStatus } from '../components';
 
 export const PurchaseDetail: React.FC = () => {
   const { id } = useParams<'id'>();
   const { data, isLoading, isError } = usePurchase({ id: parseInt(id!) });
+  const cancelMutation = useCancelPurchase();
+
+  function handleCancel() {
+    modals.openConfirmModal({
+      title: 'Batalkan Transaksi',
+      children: <Text size="sm">Apakah anda yakin untuk membatalkan transaksi ini?</Text>,
+      centered: true,
+      closeOnConfirm: false,
+      onConfirm: async () => {
+        await cancelMutation.mutateAsync(
+          { id: parseInt(id!) },
+          {
+            onSuccess: () => {
+              notifications.show({
+                message: 'Transaksi berhasil dibatalkan',
+                color: 'green',
+                icon: <IconCheck />,
+              });
+              modals.closeAll();
+            },
+            onError: () => {
+              notifications.show({
+                message: 'Transaksi tidak bisa dibatalkan',
+                color: 'red',
+              });
+            },
+          }
+        );
+      },
+    });
+  }
 
   if (isLoading || isError) return null;
 
   return (
     <main className="bg-white min-h-screen pb-6 relative">
-      <header className="px-4 sticky top-0 z-10 bg-white py-3.5">
-        <Link to="/" className="flex items-center">
-          <ActionIcon variant="transparent">
-            <IconChevronLeft className="text-gray-800" />
-          </ActionIcon>
-          <div className="font-bold ml-4">Kembali</div>
-        </Link>
-      </header>
+      <Navbar />
 
       <section className="flex flex-col items-center justify-center mt-8">
         <div className="bg-orange-100 text-orange-600 p-2 rounded-lg">
@@ -78,17 +105,22 @@ export const PurchaseDetail: React.FC = () => {
 
       <div className="fixed bottom-0 bg-white max-w-md py-4 px-5 flex w-full items-center space-x-4 border-t border-gray-200">
         <Button fullWidth>Cetak</Button>
-        <Menu position="top-end" width={200}>
-          <Menu.Target>
-            <ActionIcon variant="outline" color="gray" size="lg">
-              <IconDots />
-            </ActionIcon>
-          </Menu.Target>
 
-          <Menu.Dropdown>
-            <Menu.Item color="red">Batalkan Pesanan</Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+        {data.status == 'success' && (
+          <Menu position="top-end" width={200}>
+            <Menu.Target>
+              <ActionIcon variant="outline" color="gray" size="lg">
+                <IconDots />
+              </ActionIcon>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Item color="red" onClick={handleCancel}>
+                Batalkan Transaksi
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        )}
       </div>
     </main>
   );

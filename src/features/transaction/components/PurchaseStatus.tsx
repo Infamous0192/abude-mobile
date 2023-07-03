@@ -9,9 +9,17 @@ type Props = {
 export const PurchaseStatus: React.FC<Props> = ({ status }) => {
   switch (status) {
     case 'success':
-      return <Badge color="green">Success</Badge>;
+      return (
+        <Badge color="green" radius="xs">
+          Berhasil
+        </Badge>
+      );
     case 'canceled':
-      return <Badge color="red">Dibatalkan</Badge>;
+      return (
+        <Badge color="red" radius="xs">
+          Batal
+        </Badge>
+      );
     default:
       return null;
   }

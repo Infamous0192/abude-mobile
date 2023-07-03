@@ -12,6 +12,9 @@ const SalesSection: React.FC = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<SalesSummaryQuery>({
     outlet: outlet?.id,
+    status: 'approved',
+    startDate: new Date(),
+    endDate: new Date(),
   });
 
   return (
@@ -43,6 +46,9 @@ const PurchasesSection: React.FC = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<PurchasesSummaryQuery>({
     outlet: outlet?.id,
+    status: 'approved',
+    startDate: new Date(),
+    endDate: new Date(),
   });
 
   return (

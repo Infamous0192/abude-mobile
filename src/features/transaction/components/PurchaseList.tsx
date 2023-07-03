@@ -11,6 +11,8 @@ import { formatCurrency } from '@/utils/format';
 import { useInfinitePurchases } from '../api';
 import { Purchase, PurchaseQuery } from '../types';
 
+import { PurchaseStatus } from './PurchaseStatus';
+
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
     <Link
@@ -22,14 +24,15 @@ const PurchaseItem: React.FC<Purchase> = (purchase) => {
           <IconArrowBarToDown className="w-6 h-6" />
         </div>
       </div>
-      <div className="flex-grow px-3 flex flex-col justify-between">
-        <div className="font-bold capitalize">Pembelian</div>
-        <div className="text-xs font-semibold text-gray-600">
-          {dayjs(purchase.createdAt).format('D MMM YYYY HH:mm')}
-        </div>
+      <div className="flex-grow px-3">
+        <div className="font-bold text-sm capitalize">{purchase.code}</div>
+        <PurchaseStatus status={purchase.status} />
       </div>
       <div className="flex-grow text-right">
         <div className="font-bold">{formatCurrency(purchase.total)}</div>
+        <div className="text-xs font-semibold text-gray-600">
+          {dayjs(purchase.createdAt).format('D MMM YYYY HH:mm')}
+        </div>
       </div>
     </Link>
   );
