@@ -1,4 +1,4 @@
-import { Button, Loader } from '@mantine/core';
+import { Button, Loader, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { IconArrowBarUp, IconCalendar } from '@tabler/icons-react';
 import { useState } from 'react';
@@ -56,7 +56,7 @@ export const SaleList: React.FC<Props> = () => {
 
   return (
     <>
-      <div className="px-5 mb-2">
+      <div className="px-5 mb-4 space-y-2">
         <DatePickerInput
           icon={<IconCalendar size={14} />}
           placeholder="Rentang Tanggal"
@@ -67,6 +67,20 @@ export const SaleList: React.FC<Props> = () => {
           value={[params.startDate ?? null, params.endDate ?? null]}
           onChange={(v) => {
             setParams({ ...params, startDate: v[0] || undefined, endDate: v[1] || undefined });
+          }}
+        />
+        <Select
+          placeholder="Status Transaksi"
+          data={[
+            { value: 'accepted', label: 'Diterima' },
+            { value: 'approved', label: 'Direkap' },
+            { value: 'canceled', label: 'Batal' },
+          ]}
+          value={params.status}
+          onChange={(v) => {
+            if (v == null) return;
+
+            setParams({ ...params, status: v as SaleQuery['status'] });
           }}
         />
       </div>

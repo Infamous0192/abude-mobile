@@ -1,6 +1,5 @@
 import { ActionIcon, NumberInput } from '@mantine/core';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
-import { useState } from 'react';
 
 import { Product } from '@/features/product';
 import { formatCurrency } from '@/utils/format';
@@ -9,16 +8,14 @@ import { SaleRequest } from '../types';
 
 type ItemProps = {
   product: Product;
+  value: number;
   onChange: (amount: number) => void;
 };
 
-const SaleItem: React.FC<ItemProps> = ({ product, onChange }) => {
-  const [value, setValue] = useState(1);
-
+const SaleItem: React.FC<ItemProps> = ({ product, value, onChange }) => {
   function handleChange(v: number | '') {
     if (v === '') return;
 
-    setValue(v);
     onChange(v);
   }
 
@@ -99,7 +96,12 @@ export const SaleItemList: React.FC<Props> = ({ products, items, onChange }) => 
           return items.filter((item) => item.product == product.id).length > 0;
         })
         .map((product) => (
-          <SaleItem key={product.id} product={product} onChange={handleChange(product)} />
+          <SaleItem
+            key={product.id}
+            product={product}
+            value={items.filter((item) => item.product == product.id)[0].quantity ?? 1}
+            onChange={handleChange(product)}
+          />
         ))}
     </>
   );

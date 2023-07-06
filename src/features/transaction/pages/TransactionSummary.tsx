@@ -1,4 +1,4 @@
-import { Button, Tabs } from '@mantine/core';
+import { Button, Select, Tabs } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from 'react';
 
@@ -12,28 +12,44 @@ const SalesSection: React.FC = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<SalesSummaryQuery>({
     outlet: outlet?.id,
-    status: 'approved',
+    status: 'accepted',
     startDate: new Date(),
     endDate: new Date(),
   });
 
   return (
     <section>
-      <DatePickerInput
-        type="range"
-        valueFormat="D MMMM YYYY"
-        label="Rentang Tanggal"
-        placeholder="Pilih Tanggal"
-        value={[params.startDate ?? null, params.endDate ?? null]}
-        allowSingleDateInRange
-        onChange={([startDate, endDate]) =>
-          setParams({
-            ...params,
-            startDate: startDate ?? undefined,
-            endDate: endDate ?? undefined,
-          })
-        }
-      />
+      <div className="space-y-2 mb-4">
+        <DatePickerInput
+          type="range"
+          valueFormat="D MMMM YYYY"
+          label="Rentang Tanggal"
+          placeholder="Pilih Tanggal"
+          value={[params.startDate ?? null, params.endDate ?? null]}
+          allowSingleDateInRange
+          onChange={([startDate, endDate]) =>
+            setParams({
+              ...params,
+              startDate: startDate ?? undefined,
+              endDate: endDate ?? undefined,
+            })
+          }
+        />
+        <Select
+          label="Status Transaksi"
+          data={[
+            { value: 'accepted', label: 'Diterima' },
+            { value: 'approved', label: 'Direkap' },
+            { value: 'canceled', label: 'Batal' },
+          ]}
+          value={params.status}
+          onChange={(v) => {
+            if (v == null) return;
+
+            setParams({ ...params, status: v as SalesSummaryQuery['status'] });
+          }}
+        />
+      </div>
 
       <div className="mt-4">
         <SalesSummaries {...params} withProduct />
