@@ -54,6 +54,8 @@ export const SaleList: React.FC<Props> = () => {
 
   const sales = data?.pages.reduce((prev, { result }) => [...prev, ...result], [] as Sale[]);
 
+  console.log(params);
+
   return (
     <>
       <div className="px-5 mb-4 space-y-2">
@@ -66,7 +68,11 @@ export const SaleList: React.FC<Props> = () => {
           valueFormat="D MMMM YYYY"
           value={[params.startDate ?? null, params.endDate ?? null]}
           onChange={(v) => {
-            setParams({ ...params, startDate: v[0] || undefined, endDate: v[1] || undefined });
+            setParams({
+              ...params,
+              startDate: v[0] != null ? dayjs(v[0]).startOf('day').toDate() : undefined,
+              endDate: v[1] != null ? dayjs(v[1]).endOf('day').toDate() : undefined,
+            });
           }}
         />
         <Select

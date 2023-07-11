@@ -1,6 +1,6 @@
 import { Button, Loader } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { IconArrowBarToDown, IconCalendar } from '@tabler/icons-react';
+import { IconArrowBarToDown, IconCalendar, IconDots } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -17,23 +17,36 @@ const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
     <Link
       to={`/purchases/${purchase.id}`}
-      className="w-full flex items-center active:bg-gray-100 px-5 py-2 transition cursor-pointer"
+      className="w-full block active:bg-gray-100 px-5 py-2 transition cursor-pointer"
     >
-      <div className="flex-shrink-0">
-        <div className="rounded-lg p-2 bg-orange-100 text-orange-600">
-          <IconArrowBarToDown className="w-6 h-6" />
+      <div className="flex w-full">
+        <div className="flex-shrink-0">
+          <div className="rounded-lg p-2 bg-orange-100 text-orange-600">
+            <IconArrowBarToDown className="w-6 h-6" />
+          </div>
+        </div>
+        <div className="flex-grow px-3">
+          <div className="font-bold text-sm capitalize">{purchase.code}</div>
+          <PurchaseStatus status={purchase.status} />
+        </div>
+        <div className="flex-grow text-right">
+          <div className="font-bold">{formatCurrency(purchase.total)}</div>
+          <div className="text-xs font-semibold text-gray-600">
+            {dayjs(purchase.createdAt).format('D MMM YYYY HH:mm')}
+          </div>
         </div>
       </div>
-      <div className="flex-grow px-3">
-        <div className="font-bold text-sm capitalize">{purchase.code}</div>
-        <PurchaseStatus status={purchase.status} />
-      </div>
-      <div className="flex-grow text-right">
-        <div className="font-bold">{formatCurrency(purchase.total)}</div>
-        <div className="text-xs font-semibold text-gray-600">
-          {dayjs(purchase.createdAt).format('D MMM YYYY HH:mm')}
+      {purchase.items.length > 0 && (
+        <div className="text-xs text-gray-600 flex flex-col items-end">
+          <ul className="m-0">
+            <li>
+              {purchase.items[0].quantity} {purchase.items[0].product.unit}{' '}
+              {purchase.items[0].product.name}
+            </li>
+          </ul>
+          {purchase.items.length > 1 && <IconDots stroke={0.9} size={14} />}
         </div>
-      </div>
+      )}
     </Link>
   );
 };
@@ -69,14 +82,20 @@ export const PurchaseList: React.FC<Props> = () => {
           valueFormat="D MMMM YYYY"
           value={[params.startDate ?? null, params.endDate ?? null]}
           onChange={(v) => {
-            setParams({ ...params, startDate: v[0] || undefined, endDate: v[1] || undefined });
+            setParams({
+              ...params,
+              startDate: v[0] != null ? dayjs(v[0]).startOf('day').toDate() : undefined,
+              endDate: v[1] != null ? dayjs(v[1]).endOf('day').toDate() : undefined,
+            });
           }}
         />
       </div>
       {purchases?.length == 0 && <div className="px-5">Belum ada pembelian</div>}
-      {purchases?.map((purchase) => (
-        <PurchaseItem key={purchase.id} {...purchase} />
-      ))}
+      <div className="divide-y divide-gray-200">
+        {purchases?.map((purchase) => (
+          <PurchaseItem key={purchase.id} {...purchase} />
+        ))}
+      </div>
       <div className="px-5 flex items-center justify-center py-4">
         {isFetching ? (
           <Loader />
