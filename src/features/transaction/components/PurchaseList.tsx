@@ -32,7 +32,7 @@ const PurchaseItem: React.FC<Purchase> = (purchase) => {
         <div className="flex-grow text-right">
           <div className="font-bold">{formatCurrency(purchase.total)}</div>
           <div className="text-xs font-semibold text-gray-600">
-            {dayjs(purchase.createdAt).format('D MMM YYYY HH:mm')}
+            {dayjs(purchase.date).format('D MMM YYYY HH:mm')}
           </div>
         </div>
       </div>

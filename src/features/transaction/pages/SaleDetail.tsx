@@ -72,7 +72,7 @@ export const SaleDetail: React.FC = () => {
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="text-gray-600 font-medium">Tanggal Transaksi</div>
-            <div className="font-bold">{dayjs(data.createdAt).format('D MMMM YYYY HH:mm')}</div>
+            <div className="font-bold">{dayjs(data.date).format('D MMMM YYYY HH:mm')}</div>
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="text-gray-600 font-medium">Status</div>

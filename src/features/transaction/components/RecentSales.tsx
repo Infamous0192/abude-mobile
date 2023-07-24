@@ -35,7 +35,7 @@ const SaleItem: React.FC<Sale> = (sale) => {
       <div className="flex-grow px-3 flex flex-col justify-between">
         <div className="font-bold capitalize">Penjualan</div>
         <div className="text-xs font-semibold text-gray-600">
-          {dayjs(sale.createdAt).format('D MMM YYYY HH:mm')}
+          {dayjs(sale.date).format('D MMM YYYY HH:mm')}
         </div>
       </div>
       <div className="flex-grow text-right">
