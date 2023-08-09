@@ -4,7 +4,7 @@ import { useId } from 'react';
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
-import { usePurchasesSummary } from '../api';
+import { usePurchasesSummary, useSalesSummary } from '../api';
 import { PurchasesSummary, PurchasesSummaryQuery } from '../types';
 
 type Props = {
@@ -12,17 +12,26 @@ type Props = {
 } & PurchasesSummaryQuery;
 
 export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
-  const { data, isLoading, isError } = usePurchasesSummary({ params });
-  const total = data?.reduce(
+  const sale = useSalesSummary({ params: { ...params, status: 'approved' } });
+  const purchase = usePurchasesSummary({ params: { ...params, status: 'success' } });
+  const id = useId();
+
+  const isLoading = purchase.isLoading || sale.isLoading;
+  const isError = purchase.isError || sale.isError;
+
+  const totalSales = sale.data?.reduce(
     (acc, summary) => [acc[0] + summary.quantity, acc[1] + summary.total],
     [0, 0]
   );
-  const id = useId();
+  const totalPurchases = purchase.data?.reduce(
+    (acc, summary) => [acc[0] + summary.quantity, acc[1] + summary.total],
+    [0, 0]
+  );
 
   function productSummary() {
-    if (!withProduct || !data) return null;
+    if (!withProduct || !purchase.data) return null;
 
-    return (data ?? []).reduce((acc, sale) => {
+    return (purchase.data ?? []).reduce((acc, sale) => {
       const existingSummary = acc.find((s) => s.id === sale.id);
       if (existingSummary) {
         existingSummary.quantity += sale.quantity;
@@ -83,7 +92,7 @@ export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) 
           {isError && <ErrorState />}
           {!isLoading && !isError && (
             <>
-              {data.map(({ name, date, total, quantity }, i) => (
+              {purchase.data.map(({ name, date, total, quantity }, i) => (
                 <tr key={`${id}_${i}`}>
                   <td>{dayjs(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}</td>
                   <td>{name}</td>
@@ -102,15 +111,44 @@ export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) 
                   </td>
                 </tr>
               ))}
-              {total ? (
-                <tr>
-                  <td colSpan={3} className="w-full">
-                    <div className="font-bold text-center">Total</div>
-                  </td>
-                  <td>
-                    <span className="font-bold">{formatCurrency(total[1])}</span>
-                  </td>
-                </tr>
+              {totalPurchases && totalPurchases[0] ? (
+                <>
+                  <tr>
+                    <td colSpan={3} className="w-full">
+                      <div className="font-bold text-center">Total Pembelian</div>
+                    </td>
+                    <td className="text-right">
+                      <span className="font-bold text-right">
+                        {formatCurrency(totalPurchases[1])}
+                      </span>
+                    </td>
+                  </tr>
+
+                  {!!totalSales && (
+                    <>
+                      <tr>
+                        <td colSpan={3} className="w-full">
+                          <div className="font-bold text-center">Total Penjualan</div>
+                        </td>
+                        <td className="text-right">
+                          <span className="font-bold text-right">
+                            {formatCurrency(totalSales[1])}
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={3} className="w-full">
+                          <div className="font-bold text-center">Total Pendapatan</div>
+                        </td>
+                        <td className="text-right">
+                          <span className="font-bold text-right">
+                            {formatCurrency(totalSales[1] - totalPurchases[1])}
+                          </span>
+                        </td>
+                      </tr>
+                    </>
+                  )}
+                </>
               ) : (
                 <tr>
                   <td colSpan={4} className="text-center">
