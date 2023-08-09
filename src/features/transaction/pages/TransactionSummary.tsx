@@ -52,7 +52,7 @@ const SalesSection: React.FC = () => {
       </div>
 
       <div className="mt-4">
-        <SalesSummaries {...params} withProduct />
+        <SalesSummaries {...params} />
       </div>
     </section>
   );
@@ -62,7 +62,7 @@ const PurchasesSection: React.FC = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<PurchasesSummaryQuery>({
     outlet: outlet?.id,
-    status: 'approved',
+    status: 'success',
     startDate: new Date(),
     endDate: new Date(),
   });
@@ -86,7 +86,7 @@ const PurchasesSection: React.FC = () => {
       />
 
       <div className="mt-4">
-        <PurchasesSummaries {...params} withProduct />
+        <PurchasesSummaries {...params} />
       </div>
     </section>
   );
