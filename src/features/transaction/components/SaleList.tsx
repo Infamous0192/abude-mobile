@@ -54,8 +54,6 @@ export const SaleList: React.FC<Props> = () => {
 
   const sales = data?.pages.reduce((prev, { result }) => [...prev, ...result], [] as Sale[]);
 
-  console.log(params);
-
   return (
     <>
       <div className="px-5 mb-4 space-y-2">
