@@ -1,6 +1,8 @@
+import { App } from '@capacitor/app';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
 
 import { AuthProvider } from '@/features/auth';
 import { OutletProvider } from '@/features/outlet';
@@ -14,6 +16,21 @@ type Props = {
   children: React.ReactNode;
 };
 
+const BackProvider = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    App.addListener('backButton', ({ canGoBack }) => {
+      if (canGoBack) return navigate(-1);
+
+      App.exitApp();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <>{children}</>;
+};
+
 export const AppProvider: React.FC<Props> = ({ children }) => {
   return (
     <ErrorProvider>
@@ -23,7 +40,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
             <AuthProvider>
               <OutletProvider>
                 <HelmetProvider>
-                  <DateProvider>{children}</DateProvider>
+                  <DateProvider>
+                    <BackProvider>{children}</BackProvider>
+                  </DateProvider>
                 </HelmetProvider>
               </OutletProvider>
             </AuthProvider>
