@@ -3,6 +3,8 @@ import { Product } from '@/features/product';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
+export type TransactionStatus = 'approved' | 'accepted' | 'canceled';
+
 export type SaleItem = {
   id: number;
   price: number;
@@ -14,7 +16,7 @@ export type SaleItem = {
 export type Sale = {
   code: string;
   customer: string;
-  status: 'approved' | 'accepted' | 'canceled';
+  status: TransactionStatus;
   note: string;
   total: number;
   user: User;
@@ -37,7 +39,7 @@ export type SaleRequest = {
 
 export type SaleQuery = {
   outlet?: number;
-  status?: 'approved' | 'accepted' | 'canceled';
+  status?: TransactionStatus[];
   startDate?: Date;
   endDate?: Date;
 } & Pagination;
@@ -56,7 +58,7 @@ export type Purchase = {
   note: string;
   total: number;
   items: PurchaseItem[];
-  status: 'success' | 'canceled';
+  status: TransactionStatus;
   user: User;
   date: Date;
 } & BaseEntity;
@@ -78,6 +80,7 @@ export type PurchaseQuery = {
   outlet?: number;
   startDate?: Date;
   endDate?: Date;
+  status?: TransactionStatus[];
 } & Pagination;
 
 export type SalesSummary = {
@@ -89,7 +92,7 @@ export type SalesSummary = {
 };
 
 export type SalesSummaryQuery = {
-  status?: 'approved' | 'accepted' | 'canceled';
+  status?: TransactionStatus[];
   outlet?: number;
   startDate?: Date;
   endDate?: Date;
@@ -104,7 +107,7 @@ export type PurchasesSummary = {
 };
 
 export type PurchasesSummaryQuery = {
-  status?: 'success' | 'canceled';
+  status?: TransactionStatus[];
   outlet?: number;
   startDate?: Date;
   endDate?: Date;

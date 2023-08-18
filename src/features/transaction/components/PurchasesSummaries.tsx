@@ -8,15 +8,25 @@ import { usePurchasesSummary, useSalesSummary } from '../api';
 import { PurchasesSummary, PurchasesSummaryQuery } from '../types';
 
 type Props = {
+  hideTable?: boolean;
   withProduct?: boolean;
+  hideProfit?: boolean;
 } & PurchasesSummaryQuery;
 
-export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) => {
-  const sale = useSalesSummary({ params: { ...params, status: 'approved' } });
-  const purchase = usePurchasesSummary({ params: { ...params, status: 'success' } });
+export const PurchasesSummaries: React.FC<Props> = ({
+  withProduct,
+  hideTable,
+  hideProfit,
+  ...params
+}) => {
+  const purchase = usePurchasesSummary({ params });
+  const sale = useSalesSummary({
+    params: { ...params },
+    config: { enabled: !hideProfit },
+  });
   const id = useId();
 
-  const isLoading = purchase.isLoading || sale.isLoading;
+  const isLoading = purchase.isLoading;
   const isError = purchase.isError || sale.isError;
 
   const totalSales = sale.data?.reduce(
@@ -80,40 +90,41 @@ export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) 
     <div className="overflow-auto relative shadow-lg shadow-gray-200 bg-white rounded-md">
       <Table>
         <thead>
-          <tr>
-            <th className="whitespace-nowrap">Tanggal</th>
-            <th className="whitespace-nowrap">Barang</th>
-            <th>Jumlah</th>
-            <th>Total</th>
-          </tr>
+          {!hideTable && (
+            <tr>
+              <th className="whitespace-nowrap">Tanggal</th>
+              <th className="whitespace-nowrap">Barang</th>
+              <th>Jumlah</th>
+              <th>Total</th>
+            </tr>
+          )}
         </thead>
         <tbody>
           {isLoading && <LoadingState />}
           {isError && <ErrorState />}
           {!isLoading && !isError && (
             <>
-              {purchase.data.map(({ name, date, total, quantity }, i) => (
-                <tr key={`${id}_${i}`}>
-                  <td>{dayjs(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}</td>
-                  <td>{name}</td>
-                  <td>{quantity}</td>
-                  <td>{formatCurrency(total)}</td>
-                </tr>
-              ))}
+              {!hideTable &&
+                purchase.data.map(({ name, date, total, quantity }, i) => (
+                  <tr key={`${id}_${i}`}>
+                    <td>{dayjs(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}</td>
+                    <td>{name}</td>
+                    <td>{quantity}</td>
+                    <td className="text-right">{formatCurrency(total)}</td>
+                  </tr>
+                ))}
               {productSummary()?.map((item) => (
-                <tr key={item.id} className="bg-gray-50 font-bold">
+                <tr key={item.id} className="font-bold">
                   <td colSpan={2} className=" text-center">
                     {item.name}
                   </td>
                   <td className="">{item.quantity}</td>
-                  <td>
-                    <span className="">{formatCurrency(item.total)}</span>
-                  </td>
+                  <td className="text-right">{formatCurrency(item.total)}</td>
                 </tr>
               ))}
               {totalPurchases && totalPurchases[0] ? (
                 <>
-                  <tr>
+                  <tr className="bg-gray-50">
                     <td colSpan={3} className="w-full">
                       <div className="font-bold text-center">Total Pembelian</div>
                     </td>
@@ -126,7 +137,7 @@ export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) 
 
                   {!!totalSales && (
                     <>
-                      <tr>
+                      <tr className="bg-gray-50">
                         <td colSpan={3} className="w-full">
                           <div className="font-bold text-center">Total Penjualan</div>
                         </td>
@@ -136,9 +147,9 @@ export const PurchasesSummaries: React.FC<Props> = ({ withProduct, ...params }) 
                           </span>
                         </td>
                       </tr>
-                      <tr>
+                      <tr className="bg-gray-50">
                         <td colSpan={3} className="w-full">
-                          <div className="font-bold text-center">Total Pendapatan</div>
+                          <div className="font-bold text-center">Laba Kotor</div>
                         </td>
                         <td className="text-right">
                           <span className="font-bold text-right">

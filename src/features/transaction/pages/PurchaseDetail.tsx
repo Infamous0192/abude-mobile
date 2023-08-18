@@ -106,7 +106,7 @@ export const PurchaseDetail: React.FC = () => {
       <div className="fixed bottom-0 bg-white max-w-md py-4 px-5 flex w-full items-center space-x-4 border-t border-gray-200">
         <Button fullWidth>Cetak</Button>
 
-        {data.status == 'success' && (
+        {data.status == 'accepted' && (
           <Menu position="top-end" width={200}>
             <Menu.Target>
               <ActionIcon variant="outline" color="gray" size="lg">

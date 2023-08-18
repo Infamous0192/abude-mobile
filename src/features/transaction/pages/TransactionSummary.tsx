@@ -6,13 +6,13 @@ import { Navbar } from '@/components/navigation';
 import { useOutletContext } from '@/features/outlet';
 
 import { PurchasesSummaries, SalesSummaries } from '../components';
-import { PurchasesSummaryQuery, SalesSummaryQuery } from '../types';
+import { PurchasesSummaryQuery, SalesSummaryQuery, TransactionStatus } from '../types';
 
 const SalesSection: React.FC = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<SalesSummaryQuery>({
     outlet: outlet?.id,
-    status: 'accepted',
+    status: ['accepted'],
     startDate: new Date(),
     endDate: new Date(),
   });
@@ -42,11 +42,11 @@ const SalesSection: React.FC = () => {
             { value: 'approved', label: 'Direkap' },
             { value: 'canceled', label: 'Batal' },
           ]}
-          value={params.status}
+          value={params.status ? params.status[0] : undefined}
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: v as SalesSummaryQuery['status'] });
+            setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
       </div>
@@ -62,28 +62,44 @@ const PurchasesSection: React.FC = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<PurchasesSummaryQuery>({
     outlet: outlet?.id,
-    status: 'success',
+    status: ['accepted'],
     startDate: new Date(),
     endDate: new Date(),
   });
 
   return (
     <section>
-      <DatePickerInput
-        type="range"
-        valueFormat="D MMMM YYYY"
-        label="Rentang Tanggal"
-        placeholder="Pilih Tanggal"
-        value={[params.startDate ?? null, params.endDate ?? null]}
-        allowSingleDateInRange
-        onChange={([startDate, endDate]) =>
-          setParams({
-            ...params,
-            startDate: startDate ?? undefined,
-            endDate: endDate ?? undefined,
-          })
-        }
-      />
+      <div className="space-y-2 mb-4">
+        <DatePickerInput
+          type="range"
+          valueFormat="D MMMM YYYY"
+          label="Rentang Tanggal"
+          placeholder="Pilih Tanggal"
+          value={[params.startDate ?? null, params.endDate ?? null]}
+          allowSingleDateInRange
+          onChange={([startDate, endDate]) =>
+            setParams({
+              ...params,
+              startDate: startDate ?? undefined,
+              endDate: endDate ?? undefined,
+            })
+          }
+        />
+        <Select
+          label="Status Transaksi"
+          data={[
+            { value: 'accepted', label: 'Diterima' },
+            { value: 'approved', label: 'Direkap' },
+            { value: 'canceled', label: 'Batal' },
+          ]}
+          value={params.status ? params.status[0] : undefined}
+          onChange={(v) => {
+            if (v == null) return;
+
+            setParams({ ...params, status: [v as TransactionStatus] });
+          }}
+        />
+      </div>
 
       <div className="mt-4">
         <PurchasesSummaries {...params} />

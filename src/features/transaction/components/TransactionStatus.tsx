@@ -1,17 +1,23 @@
 import { Badge } from '@mantine/core';
 
-import { Purchase } from '../types';
+import { TransactionStatus } from '../types';
 
 type Props = {
-  status: Purchase['status'];
+  status: TransactionStatus;
 };
 
 export const PurchaseStatus: React.FC<Props> = ({ status }) => {
   switch (status) {
-    case 'success':
+    case 'approved':
+      return (
+        <Badge color="orange" radius="xs">
+          Direkap
+        </Badge>
+      );
+    case 'accepted':
       return (
         <Badge color="green" radius="xs">
-          Berhasil
+          Diterima
         </Badge>
       );
     case 'canceled':

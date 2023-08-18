@@ -9,7 +9,7 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useInfiniteSales } from '../api';
-import { Sale, SaleQuery } from '../types';
+import { Sale, SaleQuery, TransactionStatus } from '../types';
 
 import { SaleStatus } from './SaleStatus';
 
@@ -80,11 +80,11 @@ export const SaleList: React.FC<Props> = () => {
             { value: 'approved', label: 'Direkap' },
             { value: 'canceled', label: 'Batal' },
           ]}
-          value={params.status}
+          value={params.status ? params.status[0] : undefined}
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: v as SaleQuery['status'] });
+            setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
       </div>

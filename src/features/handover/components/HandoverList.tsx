@@ -56,12 +56,12 @@ export const HandoverList: React.FC<HandoverListProps> = (params) => {
 
             <div className="grid grid-cols-2 divide-x divide-gray-300 my-3">
               <div>
-                <div className="text-xs text-gray-600 font-medium">Total Penerimaan</div>
-                <div className="text-lg font-bold">{formatCurrency(handover.cashReceived)}</div>
+                <div className="text-xs text-gray-600 font-medium">Total Setoran</div>
+                <div className="text-sm font-bold">{formatCurrency(handover.cashReceived)}</div>
               </div>
               <div className="pl-4">
                 <div className="text-xs text-gray-600 font-medium">Total Penjualan</div>
-                <div className="text-lg font-bold">{formatCurrency(handover.salesTotal)}</div>
+                <div className="text-sm font-bold">{formatCurrency(handover.salesTotal)}</div>
               </div>
             </div>
 

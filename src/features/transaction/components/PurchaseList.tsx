@@ -1,4 +1,4 @@
-import { Button, Loader } from '@mantine/core';
+import { Button, Loader, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { IconArrowBarToDown, IconCalendar, IconDots } from '@tabler/icons-react';
 import { useState } from 'react';
@@ -9,9 +9,9 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useInfinitePurchases } from '../api';
-import { Purchase, PurchaseQuery } from '../types';
+import { Purchase, PurchaseQuery, TransactionStatus } from '../types';
 
-import { PurchaseStatus } from './PurchaseStatus';
+import { PurchaseStatus } from './TransactionStatus';
 
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
@@ -57,7 +57,11 @@ type Props = {
 
 export const PurchaseList: React.FC<Props> = () => {
   const { outlet } = useOutletContext();
-  const [params, setParams] = useState<PurchaseQuery>({});
+  const [params, setParams] = useState<PurchaseQuery>({
+    startDate: undefined,
+    endDate: undefined,
+    status: [],
+  });
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfinitePurchases({
     params: { ...params, outlet: outlet?.id },
     config: {
@@ -72,7 +76,7 @@ export const PurchaseList: React.FC<Props> = () => {
 
   return (
     <>
-      <div className="px-5 mb-2">
+      <div className="px-5 mb-2 space-y-2">
         <DatePickerInput
           icon={<IconCalendar size={14} />}
           placeholder="Rentang Tanggal"
@@ -87,6 +91,20 @@ export const PurchaseList: React.FC<Props> = () => {
               startDate: v[0] != null ? dayjs(v[0]).startOf('day').toDate() : undefined,
               endDate: v[1] != null ? dayjs(v[1]).endOf('day').toDate() : undefined,
             });
+          }}
+        />
+        <Select
+          placeholder="Status Transaksi"
+          data={[
+            { value: 'accepted', label: 'Diterima' },
+            { value: 'approved', label: 'Direkap' },
+            { value: 'canceled', label: 'Batal' },
+          ]}
+          value={params.status ? params.status[0] : undefined}
+          onChange={(v) => {
+            if (v == null) return;
+
+            setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
       </div>
