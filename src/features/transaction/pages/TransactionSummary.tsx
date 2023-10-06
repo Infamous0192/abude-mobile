@@ -1,9 +1,11 @@
 import { Button, Select, Tabs } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
+import { IconAdjustments, IconCalendar, IconCategory, IconPrinter } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Navbar } from '@/components/navigation';
-import { useOutletContext } from '@/features/outlet';
+import { Authorization } from '@/features/auth';
+import { OutletSelect, useOutletContext } from '@/features/outlet';
 
 import { PurchasesSummaries, SalesSummaries } from '../components';
 import { PurchasesSummaryQuery, SalesSummaryQuery, TransactionStatus } from '../types';
@@ -19,12 +21,27 @@ const SalesSection: React.FC = () => {
 
   return (
     <section>
-      <div className="space-y-2 mb-4">
+      <div className="space-y-2 mb-4 mt-2">
+        <Authorization role={['owner', 'superadmin']}>
+          <OutletSelect
+            placeholder="Pilih Outlet"
+            icon={<IconCategory size={14} />}
+            value={params.outlet?.toString()}
+            onChange={(v) => {
+              if (v == null) return;
+
+              setParams({
+                ...params,
+                outlet: v,
+              });
+            }}
+          />
+        </Authorization>
         <DatePickerInput
           type="range"
           valueFormat="D MMMM YYYY"
-          label="Rentang Tanggal"
-          placeholder="Pilih Tanggal"
+          placeholder="Rentang Tanggal"
+          icon={<IconCalendar size={14} />}
           value={[params.startDate ?? null, params.endDate ?? null]}
           allowSingleDateInRange
           onChange={([startDate, endDate]) =>
@@ -36,7 +53,7 @@ const SalesSection: React.FC = () => {
           }
         />
         <Select
-          label="Status Transaksi"
+          icon={<IconAdjustments size={14} />}
           data={[
             { value: 'accepted', label: 'Diterima' },
             { value: 'approved', label: 'Direkap' },
@@ -49,6 +66,10 @@ const SalesSection: React.FC = () => {
             setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
+
+        <div className="flex items-center justify-end">
+          <Button leftIcon={<IconPrinter size={16} />}>PDF</Button>
+        </div>
       </div>
 
       <div className="mt-4">
@@ -69,12 +90,27 @@ const PurchasesSection: React.FC = () => {
 
   return (
     <section>
-      <div className="space-y-2 mb-4">
+      <div className="space-y-2 mb-4 mt-2">
+        <Authorization role={['owner', 'superadmin']}>
+          <OutletSelect
+            placeholder="Pilih Outlet"
+            icon={<IconCategory size={14} />}
+            value={params.outlet?.toString()}
+            onChange={(v) => {
+              if (v == null) return;
+
+              setParams({
+                ...params,
+                outlet: v,
+              });
+            }}
+          />
+        </Authorization>
         <DatePickerInput
           type="range"
           valueFormat="D MMMM YYYY"
-          label="Rentang Tanggal"
-          placeholder="Pilih Tanggal"
+          placeholder="Rentang Tanggal"
+          icon={<IconCalendar size={14} />}
           value={[params.startDate ?? null, params.endDate ?? null]}
           allowSingleDateInRange
           onChange={([startDate, endDate]) =>
@@ -86,7 +122,7 @@ const PurchasesSection: React.FC = () => {
           }
         />
         <Select
-          label="Status Transaksi"
+          icon={<IconAdjustments size={14} />}
           data={[
             { value: 'accepted', label: 'Diterima' },
             { value: 'approved', label: 'Direkap' },
@@ -99,6 +135,9 @@ const PurchasesSection: React.FC = () => {
             setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
+        <div className="flex items-center justify-end">
+          <Button leftIcon={<IconPrinter size={16} />}>PDF</Button>
+        </div>
       </div>
 
       <div className="mt-4">

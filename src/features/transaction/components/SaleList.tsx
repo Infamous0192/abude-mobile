@@ -1,10 +1,11 @@
 import { Button, Loader, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { IconArrowBarUp, IconCalendar } from '@tabler/icons-react';
+import { IconArrowBarUp, IconCalendar, IconCategory } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useOutletContext } from '@/features/outlet';
+import { Authorization } from '@/features/auth';
+import { OutletSelect, useOutletContext } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
@@ -44,9 +45,9 @@ type Props = {
 
 export const SaleList: React.FC<Props> = () => {
   const { outlet } = useOutletContext();
-  const [params, setParams] = useState<SaleQuery>({});
+  const [params, setParams] = useState<SaleQuery>({ outlet: outlet?.id });
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteSales({
-    params: { ...params, outlet: outlet?.id },
+    params,
     config: {
       enabled: (!params.startDate && !params.endDate) || (!!params.startDate && !!params.endDate),
     },
@@ -57,6 +58,21 @@ export const SaleList: React.FC<Props> = () => {
   return (
     <>
       <div className="px-5 mb-4 space-y-2">
+        <Authorization role={['owner', 'superadmin']}>
+          <OutletSelect
+            placeholder="Pilih Outlet"
+            icon={<IconCategory size={14} />}
+            value={params.outlet?.toString()}
+            onChange={(v) => {
+              if (v == null) return;
+
+              setParams({
+                ...params,
+                outlet: v,
+              });
+            }}
+          />
+        </Authorization>
         <DatePickerInput
           icon={<IconCalendar size={14} />}
           placeholder="Rentang Tanggal"

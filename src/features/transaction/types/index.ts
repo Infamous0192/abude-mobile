@@ -38,7 +38,7 @@ export type SaleRequest = {
 };
 
 export type SaleQuery = {
-  outlet?: number;
+  outlet?: number | string;
   status?: TransactionStatus[];
   startDate?: Date;
   endDate?: Date;
@@ -77,7 +77,7 @@ export type PurchaseRequest = {
 };
 
 export type PurchaseQuery = {
-  outlet?: number;
+  outlet?: number | string;
   startDate?: Date;
   endDate?: Date;
   status?: TransactionStatus[];
@@ -93,7 +93,7 @@ export type SalesSummary = {
 
 export type SalesSummaryQuery = {
   status?: TransactionStatus[];
-  outlet?: number;
+  outlet?: number | string;
   startDate?: Date;
   endDate?: Date;
 };
@@ -108,7 +108,7 @@ export type PurchasesSummary = {
 
 export type PurchasesSummaryQuery = {
   status?: TransactionStatus[];
-  outlet?: number;
+  outlet?: number | string;
   startDate?: Date;
   endDate?: Date;
 };

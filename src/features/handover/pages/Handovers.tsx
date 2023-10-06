@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Navbar } from '@/components/navigation';
+import { Authorization } from '@/features/auth';
 import { ShiftSelect } from '@/features/employee';
-import { useOutletContext } from '@/features/outlet';
+import { OutletSelect, useOutletContext } from '@/features/outlet';
 
 import { HandoverList, HandoverListProps } from '../components';
 
@@ -14,7 +15,7 @@ export const Handovers: React.FC = () => {
   const [params, setParams] = useState<HandoverListProps>({ outlet: outlet?.id });
 
   function handleClear() {
-    setParams({ outlet: outlet?.id });
+    setParams((prev) => ({ outlet: prev.outlet }));
   }
 
   return (
@@ -23,6 +24,15 @@ export const Handovers: React.FC = () => {
 
       <section className="px-5">
         <div className="space-y-2">
+          <Authorization role={['owner', 'superadmin']}>
+            <OutletSelect
+              label="Outlet"
+              placeholder="Pilih Outlet"
+              value={params.outlet?.toString()}
+              onChange={(v) => setParams({ ...params, outlet: parseInt(v || '') })}
+            />
+          </Authorization>
+
           <ShiftSelect
             label="Shift"
             placeholder="Pilih Shift"
