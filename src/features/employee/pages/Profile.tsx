@@ -4,7 +4,7 @@ import { IconChevronRight, IconLogout, IconSettings, IconUser } from '@tabler/ic
 import { useAuth } from '@/features/auth';
 
 export const Profile: React.FC = () => {
-  const { creds, logout } = useAuth();
+  const { creds, getRoleText, logout } = useAuth();
 
   return (
     <main className="py-12">
@@ -13,7 +13,7 @@ export const Profile: React.FC = () => {
           <IconUser className="w-16 h-16" />
         </div>
         <div className="font-bold text-lg">{creds?.name}</div>
-        <div className="text-sm text-gray-600">Admin Outlet</div>
+        <div className="text-sm text-gray-600">{getRoleText()}</div>
       </section>
 
       <section className="w-full mt-8 px-5">
