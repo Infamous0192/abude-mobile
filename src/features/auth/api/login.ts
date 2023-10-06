@@ -37,9 +37,7 @@ type UseLoginOption = {
 
 export function useLogin({ config }: UseLoginOption = {}) {
   return useMutation(login, {
-    onSuccess: ({ creds, token }) => {
-      if (creds.role != 'employee') throw { message: 'Hanya pegawai yang bisa login' };
-
+    onSuccess: ({ token }) => {
       storage.setToken(token);
       queryClient.invalidateQueries([CREDS_KEY]);
     },

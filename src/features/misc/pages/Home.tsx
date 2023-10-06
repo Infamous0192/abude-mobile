@@ -9,13 +9,26 @@ import { RecentSales } from '@/features/transaction';
 export const Home: React.FC = () => {
   const { creds } = useAuth();
 
+  function roleText() {
+    switch (creds?.role) {
+      case 'employee':
+        return 'Admin Outlet';
+      case 'owner':
+        return 'Owner';
+      case 'superadmin':
+        return 'Superadmin';
+      default:
+        return 'Pengguna';
+    }
+  }
+
   return (
     <main>
       <section className="bg-blue-800 w-full rounded-b-xl px-5 pt-8 pb-20 relative">
         <OutletPick />
 
         <div className="text-white font-black text-xl">{creds?.name}</div>
-        <div className="text-sm font-semibold text-white">Admin Outlet</div>
+        <div className="text-sm font-semibold text-white">{roleText()}</div>
 
         <div className="absolute right-5 top-5">
           <img src="/images/abude-logo.png" alt="" className="w-16" />

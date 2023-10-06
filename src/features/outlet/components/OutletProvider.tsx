@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { LoadingScreen } from '@/components/elements';
 import { useAuth } from '@/features/auth';
-import { useEmployeeOutlet } from '@/features/employee';
 import storage from '@/utils/storage';
 
+import { useOutlets } from '../api';
 import { OutletContext } from '../contexts';
 import { Outlet } from '../types';
 
@@ -15,7 +15,7 @@ type Props = {
 export const OutletProvider: React.FC<Props> = ({ children }) => {
   const [selected, setSelected] = useState<Outlet | null>(storage.getOutlet());
   const { creds } = useAuth();
-  const { data, isLoading } = useEmployeeOutlet({ config: { enabled: !!creds } });
+  const { data, isLoading } = useOutlets({ config: { enabled: !!creds } });
 
   function setOutlet(id: number) {
     if (isLoading) return;
