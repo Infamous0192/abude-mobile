@@ -66,10 +66,6 @@ const SalesSection: React.FC = () => {
             setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
-
-        <div className="flex items-center justify-end">
-          <Button leftIcon={<IconPrinter size={16} />}>PDF</Button>
-        </div>
       </div>
 
       <div className="mt-4">
