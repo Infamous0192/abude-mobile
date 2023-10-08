@@ -22,7 +22,7 @@ export const Outlets: React.FC = () => {
   if (outlet) return <Navigate to="/" replace />;
 
   return (
-    <main>
+    <main className="pb-24">
       <header className="px-5 py-5 flex items-center justify-center">
         <h1 className="font-bold text-lg">Pilih Outlet</h1>
       </header>

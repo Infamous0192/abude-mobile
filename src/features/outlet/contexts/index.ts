@@ -4,7 +4,7 @@ import { Outlet } from '../types';
 
 export type OutletContextValue = {
   outlet: Outlet | null;
-  setOutlet: (id: number) => void;
+  setOutlet: (id: number | null) => void;
   outlets: Outlet[];
 };
 

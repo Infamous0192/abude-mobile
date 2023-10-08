@@ -18,17 +18,24 @@ export const OutletPick: React.FC = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
-        {outlets.map(({ id, name }) => (
-          <Menu.Item
-            key={id}
-            color={outlet?.id == id ? 'blue' : ''}
-            onClick={() => {
-              setOutlet(id);
-            }}
-          >
-            {name}
-          </Menu.Item>
-        ))}
+        {outlet && <Menu.Item color="blue">{outlet.name}</Menu.Item>}
+        {outlets
+          .filter(({ id }) => id != outlet?.id)
+          .slice(0, 2)
+          .map(({ id, name }) => (
+            <Menu.Item
+              key={id}
+              onClick={() => {
+                setOutlet(id);
+              }}
+            >
+              {name}
+            </Menu.Item>
+          ))}
+
+        <Menu.Item color="gray" onClick={() => setOutlet(null)}>
+          Lihat Semua
+        </Menu.Item>
 
         <Menu.Divider />
         <Menu.Item color="red" onClick={() => logout()} icon={<IconLogout size={14} />}>

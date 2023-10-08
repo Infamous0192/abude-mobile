@@ -15,9 +15,11 @@ type Props = {
 export const OutletProvider: React.FC<Props> = ({ children }) => {
   const [selected, setSelected] = useState<Outlet | null>(storage.getOutlet());
   const { creds } = useAuth();
-  const { data, isLoading } = useOutlets({ config: { enabled: !!creds } });
+  const { data, isLoading } = useOutlets({ params: { limit: -1 }, config: { enabled: !!creds } });
 
-  function setOutlet(id: number) {
+  function setOutlet(id: number | null) {
+    if (id == null) return setSelected(null);
+
     if (isLoading) return;
 
     const filteredOutlet = data?.result.filter((outlet) => outlet.id == id);
