@@ -32,10 +32,11 @@ export const OutletPick: React.FC = () => {
               {name}
             </Menu.Item>
           ))}
-
-        <Menu.Item color="gray" onClick={() => setOutlet(null)}>
-          Lihat Semua
-        </Menu.Item>
+        {outlets.length > 3 && (
+          <Menu.Item color="gray" onClick={() => setOutlet(null)}>
+            Lihat Semua
+          </Menu.Item>
+        )}
 
         <Menu.Divider />
         <Menu.Item color="red" onClick={() => logout()} icon={<IconLogout size={14} />}>
