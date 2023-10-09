@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Navbar } from '@/components/navigation';
 import { Authorization } from '@/features/auth';
 import { OutletSelect, useOutletContext } from '@/features/outlet';
+import { baseURL } from '@/lib/axios';
 
 import { PurchasesSummaries, SalesSummaries } from '../components';
 import { PurchasesSummaryQuery, SalesSummaryQuery, TransactionStatus } from '../types';
@@ -66,6 +67,21 @@ const SalesSection: React.FC = () => {
             setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
+
+        <div className="flex items-center justify-end">
+          <Button
+            component="a"
+            href={`${baseURL}/transaction/print?outlet=${
+              outlet?.id
+            }&startDate=${params.startDate?.toJSON()}&endDate=${params.endDate?.toJSON()}&status=${
+              params.status
+            }`}
+            target="_blank"
+            leftIcon={<IconPrinter size={16} />}
+          >
+            PDF
+          </Button>
+        </div>
       </div>
 
       <div className="mt-4">
@@ -132,7 +148,18 @@ const PurchasesSection: React.FC = () => {
           }}
         />
         <div className="flex items-center justify-end">
-          <Button leftIcon={<IconPrinter size={16} />}>PDF</Button>
+          <Button
+            component="a"
+            href={`${baseURL}/transaction/print?outlet=${
+              outlet?.id
+            }&startDate=${params.startDate?.toJSON()}&endDate=${params.endDate?.toJSON()}&status=${
+              params.status
+            }`}
+            target="_blank"
+            leftIcon={<IconPrinter size={16} />}
+          >
+            PDF
+          </Button>
         </div>
       </div>
 

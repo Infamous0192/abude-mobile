@@ -2,10 +2,10 @@ import Axios from 'axios';
 
 import storage from '@/utils/storage';
 
-const baseURL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001/api';
+export const baseURL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001';
 
 export const axios = Axios.create({
-  baseURL,
+  baseURL: `${baseURL}/api`,
 });
 
 axios.interceptors.request.use((config) => {
