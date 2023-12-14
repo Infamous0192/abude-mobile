@@ -64,7 +64,7 @@ export const Turnovers: React.FC = () => {
       </section>
 
       <section className="px-5">
-        <TurnoverList outlet={outlet?.id} limit={1} />
+        <TurnoverList outlet={outlet?.id} {...params} />
       </section>
 
       <footer className="max-w-md w-full fixed bottom-0 left-0 bg-white p-4 shadow-lg shadow-gray-200 border-t border-gray-100">
