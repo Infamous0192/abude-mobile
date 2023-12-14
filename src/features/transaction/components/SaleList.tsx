@@ -47,7 +47,11 @@ export const SaleList: React.FC<Props> = () => {
   const { outlet } = useOutletContext();
   const [params, setParams] = useState<SaleQuery>({ outlet: outlet?.id });
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteSales({
-    params,
+    params: {
+      ...params,
+      startDate: params.startDate ? dayjs(params.startDate).utc(true).toDate() : undefined,
+      endDate: params.endDate ? dayjs(params.endDate).utc(true).toDate() : undefined,
+    },
     config: {
       enabled: (!params.startDate && !params.endDate) || (!!params.startDate && !!params.endDate),
     },

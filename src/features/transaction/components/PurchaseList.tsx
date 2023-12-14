@@ -65,7 +65,11 @@ export const PurchaseList: React.FC<Props> = () => {
     status: [],
   });
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfinitePurchases({
-    params,
+    params: {
+      ...params,
+      startDate: params.startDate ? dayjs(params.startDate).utc(true).toDate() : undefined,
+      endDate: params.endDate ? dayjs(params.endDate).utc(true).toDate() : undefined,
+    },
     config: {
       enabled: (!params.startDate && !params.endDate) || (!!params.startDate && !!params.endDate),
     },

@@ -14,7 +14,11 @@ export type HandoverListProps = Omit<HandoverQuery, 'page' | 'limit'>;
 export const HandoverList: React.FC<HandoverListProps> = (params) => {
   const [selected, setSelected] = useState<Handover | null>(null);
   const { data, isLoading, isFetching, hasNextPage, fetchNextPage } = useInfiniteHandovers({
-    params,
+    params: {
+      ...params,
+      startDate: params.startDate ? dayjs(params.startDate).utc(true).toDate() : undefined,
+      endDate: params.endDate ? dayjs(params.endDate).utc(true).toDate() : undefined,
+    },
   });
 
   const handovers = data?.pages.reduce(
