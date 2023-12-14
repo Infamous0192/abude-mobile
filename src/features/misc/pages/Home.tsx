@@ -48,11 +48,6 @@ export const Home: React.FC = () => {
       <section className="px-5 my-8">
         <MenuList
           navigations={[
-            // {
-            //   title: 'Data Master',
-            //   href: '/data-master',
-            //   icon: '/images/cog.svg',
-            // },
             {
               title: 'Laporan Serah Terima',
               href: '/handover',
@@ -67,6 +62,11 @@ export const Home: React.FC = () => {
               title: 'Kehadiran',
               href: '/development',
               icon: '/images/attendance.svg',
+            },
+            {
+              title: 'Bukti Serah Terima',
+              href: '/turnover',
+              icon: '/images/briefcase.svg',
             },
           ]}
         />

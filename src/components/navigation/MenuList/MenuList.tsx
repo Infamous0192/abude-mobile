@@ -26,7 +26,7 @@ export const MenuList: React.FC<Props> = ({ navigations }) => {
   const id = useId();
 
   return (
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid grid-cols-4 gap-4">
       {navigations.map((nav, i) => (
         <MenuItem key={`${id}_${i}`} {...nav} />
       ))}
