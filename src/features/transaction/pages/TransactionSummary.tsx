@@ -7,6 +7,8 @@ import { Navbar } from '@/components/navigation';
 import { Authorization } from '@/features/auth';
 import { OutletSelect, useOutletContext } from '@/features/outlet';
 import { baseURL } from '@/lib/axios';
+import { dayjs } from '@/lib/dayjs';
+import storage from '@/utils/storage';
 
 import { PurchasesSummaries, SalesSummaries } from '../components';
 import { PurchasesSummaryQuery, SalesSummaryQuery, TransactionStatus } from '../types';
@@ -19,6 +21,9 @@ const SalesSection: React.FC = () => {
     startDate: new Date(),
     endDate: new Date(),
   });
+
+  const startDate = dayjs(params.startDate).utc(true).startOf('d').toDate().toJSON();
+  const endDate = dayjs(params.endDate).utc(true).endOf('d').toDate().toJSON();
 
   return (
     <section>
@@ -68,18 +73,30 @@ const SalesSection: React.FC = () => {
           }}
         />
 
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end space-x-2">
           <Button
             component="a"
             href={`${baseURL}/transaction/print?outlet=${
               outlet?.id
-            }&startDate=${params.startDate?.toJSON()}&endDate=${params.endDate?.toJSON()}&status=${
+            }&startDate=${startDate}&endDate=${endDate}&status=${
               params.status
-            }`}
+            }&token=${storage.getToken()}`}
             target="_blank"
             leftIcon={<IconPrinter size={16} />}
+            size="xs"
           >
-            PDF
+            Cetak per Outlet
+          </Button>
+          <Button
+            component="a"
+            href={`${baseURL}/transaction/print/all?startDate=${startDate}&endDate=${endDate}&status=${
+              params.status
+            }&token=${storage.getToken()}`}
+            target="_blank"
+            leftIcon={<IconPrinter size={16} />}
+            size="xs"
+          >
+            Cetak Semua
           </Button>
         </div>
       </div>
@@ -100,6 +117,9 @@ const PurchasesSection: React.FC = () => {
     endDate: new Date(),
   });
 
+  const startDate = dayjs(params.startDate).utc(true).startOf('d').toDate().toJSON();
+  const endDate = dayjs(params.endDate).utc(true).endOf('d').toDate().toJSON();
+
   return (
     <section>
       <div className="space-y-2 mb-4 mt-2">
@@ -147,18 +167,30 @@ const PurchasesSection: React.FC = () => {
             setParams({ ...params, status: [v as TransactionStatus] });
           }}
         />
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end space-x-2">
           <Button
             component="a"
             href={`${baseURL}/transaction/print?outlet=${
               outlet?.id
-            }&startDate=${params.startDate?.toJSON()}&endDate=${params.endDate?.toJSON()}&status=${
+            }&startDate=${startDate}&endDate=${endDate}&status=${
               params.status
-            }`}
+            }&token=${storage.getToken()}`}
             target="_blank"
             leftIcon={<IconPrinter size={16} />}
+            size="xs"
           >
-            PDF
+            Cetak per Outlet
+          </Button>
+          <Button
+            component="a"
+            href={`${baseURL}/transaction/print/all?startDate=${startDate}&endDate=${endDate}&status=${
+              params.status
+            }&token=${storage.getToken()}`}
+            target="_blank"
+            leftIcon={<IconPrinter size={16} />}
+            size="xs"
+          >
+            Cetak Semua
           </Button>
         </div>
       </div>
