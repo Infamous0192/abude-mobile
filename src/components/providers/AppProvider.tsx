@@ -8,7 +8,6 @@ import { AuthProvider } from '@/features/auth';
 import { OutletProvider } from '@/features/outlet';
 import { queryClient } from '@/lib/react-query';
 
-import { DateProvider } from './DateProvider';
 import { ErrorProvider } from './ErrorProvider';
 import { StyleProvider } from './StyleProvider';
 
@@ -40,9 +39,7 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
             <AuthProvider>
               <OutletProvider>
                 <HelmetProvider>
-                  <DateProvider>
-                    <BackProvider>{children}</BackProvider>
-                  </DateProvider>
+                  <BackProvider>{children}</BackProvider>
                 </HelmetProvider>
               </OutletProvider>
             </AuthProvider>

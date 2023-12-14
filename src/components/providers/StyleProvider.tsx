@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import '@/styles/globals.css';
+import { DateProvider } from './DateProvider';
 
 const theme: MantineThemeOverride = {
   fontFamily: 'Nunito, sans-serif',
@@ -27,20 +28,22 @@ export const StyleProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-      <Notifications autoClose={5000} />
-      <ModalsProvider
-        modalProps={{
-          styles: {
-            title: {
-              fontWeight: 700,
-              fontSize: 16,
+      <DateProvider>
+        <Notifications autoClose={5000} />
+        <ModalsProvider
+          modalProps={{
+            styles: {
+              title: {
+                fontWeight: 700,
+                fontSize: 16,
+              },
             },
-          },
-        }}
-        labels={{ confirm: 'Konfirmasi', cancel: 'Batal' }}
-      >
-        {children}
-      </ModalsProvider>
+          }}
+          labels={{ confirm: 'Konfirmasi', cancel: 'Batal' }}
+        >
+          {children}
+        </ModalsProvider>
+      </DateProvider>
     </MantineProvider>
   );
 };
