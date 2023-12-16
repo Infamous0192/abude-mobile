@@ -1,7 +1,7 @@
-import { ActionIcon, Badge, Button, Menu } from '@mantine/core';
+import { ActionIcon, Anchor, Button, Table } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconDotsVertical } from '@tabler/icons-react';
+import { IconEdit, IconTrash } from '@tabler/icons-react';
 
 import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
@@ -79,48 +79,40 @@ export const TurnoverList: React.FC<TurnoverQuery> = (params) => {
 
   return (
     <>
-      <div className="space-y-4">
-        {turnovers?.map((turnover) => (
-          <div
-            key={turnover.id}
-            className="bg-white w-full rounded-md shadow-md shadow-gray-200 border border-gray-200 p-3"
-          >
-            <div className="w-full flex items-center justify-between">
-              <Badge color="gray">{dayjs(turnover.date, 'YYYY-MM-DD').format('D MMMM YYYY')}</Badge>
-
-              <Menu position="bottom-end" withArrow width={128}>
-                <Menu.Target>
-                  <ActionIcon size="xs" radius="lg">
-                    <IconDotsVertical />
+      <div className="overflow-scroll">
+        <Table fontSize="xs">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Pemasukan</th>
+              <th>Pengeluaran</th>
+              <th>Link</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {turnovers?.map((turnover) => (
+              <tr key={turnover.id}>
+                <td>{dayjs(turnover.date).format('DD/MM/YYYY')}</td>
+                <td className="text-right">{formatCurrency(turnover.income ?? 0)}</td>
+                <td className="text-right">{formatCurrency(turnover.expense ?? 0)}</td>
+                <td>
+                  <Anchor href={turnover.evidence} target="_blank">
+                    Lihat
+                  </Anchor>
+                </td>
+                <td className="flex items-center space-x-2">
+                  <ActionIcon size="xs" radius="lg" color="blue" onClick={handleUpdate(turnover)}>
+                    <IconEdit />
                   </ActionIcon>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item onClick={handleUpdate(turnover)}>Edit</Menu.Item>
-                  <Menu.Item color="red" onClick={handleDelete(turnover)}>
-                    Hapus
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-            </div>
-
-            <div className="grid grid-cols-2 divide-x divide-gray-300 my-3">
-              <div>
-                <div className="text-xs text-gray-600 font-medium">Total Pemasukan</div>
-                <div className="text-sm font-bold">{formatCurrency(turnover.income ?? 0)}</div>
-              </div>
-              <div className="pl-4">
-                <div className="text-xs text-gray-600 font-medium">Total Pengeluaran</div>
-                <div className="text-sm font-bold">{formatCurrency(turnover.expense ?? 0)}</div>
-              </div>
-            </div>
-
-            <div>
-              <Button component="a" target="_blank" href={turnover.evidence} size="xs" fullWidth>
-                Lihat Bukti
-              </Button>
-            </div>
-          </div>
-        ))}
+                  <ActionIcon size="xs" radius="lg" color="red" onClick={handleDelete(turnover)}>
+                    <IconTrash />
+                  </ActionIcon>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
 
       <div className="mt-4">

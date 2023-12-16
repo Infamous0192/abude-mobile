@@ -5,6 +5,7 @@ import { IconCalendar, IconCategory, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Navbar } from '@/components/navigation';
+import { Authorization } from '@/features/auth';
 import { OutletSelect, useOutletContext } from '@/features/outlet';
 
 import { TurnoverForm, TurnoverList } from '../components';
@@ -33,19 +34,21 @@ export const Turnovers: React.FC = () => {
       <Navbar title="Bukti Serah Terima" withBorder to="/" />
 
       <section className="space-y-2 mb-4 mt-2 px-5">
-        <OutletSelect
-          placeholder="Pilih Outlet"
-          icon={<IconCategory size={14} />}
-          value={params.outlet?.toString()}
-          onChange={(v) => {
-            if (v == null) return;
+        <Authorization role={['superadmin', 'owner']}>
+          <OutletSelect
+            placeholder="Pilih Outlet"
+            icon={<IconCategory size={14} />}
+            value={params.outlet?.toString()}
+            onChange={(v) => {
+              if (v == null) return;
 
-            setParams({
-              ...params,
-              outlet: v,
-            });
-          }}
-        />
+              setParams({
+                ...params,
+                outlet: v,
+              });
+            }}
+          />
+        </Authorization>
         <DatePickerInput
           type="range"
           valueFormat="D MMMM YYYY"
@@ -63,11 +66,11 @@ export const Turnovers: React.FC = () => {
         />
       </section>
 
-      <section className="px-5">
+      <section className="px-4">
         <TurnoverList outlet={outlet?.id} {...params} />
       </section>
 
-      <footer className="max-w-md w-full fixed bottom-0 left-0 bg-white p-4 shadow-lg shadow-gray-200 border-t border-gray-100">
+      <footer className="max-w-md w-full fixed bottom-0 bg-white p-4 shadow-lg shadow-gray-200 border-t border-gray-100">
         <Button onClick={handleAdd} leftIcon={<IconPlus size={16} />} fullWidth size="xs">
           Tambah
         </Button>
