@@ -22,8 +22,8 @@ const SalesSection: React.FC = () => {
     endDate: new Date(),
   });
 
-  const startDate = dayjs(params.startDate).utc(true).startOf('d').toDate().toJSON();
-  const endDate = dayjs(params.endDate).utc(true).endOf('d').toDate().toJSON();
+  const startDate = dayjs(params.startDate).startOf('d').toDate().toJSON();
+  const endDate = dayjs(params.endDate).endOf('d').toDate().toJSON();
 
   return (
     <section>
@@ -76,28 +76,28 @@ const SalesSection: React.FC = () => {
         <div className="flex items-center justify-end space-x-2">
           <Button
             component="a"
-            href={`${baseURL}/transaction/print?outlet=${
-              outlet?.id
-            }&startDate=${startDate}&endDate=${endDate}&status=${
-              params.status
-            }&token=${storage.getToken()}`}
+            href={`${baseURL}/outlet/${
+              params.outlet
+            }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
             target="_blank"
             leftIcon={<IconPrinter size={16} />}
             size="xs"
           >
             Cetak per Outlet
           </Button>
-          <Button
-            component="a"
-            href={`${baseURL}/transaction/print/all?startDate=${startDate}&endDate=${endDate}&status=${
-              params.status
-            }&token=${storage.getToken()}`}
-            target="_blank"
-            leftIcon={<IconPrinter size={16} />}
-            size="xs"
-          >
-            Cetak Semua
-          </Button>
+          <Authorization role={['superadmin', 'owner']}>
+            <Button
+              component="a"
+              href={`${baseURL}/company/${
+                outlet?.company.id
+              }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
+              target="_blank"
+              leftIcon={<IconPrinter size={16} />}
+              size="xs"
+            >
+              Cetak Semua
+            </Button>
+          </Authorization>
         </div>
       </div>
 
@@ -117,8 +117,8 @@ const PurchasesSection: React.FC = () => {
     endDate: new Date(),
   });
 
-  const startDate = dayjs(params.startDate).utc(true).startOf('d').toDate().toJSON();
-  const endDate = dayjs(params.endDate).utc(true).endOf('d').toDate().toJSON();
+  const startDate = dayjs(params.startDate).startOf('d').toDate().toJSON();
+  const endDate = dayjs(params.endDate).endOf('d').toDate().toJSON();
 
   return (
     <section>
@@ -170,28 +170,28 @@ const PurchasesSection: React.FC = () => {
         <div className="flex items-center justify-end space-x-2">
           <Button
             component="a"
-            href={`${baseURL}/transaction/print?outlet=${
-              outlet?.id
-            }&startDate=${startDate}&endDate=${endDate}&status=${
-              params.status
-            }&token=${storage.getToken()}`}
+            href={`${baseURL}/outlet/${
+              params.outlet
+            }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
             target="_blank"
             leftIcon={<IconPrinter size={16} />}
             size="xs"
           >
             Cetak per Outlet
           </Button>
-          <Button
-            component="a"
-            href={`${baseURL}/transaction/print/all?startDate=${startDate}&endDate=${endDate}&status=${
-              params.status
-            }&token=${storage.getToken()}`}
-            target="_blank"
-            leftIcon={<IconPrinter size={16} />}
-            size="xs"
-          >
-            Cetak Semua
-          </Button>
+          <Authorization role={['superadmin', 'owner']}>
+            <Button
+              component="a"
+              href={`${baseURL}/company/${
+                outlet?.company.id
+              }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
+              target="_blank"
+              leftIcon={<IconPrinter size={16} />}
+              size="xs"
+            >
+              Cetak Semua
+            </Button>
+          </Authorization>
         </div>
       </div>
 
