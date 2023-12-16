@@ -5,7 +5,7 @@ import { IconCalendar, IconCategory, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Navbar } from '@/components/navigation';
-import { Authorization } from '@/features/auth';
+import { Authorization, useAuth } from '@/features/auth';
 import { OutletSelect, useOutletContext } from '@/features/outlet';
 
 import { TurnoverForm, TurnoverList } from '../components';
@@ -13,6 +13,7 @@ import { TurnoverQuery } from '../types';
 
 export const Turnovers: React.FC = () => {
   const { outlet } = useOutletContext();
+  const { creds } = useAuth();
   const [params, setParams] = useState<TurnoverQuery>({
     outlet: outlet?.id,
     startDate: undefined,
@@ -24,7 +25,7 @@ export const Turnovers: React.FC = () => {
 
     modals.open({
       title: 'Tambah Bukti',
-      children: <TurnoverForm outlet={outlet.id} />,
+      children: <TurnoverForm outlet={creds?.role == 'employee' ? outlet?.id : undefined} />,
       fullScreen: true,
     });
   }

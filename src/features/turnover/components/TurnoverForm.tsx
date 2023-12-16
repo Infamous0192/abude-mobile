@@ -5,6 +5,7 @@ import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
 
+import { OutletSelect } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 
 import { useCreateTurnover, useUpdateTurnover } from '../api';
@@ -12,7 +13,7 @@ import { Turnover, TurnoverRequest } from '../types';
 
 type Props = {
   turnover?: Turnover;
-  outlet: number;
+  outlet?: number;
   onSuccess?: VoidFunction;
 };
 
@@ -32,7 +33,11 @@ export const TurnoverForm: React.FC<Props> = ({ turnover, outlet, onSuccess }) =
       await updateMutation.mutateAsync(
         {
           id: turnover.id,
-          data: { ...values, date: dayjs(values.date).utc(true).startOf('D').toDate() },
+          data: {
+            ...values,
+            outlet: values.outlet ? parseInt(values.outlet.toString()) : undefined,
+            date: dayjs(values.date).utc(true).startOf('D').toDate(),
+          },
         },
         {
           onError({ response }) {
@@ -53,7 +58,13 @@ export const TurnoverForm: React.FC<Props> = ({ turnover, outlet, onSuccess }) =
       );
     } else {
       await createMutation.mutateAsync(
-        { data: { ...values, date: dayjs(values.date).utc(true).startOf('D').toDate() } },
+        {
+          data: {
+            ...values,
+            outlet: values.outlet ? parseInt(values.outlet.toString()) : undefined,
+            date: dayjs(values.date).utc(true).startOf('D').toDate(),
+          },
+        },
         {
           onError({ response }) {
             form.setErrors((response?.data as any).errors);
@@ -77,6 +88,13 @@ export const TurnoverForm: React.FC<Props> = ({ turnover, outlet, onSuccess }) =
   return (
     <form className="relative" onSubmit={handleSubmit}>
       <div className="space-y-2">
+        {!outlet && (
+          <OutletSelect
+            {...form.getInputProps('outlet')}
+            label="Outlet"
+            placeholder="Pilih Outlet"
+          />
+        )}
         <DateInput
           {...form.getInputProps('date')}
           label="Tanggal"
