@@ -49,6 +49,11 @@ export const Home: React.FC = () => {
         <MenuList
           navigations={[
             {
+              title: 'Bukti Serah Terima',
+              href: '/turnover',
+              icon: '/images/briefcase.svg',
+            },
+            {
               title: 'Laporan Serah Terima',
               href: '/handover',
               icon: '/images/postor.svg',
@@ -62,11 +67,6 @@ export const Home: React.FC = () => {
               title: 'Kehadiran',
               href: '/development',
               icon: '/images/attendance.svg',
-            },
-            {
-              title: 'Bukti Serah Terima',
-              href: '/turnover',
-              icon: '/images/briefcase.svg',
             },
           ]}
         />
