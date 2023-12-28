@@ -19,13 +19,11 @@ export const SalesSummaries: React.FC<Props> = ({
   hideProfit,
   ...params
 }) => {
-  const sale = useSalesSummary({ params });
+  const sale = useSalesSummary({
+    params,
+  });
   const purchase = usePurchasesSummary({
-    params: {
-      ...params,
-      startDate: params.startDate ? dayjs(params.startDate).utc(true).toDate() : undefined,
-      endDate: params.endDate ? dayjs(params.endDate).utc(true).toDate() : undefined,
-    },
+    params,
     config: { enabled: !hideProfit },
   });
   const id = useId();

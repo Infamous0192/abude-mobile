@@ -14,8 +14,8 @@ export async function getSalesSummary({ params }: SummariesDTO) {
   const res = await axios.get<SalesSummary[]>(`/sale/summary`, {
     params: {
       ...params,
-      startDate: params?.startDate ? dayjs(params?.startDate).format('YYYY-MM-DD') : '',
-      endDate: params?.endDate ? dayjs(params?.endDate).format('YYYY-MM-DD') : '',
+      startDate: params?.startDate ? dayjs(params?.startDate).startOf('d').utc(true).toDate() : '',
+      endDate: params?.endDate ? dayjs(params?.endDate).endOf('d').utc(true).toDate() : '',
     },
   });
 
