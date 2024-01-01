@@ -22,8 +22,8 @@ const SalesSection: React.FC = () => {
     endDate: new Date(),
   });
 
-  const startDate = dayjs(params.startDate).utc(true).startOf('d').toDate().toJSON();
-  const endDate = dayjs(params.endDate).utc(true).endOf('d').toDate().toJSON();
+  const startDate = dayjs(params.startDate).startOf('d').toDate().toJSON();
+  const endDate = dayjs(params.endDate).endOf('d').toDate().toJSON();
 
   return (
     <section>
@@ -117,8 +117,8 @@ const PurchasesSection: React.FC = () => {
     endDate: new Date(),
   });
 
-  const startDate = dayjs(params.startDate).utc(true).startOf('d').toDate().toJSON();
-  const endDate = dayjs(params.endDate).utc(true).endOf('d').toDate().toJSON();
+  const startDate = dayjs(params.startDate).startOf('d').toDate().toJSON();
+  const endDate = dayjs(params.endDate).endOf('d').toDate().toJSON();
 
   return (
     <section>
