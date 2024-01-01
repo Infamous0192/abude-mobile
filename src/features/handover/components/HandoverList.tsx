@@ -16,8 +16,10 @@ export const HandoverList: React.FC<HandoverListProps> = (params) => {
   const { data, isLoading, isFetching, hasNextPage, fetchNextPage } = useInfiniteHandovers({
     params: {
       ...params,
-      startDate: params.startDate ? dayjs(params.startDate).utc(true).toDate() : undefined,
-      endDate: params.endDate ? dayjs(params.endDate).utc(true).toDate() : undefined,
+      startDate: params.startDate
+        ? dayjs(params.startDate).utc(true).startOf('d').toDate()
+        : undefined,
+      endDate: params.endDate ? dayjs(params.endDate).utc(true).endOf('d').toDate() : undefined,
     },
   });
 
