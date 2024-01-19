@@ -49,7 +49,7 @@ export const Home: React.FC = () => {
         <MenuList
           navigations={[
             {
-              title: 'Bukti Serah Terima',
+              title: 'Bukti Transaksi',
               href: '/turnover',
               icon: '/images/briefcase.svg',
             },

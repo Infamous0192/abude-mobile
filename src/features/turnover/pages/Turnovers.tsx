@@ -1,19 +1,21 @@
-import { Button } from '@mantine/core';
+import { Button, SegmentedControl } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { modals } from '@mantine/modals';
-import { IconCalendar, IconCategory, IconPlus } from '@tabler/icons-react';
+import { IconArrowLeft, IconCalendar, IconCategory, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Navbar } from '@/components/navigation';
 import { Authorization, useAuth } from '@/features/auth';
 import { OutletSelect, useOutletContext } from '@/features/outlet';
 
-import { TurnoverForm, TurnoverList } from '../components';
+import { HandoverProofForm, HandoverProofList, TurnoverForm, TurnoverList } from '../components';
 import { TurnoverQuery } from '../types';
 
 export const Turnovers: React.FC = () => {
   const { outlet } = useOutletContext();
   const { creds } = useAuth();
+  const [tab, setTab] = useState('turnover');
+  const navigate = useNavigate();
   const [params, setParams] = useState<TurnoverQuery>({
     outlet: outlet?.id,
     startDate: undefined,
@@ -23,17 +25,52 @@ export const Turnovers: React.FC = () => {
   function handleAdd() {
     if (!outlet) return;
 
-    modals.open({
-      title: 'Tambah Bukti',
-      children: <TurnoverForm outlet={creds?.role == 'employee' ? outlet?.id : undefined} />,
-      fullScreen: true,
-    });
+    if (tab === 'turnover') {
+      modals.open({
+        title: 'Tambah Bukti',
+        children: <TurnoverForm outlet={creds?.role == 'employee' ? outlet?.id : undefined} />,
+        fullScreen: true,
+      });
+    } else if (tab === 'handover') {
+      modals.open({
+        title: 'Tambah Bukti',
+        children: <HandoverProofForm outlet={creds?.role == 'employee' ? outlet?.id : undefined} />,
+        fullScreen: true,
+      });
+    }
   }
 
   return (
-    <main>
-      <Navbar title="Bukti Serah Terima" withBorder to="/" />
+    <main className="py-28 bg-gray-50">
+      <header className="px-5 py-3.5 fixed max-w-md w-full bg-white text-black top-0 z-20">
+        <div className="flex items-center space-x-4 text-center">
+          <div className="min-w-[1.5rem] flex">
+            <button
+              onClick={() => navigate('/')}
+              className="bg-transparent active:translate-y-0.5 transition-transform"
+            >
+              <IconArrowLeft size={24} />
+            </button>
+          </div>
+          <div className="flex-grow">
+            <h1 className="font-bold text-base">Bukti Transaksi</h1>
+          </div>
+          <div className="min-w-[1.5rem] flex"></div>
+        </div>
 
+        <div className="mt-3.5">
+          <SegmentedControl
+            color="blue"
+            fullWidth
+            value={tab}
+            onChange={(v) => setTab(v)}
+            data={[
+              { label: 'Bukti Setoran', value: 'turnover' },
+              { label: 'Bukti Serah Terima', value: 'handover' },
+            ]}
+          />
+        </div>
+      </header>
       <section className="space-y-2 mb-4 mt-2 px-5">
         <Authorization role={['superadmin', 'owner']}>
           <OutletSelect
@@ -68,7 +105,11 @@ export const Turnovers: React.FC = () => {
       </section>
 
       <section className="px-4">
-        <TurnoverList outlet={outlet?.id} {...params} />
+        {tab === 'turnover' ? (
+          <TurnoverList outlet={outlet?.id} {...params} />
+        ) : (
+          <HandoverProofList outlet={outlet?.id} {...params} />
+        )}
       </section>
 
       <footer className="max-w-md w-full fixed bottom-0 bg-white p-4 shadow-lg shadow-gray-200 border-t border-gray-100">

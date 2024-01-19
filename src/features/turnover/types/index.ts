@@ -21,3 +21,21 @@ export type TurnoverQuery = {
   startDate?: Date;
   endDate?: Date;
 } & Pagination;
+
+export type HandoverProof = {
+  date: Date;
+  evidence: string;
+  outlet: Outlet;
+} & BaseEntity;
+
+export type HandoverProofRequest = {
+  date?: Date | string;
+  evidence?: string;
+  outlet?: number | string;
+};
+
+export type HandoverProofQuery = {
+  outlet?: number | string;
+  startDate?: Date;
+  endDate?: Date;
+} & Pagination;
