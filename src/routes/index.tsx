@@ -23,6 +23,10 @@ const { SaleCreate } = lazyImport(() => import('@/features/transaction'), 'SaleC
 const { SaleDetail } = lazyImport(() => import('@/features/transaction'), 'SaleDetail');
 const { PurchaseCreate } = lazyImport(() => import('@/features/transaction'), 'PurchaseCreate');
 const { PurchaseDetail } = lazyImport(() => import('@/features/transaction'), 'PurchaseDetail');
+const { PurchaseRecapitulation } = lazyImport(
+  () => import('@/features/transaction'),
+  'PurchaseRecapitulation'
+);
 const { TransactionSummary } = lazyImport(
   () => import('@/features/transaction'),
   'TransactionSummary'
@@ -40,6 +44,7 @@ export const AppRoutes: React.FC = () => {
         </Route>
 
         <Route path="transaction/summary" element={<TransactionSummary />} />
+        <Route path="purchase/summary" element={<PurchaseRecapitulation />} />
 
         <Route path="sales/:id" element={<SaleDetail />} />
         <Route path="sales/create" element={<SaleCreate />} />
