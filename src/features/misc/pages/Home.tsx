@@ -1,4 +1,4 @@
-import { IconArrowBarToDown, IconArrowBarUp, IconReceipt } from '@tabler/icons-react';
+import { IconArrowBarToDown, IconArrowBarUp, IconBasket, IconReceipt } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
@@ -45,7 +45,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="px-5 my-8">
+      <section className="px-5 mt-8 mb-6">
         <MenuList
           navigations={[
             {
@@ -59,9 +59,9 @@ export const Home: React.FC = () => {
               icon: '/images/postor.svg',
             },
             {
-              title: 'Statistik Harian',
-              href: '/transaction/summary',
-              icon: '/images/report-up.svg',
+              title: 'Data Master',
+              href: '/data-master',
+              icon: '/images/cog.svg',
             },
             {
               title: 'Kehadiran',
@@ -70,6 +70,43 @@ export const Home: React.FC = () => {
             },
           ]}
         />
+      </section>
+
+      <section className="mb-6">
+        <div className="px-5 flex justify-between">
+          <h2 className="text-lg font-bold mb-2.5">Laporan</h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2.5 px-5">
+          <Link
+            to="/transaction/summary"
+            className="bg-white rounded-lg active:bg-blue-50 border border-transparent active:border-blue-400 transition shadow-md shadow-gray-300 px-3 py-2 items-center"
+          >
+            <div className="flex items-center justify-center p-1.5 w-7 h-7 mr-4 bg-blue-50 text-blue-600 rounded-md mb-1">
+              <IconArrowBarUp />
+            </div>
+            <div className="text-left">
+              <h3 className="text-xs font-bold mb-1">Statistik</h3>
+              <p className="text-xxs font-light text-gray-600">
+                Lihat Statistik Penjualan dan Pembelian Outlet
+              </p>
+            </div>
+          </Link>
+          <Link
+            to="/purchase/summary"
+            className="bg-white rounded-lg active:bg-blue-50 border border-transparent active:border-blue-400 transition shadow-md shadow-gray-300 px-3 py-2 items-center"
+          >
+            <div className="flex items-center justify-center p-1.5 w-7 h-7 mr-4 bg-blue-50 text-blue-600 rounded-md mb-1">
+              <IconBasket />
+            </div>
+            <div className="text-left">
+              <h3 className="text-xs font-bold mb-1">Rekapitulasi Pembelian</h3>
+              <p className="text-xxs font-light text-gray-600">
+                Lihat Rekapitulasi Pembelian Barang Outlet
+              </p>
+            </div>
+          </Link>
+        </div>
       </section>
 
       <section className="my-6">

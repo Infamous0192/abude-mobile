@@ -4,3 +4,4 @@ export * from './Transactions';
 export * from './PurchaseCreate';
 export * from './PurchaseDetail';
 export * from './TransactionSummary';
+export * from './PurchaseRecapitulation';

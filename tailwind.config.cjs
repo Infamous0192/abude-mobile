@@ -6,6 +6,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontSize: {
+        xxs: '0.625rem',
+      },
       keyframes: {
         'bounce-once': {
           '0%, 100%': { transform: 'none' },
