@@ -1,4 +1,5 @@
-import { Button } from '@mantine/core';
+import { Button, TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { clsx, formatCurrency } from '@/utils/format';
@@ -40,6 +41,7 @@ type Props = {
 
 export const ProductPick: React.FC<Props> = ({ products, onSubmit }) => {
   const [selected, setSelected] = useState<Product | null>(null);
+  const [keyword, setKeyword] = useState('');
 
   function handleSelect(product: Product) {
     return () => {
@@ -53,14 +55,24 @@ export const ProductPick: React.FC<Props> = ({ products, onSubmit }) => {
 
   return (
     <div className="relative">
-      {products.map((product) => (
-        <ProductItem
-          key={product.id}
-          product={product}
-          selected={product.id == selected?.id}
-          onSelect={handleSelect(product)}
-        />
-      ))}
+      <TextInput
+        icon={<IconSearch size={16} />}
+        placeholder="Cari barang"
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
+        className="mb-4"
+      />
+
+      {products
+        .filter(({ name }) => (keyword ? new RegExp(`${keyword}`, 'gi').test(name) : true))
+        .map((product) => (
+          <ProductItem
+            key={product.id}
+            product={product}
+            selected={product.id == selected?.id}
+            onSelect={handleSelect(product)}
+          />
+        ))}
 
       <div className="flex justify-end pt-2 sticky bottom-0 pb-2 bg-white">
         <Button disabled={selected == null} px="xl" onClick={handleSubmit}>
