@@ -59,9 +59,9 @@ export const Home: React.FC = () => {
               icon: '/images/postor.svg',
             },
             {
-              title: 'Data Master',
-              href: '/data-master',
-              icon: '/images/cog.svg',
+              title: 'Statistik',
+              href: '/transaction/summary',
+              icon: '/images/report-up.svg',
             },
             {
               title: 'Kehadiran',
