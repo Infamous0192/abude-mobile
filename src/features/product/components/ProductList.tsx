@@ -12,13 +12,15 @@ import { ProductUpdateForm } from './ProductUpdateForm';
 
 const defaultParams: ProductQuery = {
   page: 1,
-  limit: 5,
+  limit: 10,
 };
 
-export const ProductList: React.FC = () => {
+type Props = ProductQuery;
+
+export const ProductList: React.FC<Props> = ({ ...params }) => {
   const { outlet } = useOutletContext();
   const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteProducts({
-    params: { ...defaultParams, company: outlet?.company.id },
+    params: { ...defaultParams, ...params },
   });
 
   const products =

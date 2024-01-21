@@ -1,14 +1,19 @@
-import { ActionIcon, Button } from '@mantine/core';
+import { ActionIcon, Button, TextInput } from '@mantine/core';
+import { useDebouncedValue } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
-import { IconChevronLeft } from '@tabler/icons-react';
+import { IconChevronLeft, IconSearch } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
 
 import { ProductCreateForm, ProductList } from '../components';
+import { ProductQuery } from '../types';
 
 export const Products: React.FC = () => {
   const { outlet } = useOutletContext();
+  const [query, setQuery] = useState<ProductQuery>({ company: outlet?.company.id, keyword: '' });
+  const [params] = useDebouncedValue(query, 200);
 
   function handleAdd() {
     if (!outlet?.company.id) return;
@@ -37,7 +42,16 @@ export const Products: React.FC = () => {
         </Button>
       </section>
 
-      <ProductList />
+      <section className="px-5 mb-1">
+        <TextInput
+          icon={<IconSearch size={16} />}
+          placeholder="Cari barang"
+          value={query.keyword}
+          onChange={(e) => setQuery({ ...query, keyword: e.target.value })}
+        />
+      </section>
+
+      <ProductList {...params} />
     </main>
   );
 };
