@@ -2,7 +2,7 @@ import { IconArrowBarToDown, IconArrowBarUp, IconBasket, IconReceipt } from '@ta
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
-import { useAuth } from '@/features/auth';
+import { Authorization, useAuth } from '@/features/auth';
 import { OutletPick } from '@/features/outlet';
 import { RecentSales } from '@/features/transaction';
 
@@ -72,42 +72,44 @@ export const Home: React.FC = () => {
         />
       </section>
 
-      <section className="mb-6">
-        <div className="px-5 flex justify-between">
-          <h2 className="text-lg font-bold mb-2.5">Laporan</h2>
-        </div>
+      <Authorization role={['superadmin', 'owner']}>
+        <section className="mb-6">
+          <div className="px-5 flex justify-between">
+            <h2 className="text-lg font-bold mb-2.5">Laporan</h2>
+          </div>
 
-        <div className="grid grid-cols-2 gap-2.5 px-5">
-          <Link
-            to="/transaction/summary"
-            className="bg-white rounded-lg active:bg-blue-50 border border-transparent active:border-blue-400 transition shadow-md shadow-gray-300 px-3 py-2 items-center"
-          >
-            <div className="flex items-center justify-center p-1.5 w-7 h-7 mr-4 bg-blue-50 text-blue-600 rounded-md mb-1">
-              <IconArrowBarUp />
-            </div>
-            <div className="text-left">
-              <h3 className="text-xs font-bold mb-1">Statistik</h3>
-              <p className="text-xxs font-light text-gray-600">
-                Lihat Statistik Penjualan dan Pembelian Outlet
-              </p>
-            </div>
-          </Link>
-          <Link
-            to="/purchase/summary"
-            className="bg-white rounded-lg active:bg-blue-50 border border-transparent active:border-blue-400 transition shadow-md shadow-gray-300 px-3 py-2 items-center"
-          >
-            <div className="flex items-center justify-center p-1.5 w-7 h-7 mr-4 bg-blue-50 text-blue-600 rounded-md mb-1">
-              <IconBasket />
-            </div>
-            <div className="text-left">
-              <h3 className="text-xs font-bold mb-1">Rekapitulasi Pembelian</h3>
-              <p className="text-xxs font-light text-gray-600">
-                Lihat Rekapitulasi Pembelian Barang Outlet
-              </p>
-            </div>
-          </Link>
-        </div>
-      </section>
+          <div className="grid grid-cols-2 gap-2.5 px-5">
+            <Link
+              to="/transaction/summary"
+              className="bg-white rounded-lg active:bg-blue-50 border border-transparent active:border-blue-400 transition shadow-md shadow-gray-300 px-3 py-2 items-center"
+            >
+              <div className="flex items-center justify-center p-1.5 w-7 h-7 mr-4 bg-blue-50 text-blue-600 rounded-md mb-1">
+                <IconArrowBarUp />
+              </div>
+              <div className="text-left">
+                <h3 className="text-xs font-bold mb-1">Statistik</h3>
+                <p className="text-xxs font-light text-gray-600">
+                  Lihat Statistik Penjualan dan Pembelian Outlet
+                </p>
+              </div>
+            </Link>
+            <Link
+              to="/purchase/summary"
+              className="bg-white rounded-lg active:bg-blue-50 border border-transparent active:border-blue-400 transition shadow-md shadow-gray-300 px-3 py-2 items-center"
+            >
+              <div className="flex items-center justify-center p-1.5 w-7 h-7 mr-4 bg-blue-50 text-blue-600 rounded-md mb-1">
+                <IconBasket />
+              </div>
+              <div className="text-left">
+                <h3 className="text-xs font-bold mb-1">Rekapitulasi Pembelian</h3>
+                <p className="text-xxs font-light text-gray-600">
+                  Lihat Rekapitulasi Pembelian Barang Outlet
+                </p>
+              </div>
+            </Link>
+          </div>
+        </section>
+      </Authorization>
 
       <section className="my-6">
         <div className="px-5 flex justify-between">
