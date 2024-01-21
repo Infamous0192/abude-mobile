@@ -65,8 +65,8 @@ export const Turnovers: React.FC = () => {
             value={tab}
             onChange={(v) => setTab(v)}
             data={[
-              { label: 'Bukti Setoran', value: 'turnover' },
-              { label: 'Bukti Serah Terima', value: 'handover' },
+              { label: 'Bukti Serah Terima', value: 'turnover' },
+              { label: 'Bukti Setoran', value: 'handover' },
             ]}
           />
         </div>
