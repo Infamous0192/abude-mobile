@@ -1,4 +1,4 @@
-import { IconArrowBarToDown, IconArrowBarUp, IconBasket, IconReceipt } from '@tabler/icons-react';
+import { IconArrowBarToDown, IconArrowBarUp, IconBasket, IconListCheck, IconReceipt } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
       </section>
 
       <section className="bg-white mx-auto max-w-xs w-full -mt-14 shadow shadow-gray-200 rounded-xl z-50 relative">
-        <div className="w-full grid grid-cols-3 divide-x divide-gray-300 py-4">
+        <div className="w-full grid grid-cols-4 divide-x divide-gray-300 py-4">
           <Link to="/sales/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarUp className="w-7 h-7" />
@@ -41,6 +41,12 @@ export const Home: React.FC = () => {
               <IconReceipt className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Riwayat</div>
+          </Link>
+          <Link to="/pengeluaran" className="px-4 flex flex-col items-center justify-center">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+              <IconListCheck className="w-7 h-7" />
+            </div>
+            <div className="text-xs mt-1">Pengeluaran</div>
           </Link>
         </div>
       </section>

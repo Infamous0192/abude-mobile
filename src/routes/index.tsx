@@ -7,6 +7,7 @@ const { Login } = lazyImport(() => import('@/features/auth'), 'Login');
 const { Development } = lazyImport(() => import('@/features/misc'), 'Development');
 const { Home } = lazyImport(() => import('@/features/misc'), 'Home');
 const { DataMaster } = lazyImport(() => import('@/features/misc'), 'DataMaster');
+const { DataPengeluaran } = lazyImport(() => import('@/features/misc'), 'DataPengeluaran');
 const { Profile } = lazyImport(() => import('@/features/employee'), 'Profile');
 const { Products } = lazyImport(() => import('@/features/product'), 'Products');
 const { Suppliers } = lazyImport(() => import('@/features/product'), 'Suppliers');
@@ -41,6 +42,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="transaction" element={<Transactions />} />
           <Route path="profile" element={<Profile />} />
           <Route path="data-master" element={<DataMaster />} />
+          <Route path="pengeluaran" element={<DataPengeluaran />} />
         </Route>
 
         <Route path="transaction/summary" element={<TransactionSummary />} />
