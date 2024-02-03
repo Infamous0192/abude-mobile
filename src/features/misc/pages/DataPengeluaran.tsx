@@ -15,7 +15,7 @@ export const DataPengeluaran: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-        <iframe src={`${url}${companyId}`} width='100%' height={600} ></iframe>
+        <iframe src={`${url}${companyId}/${outletId}`} width='100%' height={600} ></iframe>
           {/* <Link
             to="/product"
             className="bg-white rounded-md border border-gray-100 shadow-lg shadow-gray-200 p-4 active:bg-blue-50 active:border-blue-400"
