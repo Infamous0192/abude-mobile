@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Company } from '@/features/company';
+import { useOutletContext } from '@/features/outlet';
 
 export const DataPengeluaran: React.FC = () => {
+  const { outlet } = useOutletContext();
+  const outletId = outlet?.id.toString() || '';
+  const companyId = outlet?.company.id.toString() || '';
+  const url = 'https://txout.outlet.abudegroup.t-paz.com/expense/';
   return (
     <main className="py-6">
       <section className="px-5">
@@ -9,7 +15,7 @@ export const DataPengeluaran: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-
+        <iframe src={`${url}${companyId}`} width='100%' height={600} ></iframe>
           {/* <Link
             to="/product"
             className="bg-white rounded-md border border-gray-100 shadow-lg shadow-gray-200 p-4 active:bg-blue-50 active:border-blue-400"
