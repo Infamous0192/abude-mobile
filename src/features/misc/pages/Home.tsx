@@ -33,12 +33,12 @@ export const Home: React.FC = () => {
             </div>
             <div className="text-xs mt-1">Penjualan</div>
           </Link>
-          <Link to="/purchases/create" className="px-4 flex flex-col items-center justify-center">
+          {/* <Link to="/purchases/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarToDown className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Pembelian</div>
-          </Link>
+          </Link> */}
           <Link to="/transaction" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconReceipt className="w-7 h-7" />
@@ -71,6 +71,12 @@ export const Home: React.FC = () => {
               <IconReceipt className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Riwayat</div>
+          </Link>
+          <Link to="/pengeluaran" className="px-4 flex flex-col items-center justify-center">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+              <IconListCheck className="w-7 h-7" />
+            </div>
+            <div className="text-xs mt-1">Pengeluaran</div>
           </Link>
         </div>
       )}
