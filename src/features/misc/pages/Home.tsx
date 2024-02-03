@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
         
 
         {getRoleText() === 'Owner' ? (
-          <div className="w-full grid grid-cols-3 divide-x divide-gray-300 py-4">
+          <div className="w-full grid grid-cols-4 divide-x divide-gray-300 py-4">
           <Link to="/sales/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarUp className="w-7 h-7" />
@@ -53,7 +53,7 @@ export const Home: React.FC = () => {
           </Link>
         </div>
       ) : (
-        <div className="w-full grid grid-cols-4 divide-x divide-gray-300 py-4">
+        <div className="w-full grid grid-cols-3 divide-x divide-gray-300 py-4">
           <Link to="/sales/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarUp className="w-7 h-7" />
