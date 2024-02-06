@@ -2,6 +2,7 @@ import { Button, Select, Tabs } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { IconAdjustments, IconCalendar, IconCategory, IconPrinter } from '@tabler/icons-react';
 import { useState } from 'react';
+import { Browser } from '@capacitor/browser';
 
 import { Navbar } from '@/components/navigation';
 import { Authorization } from '@/features/auth';
@@ -25,6 +26,18 @@ const SalesSection: React.FC = () => {
   const startDate = dayjs(params.startDate).startOf('d').toDate().toJSON();
   const endDate = dayjs(params.endDate).endOf('d').toDate().toJSON();
 
+  const openCetakPerOutlet = () => {
+    const urlCetakPerOutlet = `${baseURL}/outlet/${
+      params.outlet
+    }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`;
+    Browser.open({ url: urlCetakPerOutlet });
+  };
+  const openCetakSemua =  () => {
+    const urlCetakSemua = `${baseURL}/company/${
+      outlet?.company.id
+    }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`
+    Browser.open({ url: urlCetakSemua });
+  };
   return (
     <section>
       <div className="space-y-2 mb-4 mt-2">
@@ -74,7 +87,7 @@ const SalesSection: React.FC = () => {
         />
 
         <div className="flex items-center justify-end space-x-2">
-          <Button
+          {/* <Button
             component="a"
             href={`${baseURL}/outlet/${
               params.outlet
@@ -84,9 +97,15 @@ const SalesSection: React.FC = () => {
             size="xs"
           >
             Cetak per Outlet
-          </Button>
+          </Button> */}
+          <Button 
+              onClick={openCetakPerOutlet}
+              leftIcon={<IconPrinter size={16} />}
+              size="xs">
+                Cetak per Outlet
+            </Button>
           <Authorization role={['superadmin', 'owner']}>
-            <Button
+            {/* <Button
               component="a"
               href={`${baseURL}/company/${
                 outlet?.company.id
@@ -96,6 +115,12 @@ const SalesSection: React.FC = () => {
               size="xs"
             >
               Cetak Semua
+            </Button> */}
+            <Button 
+              onClick={openCetakSemua}
+              leftIcon={<IconPrinter size={16} />}
+              size="xs">
+                Cetak Semua
             </Button>
           </Authorization>
         </div>
