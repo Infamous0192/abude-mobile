@@ -1,4 +1,4 @@
-import { Button, Loader } from '@mantine/core';
+import { Badge, Button, Loader } from '@mantine/core';
 import { IconArrowBarUp } from '@tabler/icons-react';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -27,14 +27,25 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({ expense, onClick }) => {
       <div className="flex-shrink-0 w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center">
         <IconArrowBarUp size={24} />
       </div>
-      <div className="flex-grow">
-        <div className="flex-grow flex mb-2">
-          <div className="font-bold text-sm leading-none flex-grow">
-            {expense.account?.name || 'Pengeluaran'}
-          </div>
-          <div className="font-bold text-sm leading-none">{formatCurrency(expense.amount)}</div>
+      <div className="flex mb-2 w-full">
+        <div className="flex-grow">
+          <div className="font-bold text-sm">{expense.account?.name || 'Pengeluaran'}</div>
+          <div className="text-gray-600 text-xs leading-none line-clamp-1">{expense.notes}</div>
         </div>
-        <div className="text-gray-600 text-xs leading-none line-clamp-1">{expense.notes}</div>
+        <div className="flex flex-col items-end">
+          <div className="font-bold text-sm leading-none mb-1">
+            {formatCurrency(expense.amount)}
+          </div>
+          {expense.type == 'debit' ? (
+            <Badge variant="light" color="blue" size="xs">
+              Tunai
+            </Badge>
+          ) : (
+            <Badge variant="light" color="orange" size="xs">
+              Kredit
+            </Badge>
+          )}
+        </div>
       </div>
     </button>
   );
