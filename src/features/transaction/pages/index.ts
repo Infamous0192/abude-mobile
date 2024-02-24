@@ -5,3 +5,6 @@ export * from './PurchaseCreate';
 export * from './PurchaseDetail';
 export * from './TransactionSummary';
 export * from './PurchaseRecapitulation';
+export * from './Expenses';
+export * from './ExpenseCreate';
+export * from './ExpenseDetail';

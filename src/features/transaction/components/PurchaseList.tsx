@@ -10,9 +10,9 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useInfinitePurchases } from '../api';
-import { Purchase, PurchaseQuery, TransactionStatus } from '../types';
+import { Purchase, PurchaseQuery, PurchaseStatus } from '../types';
 
-import { PurchaseStatus } from './PurchaseStatusBadge';
+import { PurchaseStatusBadge } from './PurchaseStatusBadge';
 
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
@@ -28,7 +28,7 @@ const PurchaseItem: React.FC<Purchase> = (purchase) => {
         </div>
         <div className="flex-grow px-3">
           <div className="font-bold text-sm capitalize">{purchase.code}</div>
-          <PurchaseStatus status={purchase.status} />
+          <PurchaseStatusBadge status={purchase.status} />
         </div>
         <div className="flex-grow text-right">
           <div className="font-bold">{formatCurrency(purchase.total)}</div>
@@ -125,7 +125,7 @@ export const PurchaseList: React.FC<Props> = () => {
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: [v as TransactionStatus] });
+            setParams({ ...params, status: [v as PurchaseStatus] });
           }}
         />
       </div>

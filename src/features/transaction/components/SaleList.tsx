@@ -10,9 +10,9 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useInfiniteSales } from '../api';
-import { Sale, SaleQuery, TransactionStatus } from '../types';
+import { Sale, SaleQuery, SaleStatus } from '../types';
 
-import { SaleStatus } from './SaleStatusBadge';
+import { SaleStatusBadge } from './SaleStatusBadge';
 
 const SaleItem: React.FC<Sale> = (sale) => {
   return (
@@ -27,7 +27,7 @@ const SaleItem: React.FC<Sale> = (sale) => {
       </div>
       <div className="flex-grow px-3">
         <div className="font-bold text-sm capitalize">{sale.code}</div>
-        <SaleStatus status={sale.status} />
+        <SaleStatusBadge status={sale.status} />
       </div>
       <div className="flex-grow text-right">
         <div className="font-bold">{formatCurrency(sale.total)}</div>
@@ -104,7 +104,7 @@ export const SaleList: React.FC<Props> = () => {
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: [v as TransactionStatus] });
+            setParams({ ...params, status: [v as SaleStatus] });
           }}
         />
       </div>
