@@ -12,7 +12,7 @@ import { formatCurrency } from '@/utils/format';
 import { useInfinitePurchases } from '../api';
 import { Purchase, PurchaseQuery, TransactionStatus } from '../types';
 
-import { PurchaseStatus } from './PurchaseStatus';
+import { PurchaseStatus } from './PurchaseStatusBadge';
 
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (

@@ -1,12 +1,12 @@
 import { Badge } from '@mantine/core';
 
-import { TransactionStatus } from '../types';
+import { PurchaseStatus } from '../types';
 
 type Props = {
-  status: TransactionStatus;
+  status: PurchaseStatus;
 };
 
-export const PurchaseStatus: React.FC<Props> = ({ status }) => {
+export const PurchaseStatusBadge: React.FC<Props> = ({ status }) => {
   switch (status) {
     case 'approved':
       return (

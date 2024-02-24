@@ -10,7 +10,7 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useCancelSale, useSale } from '../api';
-import { SaleStatus } from '../components';
+import { SaleStatusBadge } from '../components';
 
 export const SaleDetail: React.FC = () => {
   const { id } = useParams<'id'>();
@@ -76,7 +76,7 @@ export const SaleDetail: React.FC = () => {
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="text-gray-600 font-medium">Status</div>
-            <SaleStatus status={data.status} />
+            <SaleStatusBadge status={data.status} />
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="text-gray-600 font-medium">Pegawai</div>

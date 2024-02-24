@@ -12,7 +12,7 @@ import { formatCurrency } from '@/utils/format';
 import { useInfiniteSales } from '../api';
 import { Sale, SaleQuery, TransactionStatus } from '../types';
 
-import { SaleStatus } from './SaleStatus';
+import { SaleStatus } from './SaleStatusBadge';
 
 const SaleItem: React.FC<Sale> = (sale) => {
   return (

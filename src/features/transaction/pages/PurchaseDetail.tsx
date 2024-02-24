@@ -9,7 +9,7 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { useCancelPurchase, usePurchase } from '../api';
-import { PurchaseStatus } from '../components';
+import { PurchaseStatusBadge } from '../components';
 
 export const PurchaseDetail: React.FC = () => {
   const { id } = useParams<'id'>();
@@ -71,7 +71,7 @@ export const PurchaseDetail: React.FC = () => {
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="text-gray-600 font-medium">Status</div>
-            <PurchaseStatus status={data.status} />
+            <PurchaseStatusBadge status={data.status} />
           </div>
           <div className="flex items-center justify-between text-sm mb-3">
             <div className="text-gray-600 font-medium">Pegawai</div>
