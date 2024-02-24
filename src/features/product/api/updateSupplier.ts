@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Supplier, SupplierRequest } from '../types';
+import { Supplier, SupplierDTO } from '../types';
 
-export type UpdateSupplierDTO = {
+export type SupplierUpdateRequest = {
   id: number;
-  data: SupplierRequest;
+  data: SupplierDTO;
 };
 
-export async function updateSupplier({ id, data }: UpdateSupplierDTO) {
+export async function updateSupplier({ id, data }: SupplierUpdateRequest) {
   const res = await axios.put<GeneralResponse<Supplier>>(`/supplier/${id}`, data);
 
   return res.data;
@@ -22,11 +22,12 @@ type UseUpdateSupplierOptions = {
 };
 
 export function useUpdateSupplier({ config }: UseUpdateSupplierOptions = {}) {
-  return useMutation(updateSupplier, {
+  return useMutation({
     ...config,
+    mutationFn: updateSupplier,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['suppliers']);
-      queryClient.invalidateQueries(['supplier', args[1].id]);
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
+      queryClient.invalidateQueries({ queryKey: ['supplier'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

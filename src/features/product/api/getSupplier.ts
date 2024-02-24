@@ -5,11 +5,11 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
 import { Supplier } from '../types';
 
-type SupplierDTO = {
+type SupplierRequest = {
   id: number;
 };
 
-export async function getSupplier({ id }: SupplierDTO) {
+export async function getSupplier({ id }: SupplierRequest) {
   const res = await axios.get<Supplier>(`/supplier/${id}`);
 
   return res.data;

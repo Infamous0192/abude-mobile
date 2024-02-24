@@ -42,7 +42,7 @@ export const ProductList: React.FC<Props> = ({ ...params }) => {
       {products.map((product) => (
         <div
           key={product.id}
-          className="py-3 active:bg-gray-100 transition rounded-lg px-5 cursor-pointer"
+          className="py-3 active:bg-gray-100 transition px-5 cursor-pointer"
           onClick={handleUpdate(product)}
           aria-hidden
         >
@@ -50,12 +50,12 @@ export const ProductList: React.FC<Props> = ({ ...params }) => {
             <div
               className={clsx(
                 'rounded-lg p-2',
-                product.category == 'sale'
+                product.type == 'sale'
                   ? 'bg-blue-100 text-blue-600'
                   : 'bg-orange-100 text-orange-600'
               )}
             >
-              {product.category == 'purchase' ? (
+              {product.type == 'purchase' ? (
                 <IconArrowBarUp className="w-6 h-6" />
               ) : (
                 <IconArrowBarToDown className="w-6 h-6" />
@@ -63,7 +63,6 @@ export const ProductList: React.FC<Props> = ({ ...params }) => {
             </div>
             <div className="flex-grow px-3">
               <div className="text-sx font-bold">{product.name}</div>
-              <div className="text-xs text-gray-600">{product.supplier?.name}</div>
             </div>
             <div className="flex-shrink-0 text-right">
               <div className="font-bold">{formatCurrency(product.price)}</div>

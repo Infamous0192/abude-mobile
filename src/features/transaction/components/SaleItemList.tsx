@@ -4,7 +4,7 @@ import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { Product } from '@/features/product';
 import { formatCurrency } from '@/utils/format';
 
-import { SaleRequest } from '../types';
+import { SaleDTO } from '../types';
 
 type ItemProps = {
   product: Product;
@@ -64,8 +64,8 @@ const SaleItem: React.FC<ItemProps> = ({ product, value, onChange }) => {
 
 type Props = {
   products: Product[];
-  items: SaleRequest['items'];
-  onChange: (item: SaleRequest['items']) => void;
+  items: SaleDTO['items'];
+  onChange: (item: SaleDTO['items']) => void;
 };
 
 export const SaleItemList: React.FC<Props> = ({ products, items, onChange }) => {

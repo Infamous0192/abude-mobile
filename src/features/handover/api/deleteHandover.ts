@@ -21,10 +21,11 @@ type UseDeleteHandoverOptions = {
 };
 
 export function useDeleteHandover({ config }: UseDeleteHandoverOptions = {}) {
-  return useMutation(deleteHandover, {
+  return useMutation({
     ...config,
+    mutationFn: deleteHandover,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['handovers']);
+      queryClient.invalidateQueries({ queryKey: ['handovers'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

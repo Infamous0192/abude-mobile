@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -28,12 +28,13 @@ export function useHandovers({ config, params }: UseHandoversOptions = {}) {
     ...config,
     queryKey: ['handovers', params],
     queryFn: () => getHandovers({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }
 
 export function useInfiniteHandovers({ params }: UseHandoversOptions = {}) {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['handovers', params],
     queryFn: ({ pageParam: page = 1 }) => getHandovers({ params: { ...params, page } }),
     getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),

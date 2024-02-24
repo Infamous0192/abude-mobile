@@ -6,11 +6,11 @@ import { GeneralResponse } from '@/types/api';
 
 import { Supplier } from '../types';
 
-type SupplierDeleteDTO = {
+type SupplierDeleteRequest = {
   id: number;
 };
 
-export async function deleteSupplier({ id }: SupplierDeleteDTO) {
+export async function deleteSupplier({ id }: SupplierDeleteRequest) {
   const res = await axios.delete<GeneralResponse<Supplier>>(`/supplier/${id}`);
 
   return res.data;
@@ -21,10 +21,11 @@ type UseDeleteSupplierOptions = {
 };
 
 export function useDeleteSupplier({ config }: UseDeleteSupplierOptions = {}) {
-  return useMutation(deleteSupplier, {
+  return useMutation({
     ...config,
+    mutationFn: deleteSupplier,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['suppliers']);
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

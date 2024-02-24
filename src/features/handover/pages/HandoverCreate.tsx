@@ -83,7 +83,7 @@ export const HandoverCreate: React.FC = () => {
           {...form.getInputProps('cashReceived')}
           required
           label="Total Setoran"
-          icon={<span className="text-xs">Rp</span>}
+          leftSection={<span className="text-xs">Rp</span>}
         />
 
         <Textarea

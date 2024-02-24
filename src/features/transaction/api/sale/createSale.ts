@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Sale, SaleRequest } from '../types';
+import { Sale, SaleDTO } from '../../types';
 
-type SaleCreateDTO = {
-  data: SaleRequest;
+type SaleCreateRequest = {
+  data: SaleDTO;
 };
 
-export async function createSale({ data }: SaleCreateDTO) {
+export async function createSale({ data }: SaleCreateRequest) {
   const res = await axios.post<GeneralResponse<Sale>>(`/sale`, data);
 
   return res.data;
@@ -21,10 +21,12 @@ type UseCreateSaleOptions = {
 };
 
 export function useCreateSale({ config }: UseCreateSaleOptions = {}) {
-  return useMutation(createSale, {
+  return useMutation({
     ...config,
+    mutationFn: createSale,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['sales']);
+      queryClient.invalidateQueries({ queryKey: ['sales'] });
+      queryClient.invalidateQueries({ queryKey: ['sale'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

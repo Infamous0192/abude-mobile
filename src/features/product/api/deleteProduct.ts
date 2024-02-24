@@ -6,11 +6,11 @@ import { GeneralResponse } from '@/types/api';
 
 import { Product } from '../types';
 
-type ProductDeleteDTO = {
+type ProductDeleteRequest = {
   id: number;
 };
 
-export async function deleteProduct({ id }: ProductDeleteDTO) {
+export async function deleteProduct({ id }: ProductDeleteRequest) {
   const res = await axios.delete<GeneralResponse<Product>>(`/product/${id}`);
 
   return res.data;
@@ -21,10 +21,11 @@ type UseDeleteProductOptions = {
 };
 
 export function useDeleteProduct({ config }: UseDeleteProductOptions = {}) {
-  return useMutation(deleteProduct, {
+  return useMutation({
     ...config,
+    mutationFn: deleteProduct,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['products']);
+      queryClient.invalidateQueries({ queryKey: ['products'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

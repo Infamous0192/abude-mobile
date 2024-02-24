@@ -5,11 +5,11 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
 import { Outlet } from '../types';
 
-type OutletDTO = {
+type OutletRequest = {
   id: number;
 };
 
-export async function getOutlet({ id }: OutletDTO) {
+export async function getOutlet({ id }: OutletRequest) {
   const res = await axios.get<Outlet>(`/outlet/${id}`);
 
   return res.data;

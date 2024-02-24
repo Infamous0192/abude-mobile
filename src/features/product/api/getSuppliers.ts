@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -6,11 +6,11 @@ import { PaginatedResult } from '@/types/api';
 
 import { Supplier, SupplierQuery } from '../types';
 
-type SuppliersDTO = {
+type SuppliersRequest = {
   params?: SupplierQuery;
 };
 
-export async function getSuppliers({ params }: SuppliersDTO) {
+export async function getSuppliers({ params }: SuppliersRequest) {
   const res = await axios.get<PaginatedResult<Supplier>>(`/supplier`, { params });
 
   return res.data;
@@ -28,12 +28,13 @@ export function useSuppliers({ config, params }: UseSuppliersOptions = {}) {
     ...config,
     queryKey: ['suppliers', params],
     queryFn: () => getSuppliers({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }
 
 export function useInfiniteSuppliers({ params }: UseSuppliersOptions = {}) {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['suppliers', params],
     queryFn: ({ pageParam: page = 1 }) => getSuppliers({ params: { ...params, page } }),
     getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),

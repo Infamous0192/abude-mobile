@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Sale } from '../types';
+import { Sale } from '../../types';
 
-type SaleCancelDTO = {
+type SaleCancelRequest = {
   id: number;
 };
 
-export async function cancelSale({ id }: SaleCancelDTO) {
+export async function cancelSale({ id }: SaleCancelRequest) {
   const res = await axios.patch<GeneralResponse<Sale>>(`/sale/${id}/cancel`);
 
   return res.data;
@@ -21,11 +21,12 @@ type UseCancelSaleOptions = {
 };
 
 export function useCancelSale({ config }: UseCancelSaleOptions = {}) {
-  return useMutation(cancelSale, {
+  return useMutation({
     ...config,
+    mutationFn: cancelSale,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['sales']);
-      queryClient.invalidateQueries(['sale', args[1].id]);
+      queryClient.invalidateQueries({ queryKey: ['sales'] });
+      queryClient.invalidateQueries({ queryKey: ['sale'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

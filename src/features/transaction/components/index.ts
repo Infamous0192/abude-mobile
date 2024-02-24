@@ -11,4 +11,4 @@ export * from './PurchaseList';
 export * from './SalesSummaries';
 export * from './PurchasesSummaries';
 export * from './SaleStatus';
-export * from './TransactionStatus';
+export * from './PurchaseStatus';

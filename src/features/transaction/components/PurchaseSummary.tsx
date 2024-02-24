@@ -1,10 +1,10 @@
 import { Product } from '@/features/product';
 import { formatCurrency } from '@/utils/format';
 
-import { PurchaseRequest } from '../types';
+import { PurchaseDTO } from '../types';
 
 type ItemProps = {
-  items: PurchaseRequest['items'];
+  items: PurchaseDTO['items'];
   product: Product;
 };
 
@@ -25,7 +25,7 @@ const TransactionItem: React.FC<ItemProps> = ({ product, items }) => {
 };
 
 type Props = {
-  items: PurchaseRequest['items'];
+  items: PurchaseDTO['items'];
   total: number;
   products: Product[];
 };

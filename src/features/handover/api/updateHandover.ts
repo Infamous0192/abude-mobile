@@ -22,11 +22,12 @@ type UseUpdateHandoverOptions = {
 };
 
 export function useUpdateHandover({ config }: UseUpdateHandoverOptions = {}) {
-  return useMutation(updateHandover, {
+  return useMutation({
     ...config,
+    mutationFn: updateHandover,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['handovers']);
-      queryClient.invalidateQueries(['handover', args[1].id]);
+      queryClient.invalidateQueries({ queryKey: ['handovers'] });
+      queryClient.invalidateQueries({ queryKey: ['handover'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

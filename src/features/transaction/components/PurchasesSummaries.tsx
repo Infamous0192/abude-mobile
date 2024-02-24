@@ -5,13 +5,13 @@ import { dayjs } from '@/lib/dayjs';
 import { formatCurrency } from '@/utils/format';
 
 import { usePurchasesSummary, useSalesSummary } from '../api';
-import { PurchasesSummary, PurchasesSummaryQuery } from '../types';
+import { PurchaseSummary, PurchaseSummaryQuery } from '../types';
 
 type Props = {
   hideTable?: boolean;
   withProduct?: boolean;
   hideProfit?: boolean;
-} & PurchasesSummaryQuery;
+} & PurchaseSummaryQuery;
 
 export const PurchasesSummaries: React.FC<Props> = ({
   withProduct,
@@ -41,21 +41,24 @@ export const PurchasesSummaries: React.FC<Props> = ({
   function productSummary() {
     if (!withProduct || !purchase.data) return null;
 
-    return (purchase.data ?? []).reduce((acc, sale) => {
-      const existingSummary = acc.find((s) => s.id === sale.id);
-      if (existingSummary) {
-        existingSummary.quantity += sale.quantity;
-        existingSummary.total += sale.total;
-      } else {
-        acc.push({
-          id: sale.id,
-          name: sale.name,
-          quantity: sale.quantity,
-          total: sale.total,
-        });
-      }
-      return acc;
-    }, [] as Omit<PurchasesSummary, 'date'>[]);
+    return (purchase.data ?? []).reduce(
+      (acc, sale) => {
+        const existingSummary = acc.find((s) => s.id === sale.id);
+        if (existingSummary) {
+          existingSummary.quantity += sale.quantity;
+          existingSummary.total += sale.total;
+        } else {
+          acc.push({
+            id: sale.id,
+            name: sale.name,
+            quantity: sale.quantity,
+            total: sale.total,
+          });
+        }
+        return acc;
+      },
+      [] as Omit<PurchaseSummary, 'date'>[]
+    );
   }
 
   const ErrorState = () => (
@@ -89,87 +92,87 @@ export const PurchasesSummaries: React.FC<Props> = ({
   return (
     <div className="overflow-auto relative shadow-lg shadow-gray-200 bg-white rounded-md">
       <Table>
-        <thead>
+        <Table.Thead>
           {!hideTable && (
-            <tr>
-              <th className="whitespace-nowrap">Tanggal</th>
-              <th className="whitespace-nowrap">Barang</th>
-              <th>Jumlah</th>
-              <th>Total</th>
-            </tr>
+            <Table.Tr>
+              <Table.Th className="whitespace-nowrap">Tanggal</Table.Th>
+              <Table.Th className="whitespace-nowrap">Barang</Table.Th>
+              <Table.Th>Jumlah</Table.Th>
+              <Table.Th>Total</Table.Th>
+            </Table.Tr>
           )}
-        </thead>
-        <tbody>
+        </Table.Thead>
+        <Table.Tbody>
           {isLoading && <LoadingState />}
           {isError && <ErrorState />}
           {!isLoading && !isError && (
             <>
               {!hideTable &&
-                purchase.data.map(({ name, date, total, quantity }, i) => (
-                  <tr key={`${id}_${i}`}>
-                    <td>{dayjs(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}</td>
-                    <td>{name}</td>
-                    <td>{quantity}</td>
-                    <td className="text-right">{formatCurrency(total)}</td>
-                  </tr>
+                purchase.data?.map(({ name, date, total, quantity }, i) => (
+                  <Table.Tr key={`${id}_${i}`}>
+                    <Table.Td>{dayjs(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}</Table.Td>
+                    <Table.Td>{name}</Table.Td>
+                    <Table.Td>{quantity}</Table.Td>
+                    <Table.Td className="text-right">{formatCurrency(total)}</Table.Td>
+                  </Table.Tr>
                 ))}
               {productSummary()?.map((item) => (
-                <tr key={item.id} className="font-bold">
-                  <td colSpan={2} className=" text-center">
+                <Table.Tr key={item.id} className="font-bold">
+                  <Table.Td colSpan={2} className=" text-center">
                     {item.name}
-                  </td>
-                  <td className="">{item.quantity}</td>
-                  <td className="text-right">{formatCurrency(item.total)}</td>
-                </tr>
+                  </Table.Td>
+                  <Table.Td className="">{item.quantity}</Table.Td>
+                  <Table.Td className="text-right">{formatCurrency(item.total)}</Table.Td>
+                </Table.Tr>
               ))}
               {totalPurchases && totalPurchases[0] ? (
                 <>
-                  <tr className="bg-gray-50">
-                    <td colSpan={3} className="w-full">
+                  <Table.Tr className="bg-gray-50">
+                    <Table.Td colSpan={3} className="w-full">
                       <div className="font-bold text-center">Total Pembelian</div>
-                    </td>
-                    <td className="text-right">
+                    </Table.Td>
+                    <Table.Td className="text-right">
                       <span className="font-bold text-right">
                         {formatCurrency(totalPurchases[1])}
                       </span>
-                    </td>
-                  </tr>
+                    </Table.Td>
+                  </Table.Tr>
 
                   {!!totalSales && (
                     <>
-                      <tr className="bg-gray-50">
-                        <td colSpan={3} className="w-full">
+                      <Table.Tr className="bg-gray-50">
+                        <Table.Td colSpan={3} className="w-full">
                           <div className="font-bold text-center">Total Penjualan</div>
-                        </td>
-                        <td className="text-right">
+                        </Table.Td>
+                        <Table.Td className="text-right">
                           <span className="font-bold text-right">
                             {formatCurrency(totalSales[1])}
                           </span>
-                        </td>
-                      </tr>
-                      <tr className="bg-gray-50">
-                        <td colSpan={3} className="w-full">
+                        </Table.Td>
+                      </Table.Tr>
+                      <Table.Tr className="bg-gray-50">
+                        <Table.Td colSpan={3} className="w-full">
                           <div className="font-bold text-center">Laba Kotor</div>
-                        </td>
-                        <td className="text-right">
-                          <span className="font-bold text-right">
+                        </Table.Td>
+                        <Table.Td className="text-right">
+                          <span className="font-bold text-right whitespace-nowrap">
                             {formatCurrency(totalSales[1] - totalPurchases[1])}
                           </span>
-                        </td>
-                      </tr>
+                        </Table.Td>
+                      </Table.Tr>
                     </>
                   )}
                 </>
               ) : (
-                <tr>
-                  <td colSpan={4} className="text-center">
+                <Table.Tr>
+                  <Table.Td colSpan={4} className="text-center">
                     <div className="py-4">Data tidak ditemukan</div>
-                  </td>
-                </tr>
+                  </Table.Td>
+                </Table.Tr>
               )}
             </>
           )}
-        </tbody>
+        </Table.Tbody>
       </Table>
     </div>
   );

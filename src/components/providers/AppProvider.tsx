@@ -2,7 +2,7 @@ import { App } from '@capacitor/app';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation, useNavigate } from 'react-router-dom';
 
 import { AuthProvider } from '@/features/auth';
 import { OutletProvider } from '@/features/outlet';
@@ -15,8 +15,14 @@ type Props = {
   children: React.ReactNode;
 };
 
-const BackProvider = ({ children }: { children: React.ReactNode }) => {
+const LocationProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const root = document.getElementById('root');
+    root?.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     App.addListener('backButton', ({ canGoBack }) => {
@@ -34,17 +40,17 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
   return (
     <ErrorProvider>
       <QueryClientProvider client={queryClient}>
-        <Router>
-          <StyleProvider>
+        <StyleProvider>
+          <Router>
             <AuthProvider>
               <OutletProvider>
                 <HelmetProvider>
-                  <BackProvider>{children}</BackProvider>
+                  <LocationProvider>{children}</LocationProvider>
                 </HelmetProvider>
               </OutletProvider>
             </AuthProvider>
-          </StyleProvider>
-        </Router>
+          </Router>
+        </StyleProvider>
       </QueryClientProvider>
     </ErrorProvider>
   );

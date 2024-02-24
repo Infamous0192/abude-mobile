@@ -56,7 +56,7 @@ export const ProductPick: React.FC<Props> = ({ products, onSubmit }) => {
   return (
     <div className="relative">
       <TextInput
-        icon={<IconSearch size={16} />}
+        leftSection={<IconSearch size={16} />}
         placeholder="Cari barang"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}

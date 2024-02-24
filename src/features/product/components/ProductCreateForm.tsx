@@ -4,8 +4,8 @@ import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
 
-import { useCreateProduct, useSuppliers } from '../api';
-import { ProductRequest } from '../types';
+import { useCreateProduct } from '../api';
+import { ProductDTO } from '../types';
 
 type Props = {
   company: number;
@@ -13,20 +13,18 @@ type Props = {
 };
 
 export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
-  const form = useForm<ProductRequest>({
+  const form = useForm<ProductDTO>({
     initialValues: {
       name: '',
       description: '',
       price: 0,
       unit: '',
       company,
-      category: undefined,
-      supplier: undefined,
+      type: undefined,
       isDefault: false,
     },
   });
-  const { mutateAsync, isLoading } = useCreateProduct();
-  const { data } = useSuppliers({ params: { limit: -1, company } });
+  const { mutateAsync, isPending } = useCreateProduct();
 
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(
@@ -53,14 +51,23 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
   return (
     <form className="relative" onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <TextInput {...form.getInputProps('name')} label="Nama" required />
-        <Textarea {...form.getInputProps('description')} label="Deskripsi" />
+        <TextInput
+          {...form.getInputProps('name')}
+          label="Nama"
+          placeholder="Masukan nama produk"
+          required
+        />
+        <Textarea
+          {...form.getInputProps('description')}
+          label="Deskripsi"
+          placeholder="Masukan deskripsi (opsional)"
+        />
         <NumberInput
           {...form.getInputProps('price')}
           label="Harga"
           required
           hideControls
-          icon={<span className="text-xs">Rp.</span>}
+          leftSection={<span className="text-xs">Rp.</span>}
         />
         <TextInput
           {...form.getInputProps('unit')}
@@ -69,8 +76,8 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
           required
         />
         <Select
-          {...form.getInputProps('category')}
-          value={form.values['category'] ?? ''}
+          {...form.getInputProps('type')}
+          value={form.values['type'] ?? ''}
           label="Kategori"
           placeholder="Pilih Kategori"
           required
@@ -83,24 +90,12 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
           {...form.getInputProps('isDefault')}
           label="Default?"
           required
-          withinPortal
           data={[
             { label: 'Ya', value: 'true' },
             { label: 'Tidak', value: 'false' },
           ]}
           value={form.values['isDefault'] ? 'true' : 'false'}
           onChange={(v) => form.setFieldValue('isDefault', v == 'true')}
-        />
-        <Select
-          {...form.getInputProps('supplier')}
-          value={form.values['supplier']?.toString() ?? ''}
-          label="Supplier"
-          searchable
-          onChange={(v) => form.setFieldValue('supplier', v ? parseInt(v) : undefined)}
-          data={[
-            { label: '(Tanpa Supplier)', value: '' },
-            ...(data?.result ?? []).map(({ id, name }) => ({ label: name, value: id.toString() })),
-          ]}
         />
       </div>
 
@@ -109,11 +104,11 @@ export const ProductCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
           type="button"
           variant="default"
           onClick={() => modals.closeAll()}
-          loading={isLoading}
+          loading={isPending}
         >
           Batal
         </Button>
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={isPending}>
           Tambah
         </Button>
       </div>

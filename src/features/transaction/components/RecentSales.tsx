@@ -24,7 +24,7 @@ const SaleSkeleton: React.FC = () => {
 const SaleItem: React.FC<Sale> = (sale) => {
   return (
     <Link
-      to={`/sales/${sale.id}`}
+      to={`/sale/${sale.id}`}
       className="w-full flex items-center active:bg-gray-100 px-5 py-2 transition cursor-pointer"
     >
       <div className="flex-shrink-0">
@@ -66,11 +66,9 @@ export const RecentSales: React.FC<Props> = () => {
 
   return (
     <>
-      {data.result.map((sale) => (
-        <SaleItem key={sale.id} {...sale} />
-      ))}
+      {data?.result.map((sale) => <SaleItem key={sale.id} {...sale} />)}
       <div className="px-5 py-3">
-        {data.result.length > 0 ? (
+        {data!.result.length > 0 ? (
           <Button variant="subtle" fullWidth component={Link} to="/transaction">
             Lihat Semua
           </Button>

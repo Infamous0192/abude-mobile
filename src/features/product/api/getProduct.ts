@@ -5,11 +5,11 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
 import { Product } from '../types';
 
-type ProductDTO = {
+type ProductRequest = {
   id: number;
 };
 
-export async function getProduct({ id }: ProductDTO) {
+export async function getProduct({ id }: ProductRequest) {
   const res = await axios.get<Product>(`/product/${id}`);
 
   return res.data;

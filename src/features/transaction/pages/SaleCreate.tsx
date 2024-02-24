@@ -12,9 +12,9 @@ import { Product, ProductPick, useProducts } from '@/features/product';
 
 import { useCreateSale } from '../api';
 import { SaleItemList, SaleSubmit, SaleSummary } from '../components';
-import { SaleRequest } from '../types';
+import { SaleDTO } from '../types';
 
-const initialValues: Omit<SaleRequest, 'sourceId' | 'date'> = {
+const initialValues: Omit<SaleDTO, 'sourceId' | 'date'> = {
   customer: 'Umum',
   source: 'outlet',
   note: '',
@@ -24,10 +24,10 @@ const initialValues: Omit<SaleRequest, 'sourceId' | 'date'> = {
 export const SaleCreate: React.FC = () => {
   const { outlet } = useOutletContext();
   const { data } = useProducts({
-    params: { company: outlet?.company.id, limit: -1, category: 'sale' },
+    params: { company: outlet?.company.id, limit: -1, type: 'sale' },
   });
   const { mutateAsync } = useCreateSale();
-  const form = useForm<SaleRequest>({
+  const form = useForm<SaleDTO>({
     initialValues: {
       ...initialValues,
       sourceId: outlet?.id ?? 0,
@@ -47,7 +47,7 @@ export const SaleCreate: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  function handleItemChange(items: SaleRequest['items']) {
+  function handleItemChange(items: SaleDTO['items']) {
     form.setFieldValue('items', items);
   }
 
@@ -149,7 +149,7 @@ export const SaleCreate: React.FC = () => {
         <div className="flex items-center justify-end">
           <Button
             variant="subtle"
-            leftIcon={<IconCirclePlus size={16} />}
+            leftSection={<IconCirclePlus size={16} />}
             size="xs"
             onClick={handleAddProduct}
             disabled={products?.length == form.values['items'].length}

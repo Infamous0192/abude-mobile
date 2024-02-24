@@ -21,10 +21,11 @@ type UseCreateHandoverOptions = {
 };
 
 export function useCreateHandover({ config }: UseCreateHandoverOptions = {}) {
-  return useMutation(createHandover, {
+  return useMutation({
     ...config,
+    mutationFn: createHandover,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['handovers']);
+      queryClient.invalidateQueries({ queryKey: ['handovers'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

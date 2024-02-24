@@ -48,11 +48,11 @@ export const AppRoutes: React.FC = () => {
         <Route path="transaction/summary" element={<TransactionSummary />} />
         <Route path="purchase/summary" element={<PurchaseRecapitulation />} />
 
-        <Route path="sales/:id" element={<SaleDetail />} />
-        <Route path="sales/create" element={<SaleCreate />} />
+        <Route path="sale/:id" element={<SaleDetail />} />
+        <Route path="sale/create" element={<SaleCreate />} />
 
-        <Route path="purchases/:id" element={<PurchaseDetail />} />
-        <Route path="purchases/create" element={<PurchaseCreate />} />
+        <Route path="purchase/:id" element={<PurchaseDetail />} />
+        <Route path="purchase/create" element={<PurchaseCreate />} />
 
         <Route path="handover" element={<Handovers />} />
         <Route path="handover/create" element={<HandoverCreate />} />

@@ -1,4 +1,4 @@
-import { IconArrowBarToDown, IconArrowBarUp, IconBasket, IconListCheck, IconReceipt } from '@tabler/icons-react';
+import { IconArrowBarToDown, IconArrowBarUp, IconBasket, IconListCheck } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { MenuList } from '@/components/navigation';
@@ -23,66 +23,26 @@ export const Home: React.FC = () => {
       </section>
 
       <section className="bg-white mx-auto max-w-xs w-full -mt-14 shadow shadow-gray-200 rounded-xl z-50 relative">
-        
-
-        {getRoleText() === 'Owner' ? (
-          <div className="w-full grid grid-cols-4 divide-x divide-gray-300 py-4">
-          <Link to="/sales/create" className="px-4 flex flex-col items-center justify-center">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
-              <IconArrowBarUp className="w-7 h-7" />
-            </div>
-            <div className="text-xs mt-1">Penjualan</div>
-          </Link>
-          <Link to="/purchases/create" className="px-4 flex flex-col items-center justify-center">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
-              <IconArrowBarToDown className="w-7 h-7" />
-            </div>
-            <div className="text-xs mt-1">Pembelian</div>
-          </Link>
-          <Link to="/transaction" className="px-4 flex flex-col items-center justify-center">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
-              <IconReceipt className="w-7 h-7" />
-            </div>
-            <div className="text-xs mt-1">Riwayat</div>
-          </Link>
-          <Link to="/pengeluaran" className="px-4 flex flex-col items-center justify-center">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
-              <IconListCheck className="w-7 h-7" />
-            </div>
-            <div className="text-xs mt-1">Pengeluaran</div>
-          </Link>
-        </div>
-      ) : (
         <div className="w-full grid grid-cols-3 divide-x divide-gray-300 py-4">
-          <Link to="/sales/create" className="px-4 flex flex-col items-center justify-center">
+          <Link to="/sale/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarUp className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Penjualan</div>
           </Link>
-          {/* <Link to="/purchases/create" className="px-4 flex flex-col items-center justify-center">
+          <Link to="/purchase/create" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconArrowBarToDown className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Pembelian</div>
-          </Link> */}
-          <Link to="/transaction" className="px-4 flex flex-col items-center justify-center">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
-              <IconReceipt className="w-7 h-7" />
-            </div>
-            <div className="text-xs mt-1">Riwayat</div>
           </Link>
-          <Link to="/pengeluaran" className="px-4 flex flex-col items-center justify-center">
+          <Link to="/expense" className="px-4 flex flex-col items-center justify-center">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
               <IconListCheck className="w-7 h-7" />
             </div>
             <div className="text-xs mt-1">Pengeluaran</div>
           </Link>
         </div>
-      )}
-
-        
-        
       </section>
 
       <section className="px-5 mt-8 mb-6">
@@ -153,7 +113,7 @@ export const Home: React.FC = () => {
 
       <section className="my-6">
         <div className="px-5 flex justify-between">
-          <h2 className="text-lg font-bold mb-1">Penjualan Terbaru</h2>
+          <h2 className="text-lg font-bold mb-1">Penjualan Terakhir</h2>
         </div>
         <RecentSales />
       </section>

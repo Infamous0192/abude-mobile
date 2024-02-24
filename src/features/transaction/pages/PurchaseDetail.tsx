@@ -46,7 +46,7 @@ export const PurchaseDetail: React.FC = () => {
     });
   }
 
-  if (isLoading || isError) return null;
+  if (isLoading || isError || !data) return null;
 
   return (
     <main className="bg-white min-h-screen pb-6 relative">

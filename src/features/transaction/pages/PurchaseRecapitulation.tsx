@@ -9,11 +9,11 @@ import { OutletSelect, useOutletContext } from '@/features/outlet';
 import { formatCurrency } from '@/utils/format';
 
 import { usePurchasesSummary } from '../api';
-import { PurchasesSummary, PurchasesSummaryQuery, TransactionStatus } from '../types';
+import { PurchaseSummary, PurchaseSummaryQuery, TransactionStatus } from '../types';
 
 export const PurchaseRecapitulation: React.FC = () => {
   const { outlet } = useOutletContext();
-  const [params, setParams] = useState<PurchasesSummaryQuery>({
+  const [params, setParams] = useState<PurchaseSummaryQuery>({
     outlet: outlet?.id,
     status: ['accepted'],
     startDate: new Date(),
@@ -25,21 +25,24 @@ export const PurchaseRecapitulation: React.FC = () => {
   const result = useMemo(() => {
     if (!data) return [];
 
-    return (data ?? []).reduce((acc, sale) => {
-      const existingSummary = acc.find((s) => s.id === sale.id);
-      if (existingSummary) {
-        existingSummary.quantity += sale.quantity;
-        existingSummary.total += sale.total;
-      } else {
-        acc.push({
-          id: sale.id,
-          name: sale.name,
-          quantity: sale.quantity,
-          total: sale.total,
-        });
-      }
-      return acc;
-    }, [] as Omit<PurchasesSummary, 'date'>[]);
+    return (data ?? []).reduce(
+      (acc, sale) => {
+        const existingSummary = acc.find((s) => s.id === sale.id);
+        if (existingSummary) {
+          existingSummary.quantity += sale.quantity;
+          existingSummary.total += sale.total;
+        } else {
+          acc.push({
+            id: sale.id,
+            name: sale.name,
+            quantity: sale.quantity,
+            total: sale.total,
+          });
+        }
+        return acc;
+      },
+      [] as Omit<PurchaseSummary, 'date'>[]
+    );
   }, [data]);
 
   const ErrorState = () => (
@@ -78,7 +81,7 @@ export const PurchaseRecapitulation: React.FC = () => {
         <Authorization role={['owner', 'superadmin']}>
           <OutletSelect
             placeholder="Pilih Outlet"
-            icon={<IconCategory size={14} />}
+            leftSection={<IconCategory size={14} />}
             value={params.outlet?.toString()}
             onChange={(v) => {
               if (v == null) return;
@@ -94,7 +97,7 @@ export const PurchaseRecapitulation: React.FC = () => {
           type="range"
           valueFormat="D MMMM YYYY"
           placeholder="Rentang Tanggal"
-          icon={<IconCalendar size={14} />}
+          leftSection={<IconCalendar size={14} />}
           value={[params.startDate ?? null, params.endDate ?? null]}
           allowSingleDateInRange
           onChange={([startDate, endDate]) =>
@@ -106,7 +109,7 @@ export const PurchaseRecapitulation: React.FC = () => {
           }
         />
         <Select
-          icon={<IconAdjustments size={14} />}
+          leftSection={<IconAdjustments size={14} />}
           data={[
             { value: 'accepted', label: 'Diterima' },
             { value: 'approved', label: 'Direkap' },

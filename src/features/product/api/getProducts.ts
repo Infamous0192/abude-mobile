@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -6,11 +6,11 @@ import { PaginatedResult } from '@/types/api';
 
 import { Product, ProductQuery } from '../types';
 
-type ProductsDTO = {
+type ProductsRequest = {
   params?: ProductQuery;
 };
 
-export async function getProducts({ params }: ProductsDTO) {
+export async function getProducts({ params }: ProductsRequest) {
   const res = await axios.get<PaginatedResult<Product>>(`/product`, { params });
 
   return res.data;
@@ -28,12 +28,13 @@ export function useProducts({ config, params }: UseProductsOptions = {}) {
     ...config,
     queryKey: ['products', params],
     queryFn: () => getProducts({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }
 
 export function useInfiniteProducts({ params }: UseProductsOptions = {}) {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['products', params],
     queryFn: ({ pageParam: page = 1 }) => getProducts({ params: { ...params, page } }),
     getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),

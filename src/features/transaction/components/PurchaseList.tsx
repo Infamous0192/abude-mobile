@@ -12,12 +12,12 @@ import { formatCurrency } from '@/utils/format';
 import { useInfinitePurchases } from '../api';
 import { Purchase, PurchaseQuery, TransactionStatus } from '../types';
 
-import { PurchaseStatus } from './TransactionStatus';
+import { PurchaseStatus } from './PurchaseStatus';
 
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
     <Link
-      to={`/purchases/${purchase.id}`}
+      to={`/purchase/${purchase.id}`}
       className="w-full block active:bg-gray-100 px-5 py-2 transition cursor-pointer"
     >
       <div className="flex w-full">
@@ -86,7 +86,7 @@ export const PurchaseList: React.FC<Props> = () => {
         <Authorization role={['owner', 'superadmin']}>
           <OutletSelect
             placeholder="Pilih Outlet"
-            icon={<IconCategory size={14} />}
+            leftSection={<IconCategory size={14} />}
             value={params.outlet?.toString()}
             onChange={(v) => {
               if (v == null) return;
@@ -99,7 +99,7 @@ export const PurchaseList: React.FC<Props> = () => {
           />
         </Authorization>
         <DatePickerInput
-          icon={<IconCalendar size={14} />}
+          leftSection={<IconCalendar size={14} />}
           placeholder="Rentang Tanggal"
           type="range"
           clearable
@@ -131,9 +131,7 @@ export const PurchaseList: React.FC<Props> = () => {
       </div>
       {purchases?.length == 0 && <div className="px-5">Belum ada pembelian</div>}
       <div className="divide-y divide-gray-200">
-        {purchases?.map((purchase) => (
-          <PurchaseItem key={purchase.id} {...purchase} />
-        ))}
+        {purchases?.map((purchase) => <PurchaseItem key={purchase.id} {...purchase} />)}
       </div>
       <div className="px-5 flex items-center justify-center py-4">
         {isFetching ? (

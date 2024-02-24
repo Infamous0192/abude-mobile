@@ -23,7 +23,7 @@ const PurchaseSkeleton: React.FC = () => {
 const PurchaseItem: React.FC<Purchase> = (purchase) => {
   return (
     <Link
-      to={`/purchases/${purchase.id}`}
+      to={`/purchase/${purchase.id}`}
       className="w-full flex items-center active:bg-gray-100 px-5 py-2 transition cursor-pointer"
     >
       <div className="flex-shrink-0">
@@ -63,11 +63,5 @@ export const RecentPurchase: React.FC<Props> = () => {
       </>
     );
 
-  return (
-    <>
-      {data.result.map((purchase) => (
-        <PurchaseItem key={purchase.id} {...purchase} />
-      ))}
-    </>
-  );
+  return <>{data?.result.map((purchase) => <PurchaseItem key={purchase.id} {...purchase} />)}</>;
 };

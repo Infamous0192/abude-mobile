@@ -59,7 +59,7 @@ export const Outlets: React.FC = () => {
       <div className="px-5 mt-8">
         <Button
           onClick={() => logout()}
-          leftIcon={<IconLogout size={14} />}
+          leftSection={<IconLogout size={14} />}
           color="red"
           variant="subtle"
           fullWidth

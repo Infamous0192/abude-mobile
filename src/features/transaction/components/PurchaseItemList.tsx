@@ -1,11 +1,11 @@
-import { NumberInput, TextInput, UnstyledButton } from '@mantine/core';
+import { NumberInput, TextInput } from '@mantine/core';
 import { useState } from 'react';
 
 import { Product } from '@/features/product';
 
-import { PurchaseRequest } from '../types';
+import { PurchaseDTO } from '../types';
 
-type ItemValue = { price: number; quantity: number | '' };
+type ItemValue = { price: number; quantity: number };
 
 type ItemProps = {
   product: Product;
@@ -15,14 +15,14 @@ type ItemProps = {
 const PurchaseItem: React.FC<ItemProps> = ({ product, onChange }) => {
   const [value, setValue] = useState<ItemValue>({ quantity: 1, price: product.price });
 
-  function handlePrice(price: number) {
-    setValue({ ...value, price });
-    onChange({ ...value, price });
+  function handlePrice(price: number | string) {
+    setValue({ ...value, price: Number(price) });
+    onChange({ ...value, price: Number(price) });
   }
 
-  function handleQuantity(quantity: number) {
-    setValue({ ...value, quantity });
-    onChange({ ...value, quantity });
+  function handleQuantity(quantity: number | string) {
+    setValue({ ...value, quantity: Number(quantity) });
+    onChange({ ...value, quantity: Number(quantity) });
   }
 
   function handleRemove() {
@@ -38,9 +38,9 @@ const PurchaseItem: React.FC<ItemProps> = ({ product, onChange }) => {
           value={product.name}
           readOnly
           rightSection={
-            <UnstyledButton className="text-xs text-red-600 pr-4" onClick={handleRemove}>
+            <button className="text-red-600 text-xs bg-transparent pr-4" onClick={handleRemove}>
               Hapus
-            </UnstyledButton>
+            </button>
           }
         />
       </div>
@@ -50,11 +50,20 @@ const PurchaseItem: React.FC<ItemProps> = ({ product, onChange }) => {
           hideControls
           value={value.price}
           onChange={handlePrice}
-          rightSection={<span className="text-xs text-gray-600 pr-4">/{product.unit}</span>}
+          rightSectionWidth={24}
+          rightSection={<span className="text-xs text-gray-600">/{product.unit}</span>}
+          thousandSeparator="."
+          decimalSeparator=","
         />
       </div>
       <div className="col-span-6">
-        <NumberInput label="Jumlah" value={value.quantity} onChange={handleQuantity} />
+        <NumberInput
+          label="Jumlah"
+          value={value.quantity}
+          onChange={handleQuantity}
+          thousandSeparator="."
+          decimalSeparator=","
+        />
       </div>
     </div>
   );
@@ -62,15 +71,13 @@ const PurchaseItem: React.FC<ItemProps> = ({ product, onChange }) => {
 
 type Props = {
   products: Product[];
-  items: PurchaseRequest['items'];
-  onChange: (item: PurchaseRequest['items']) => void;
+  items: PurchaseDTO['items'];
+  onChange: (item: PurchaseDTO['items']) => void;
 };
 
 export const PurchaseItemList: React.FC<Props> = ({ products, items, onChange }) => {
   function handleChange(product: Product) {
     return ({ price, quantity }: ItemValue) => {
-      if (quantity === '') return;
-
       if (quantity <= 0) {
         return onChange(items.filter((item) => item.product != product.id));
       }

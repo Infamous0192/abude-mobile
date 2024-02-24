@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { dayjs } from '@/lib/dayjs';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
-import { PurchasesSummary, PurchasesSummaryQuery } from '../types';
+import { PurchaseSummary, PurchaseSummaryQuery } from '../../types';
 
-type SummariesDTO = {
-  params?: PurchasesSummaryQuery;
+type SummariesRequest = {
+  params?: PurchaseSummaryQuery;
 };
 
-export async function getPurchasesSummary({ params }: SummariesDTO) {
-  const res = await axios.get<PurchasesSummary[]>(`/purchase/summary`, {
+export async function getPurchasesSummary({ params }: SummariesRequest) {
+  const res = await axios.get<PurchaseSummary[]>(`/purchase/summary`, {
     params: {
       ...params,
       startDate: params?.startDate ? dayjs(params?.startDate).startOf('d').utc(true).toDate() : '',
@@ -25,7 +25,7 @@ export async function getPurchasesSummary({ params }: SummariesDTO) {
 type QueryFnType = typeof getPurchasesSummary;
 
 type UsePurchasesSummaryOptions = {
-  params?: PurchasesSummaryQuery;
+  params?: PurchaseSummaryQuery;
   config?: QueryConfig<QueryFnType>;
 };
 

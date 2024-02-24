@@ -39,7 +39,7 @@ export const OutletPick: React.FC = () => {
         )}
 
         <Menu.Divider />
-        <Menu.Item color="red" onClick={() => logout()} icon={<IconLogout size={14} />}>
+        <Menu.Item color="red" onClick={() => logout()} leftSection={<IconLogout size={14} />}>
           Logout
         </Menu.Item>
       </Menu.Dropdown>

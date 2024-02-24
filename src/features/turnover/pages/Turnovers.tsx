@@ -75,7 +75,7 @@ export const Turnovers: React.FC = () => {
         <Authorization role={['superadmin', 'owner']}>
           <OutletSelect
             placeholder="Pilih Outlet"
-            icon={<IconCategory size={14} />}
+            leftSection={<IconCategory size={14} />}
             value={params.outlet?.toString()}
             onChange={(v) => {
               if (v == null) return;
@@ -91,7 +91,7 @@ export const Turnovers: React.FC = () => {
           type="range"
           valueFormat="D MMMM YYYY"
           placeholder="Rentang Tanggal"
-          icon={<IconCalendar size={14} />}
+          leftSection={<IconCalendar size={14} />}
           value={[params.startDate ?? null, params.endDate ?? null]}
           allowSingleDateInRange
           onChange={([startDate, endDate]) =>
@@ -113,7 +113,7 @@ export const Turnovers: React.FC = () => {
       </section>
 
       <footer className="max-w-md w-full fixed bottom-0 bg-white p-4 shadow-lg shadow-gray-200 border-t border-gray-100">
-        <Button onClick={handleAdd} leftIcon={<IconPlus size={16} />} fullWidth size="xs">
+        <Button onClick={handleAdd} leftSection={<IconPlus size={16} />} fullWidth size="xs">
           Tambah
         </Button>
       </footer>

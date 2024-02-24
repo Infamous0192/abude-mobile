@@ -42,9 +42,9 @@ export const Products: React.FC = () => {
         </Button>
       </section>
 
-      <section className="px-5 mb-1">
+      <section className="px-5 mb-2">
         <TextInput
-          icon={<IconSearch size={16} />}
+          leftSection={<IconSearch size={16} />}
           placeholder="Cari barang"
           value={query.keyword}
           onChange={(e) => setQuery({ ...query, keyword: e.target.value })}

@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Purchase } from '../types';
+import { Purchase } from '../../types';
 
-type PurchaseDeleteDTO = {
+type PurchaseDeleteRequest = {
   id: number;
 };
 
-export async function deletePurchase({ id }: PurchaseDeleteDTO) {
+export async function deletePurchase({ id }: PurchaseDeleteRequest) {
   const res = await axios.delete<GeneralResponse<Purchase>>(`/purchase/${id}`);
 
   return res.data;
@@ -21,10 +21,12 @@ type UseDeletePurchaseOptions = {
 };
 
 export function useDeletePurchase({ config }: UseDeletePurchaseOptions = {}) {
-  return useMutation(deletePurchase, {
+  return useMutation({
     ...config,
+    mutationFn: deletePurchase,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['purchases']);
+      queryClient.invalidateQueries({ queryKey: ['purchases'] });
+      queryClient.invalidateQueries({ queryKey: ['purchase'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

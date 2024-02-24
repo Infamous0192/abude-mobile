@@ -1,16 +1,16 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { PaginatedResult } from '@/types/api';
 
-import { Purchase, PurchaseQuery } from '../types';
+import { Purchase, PurchaseQuery } from '../../types';
 
-type PurchasesDTO = {
+type PurchasesRequest = {
   params?: PurchaseQuery;
 };
 
-export async function getPurchases({ params }: PurchasesDTO) {
+export async function getPurchases({ params }: PurchasesRequest) {
   const res = await axios.get<PaginatedResult<Purchase>>(`/purchase`, { params });
 
   return res.data;
@@ -28,12 +28,13 @@ export function usePurchases({ config, params }: UsePurchasesOptions = {}) {
     ...config,
     queryKey: ['purchases', params],
     queryFn: () => getPurchases({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }
 
 export function useInfinitePurchases({ params }: UsePurchasesOptions = {}) {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['purchases', { ...params, infinite: true }],
     queryFn: ({ pageParam: page = 1 }) => getPurchases({ params: { ...params, page } }),
     getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),

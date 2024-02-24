@@ -2,10 +2,10 @@ import { Button } from '@mantine/core';
 
 import { formatCurrency } from '@/utils/format';
 
-import { SaleRequest } from '../types';
+import { SaleDTO } from '../types';
 
 type Props = {
-  items: SaleRequest['items'];
+  items: SaleDTO['items'];
   onSubmit: () => void;
 };
 

@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { dayjs } from '@/lib/dayjs';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
-import { SalesSummary, SalesSummaryQuery } from '../types';
+import { SaleSummary, SaleSummaryQuery } from '../../types';
 
-type SummariesDTO = {
-  params?: SalesSummaryQuery;
+type SummariesRequest = {
+  params?: SaleSummaryQuery;
 };
 
-export async function getSalesSummary({ params }: SummariesDTO) {
-  const res = await axios.get<SalesSummary[]>(`/sale/summary`, {
+export async function getSalesSummary({ params }: SummariesRequest) {
+  const res = await axios.get<SaleSummary[]>(`/sale/summary`, {
     params: {
       ...params,
       startDate: params?.startDate ? dayjs(params?.startDate).startOf('d').utc(true).toDate() : '',
@@ -25,7 +25,7 @@ export async function getSalesSummary({ params }: SummariesDTO) {
 type QueryFnType = typeof getSalesSummary;
 
 type UseSalesSummaryOptions = {
-  params?: SalesSummaryQuery;
+  params?: SaleSummaryQuery;
   config?: QueryConfig<QueryFnType>;
 };
 

@@ -1,10 +1,12 @@
 import { MantineProvider, MantineThemeOverride } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 
 import '@/styles/globals.css';
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
+
 import { DateProvider } from './DateProvider';
 
 const theme: MantineThemeOverride = {
@@ -19,15 +21,8 @@ type Props = {
 };
 
 export const StyleProvider: React.FC<Props> = ({ children }) => {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    const root = document.getElementById('root');
-    root?.scrollTo(0, 0);
-  }, [pathname]);
-
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+    <MantineProvider theme={theme}>
       <DateProvider>
         <Notifications autoClose={5000} />
         <ModalsProvider

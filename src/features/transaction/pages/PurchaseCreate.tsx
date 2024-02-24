@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Textarea } from '@mantine/core';
+import { ActionIcon, Button, Select, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
@@ -7,26 +7,28 @@ import { IconChevronLeft, IconCirclePlus } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
-import { Product, ProductPick, useProducts } from '@/features/product';
+import { Product, ProductPick, SupplierSelect, useProducts } from '@/features/product';
 import { formatCurrency } from '@/utils/format';
 
 import { useCreatePurchase } from '../api';
 import { PurchaseItemList, PurchaseSummary } from '../components';
-import { PurchaseRequest } from '../types';
+import { PurchaseDTO } from '../types';
 
-const initialValues: Omit<PurchaseRequest, 'sourceId' | 'date'> = {
+const initialValues: Omit<PurchaseDTO, 'sourceId' | 'date'> = {
   source: 'outlet',
   note: '',
   items: [],
+  supplier: undefined,
+  type: undefined,
 };
 
 export const PurchaseCreate: React.FC = () => {
   const { outlet } = useOutletContext();
   const { data } = useProducts({
-    params: { company: outlet?.company.id, limit: -1, category: 'purchase' },
+    params: { company: outlet?.company.id, limit: -1, type: 'purchase' },
   });
   const { mutateAsync } = useCreatePurchase();
-  const form = useForm<PurchaseRequest>({
+  const form = useForm<PurchaseDTO>({
     initialValues: {
       ...initialValues,
       sourceId: outlet?.id ?? 0,
@@ -40,7 +42,7 @@ export const PurchaseCreate: React.FC = () => {
     0
   );
 
-  function handleItemChange(items: PurchaseRequest['items']) {
+  function handleItemChange(items: PurchaseDTO['items']) {
     form.setFieldValue('items', items);
   }
 
@@ -115,6 +117,20 @@ export const PurchaseCreate: React.FC = () => {
           placeholder="Tambahkan catatan"
           variant="filled"
         />
+        <SupplierSelect
+          {...form.getInputProps('supplier')}
+          label="Supplier"
+          placeholder="Pilih Supplier (optional)"
+        />
+        <Select
+          {...form.getInputProps('type')}
+          label="Jenis"
+          placeholder="Pilih Jenis"
+          data={[
+            { value: 'debit', label: 'Tunai' },
+            { value: 'credit', label: 'Kredit' },
+          ]}
+        />
       </section>
 
       <section className="px-5">
@@ -127,7 +143,7 @@ export const PurchaseCreate: React.FC = () => {
         <div className="flex items-center justify-end mt-4">
           <Button
             variant="subtle"
-            leftIcon={<IconCirclePlus size={16} />}
+            leftSection={<IconCirclePlus size={16} />}
             size="xs"
             onClick={handleAddProduct}
             disabled={products?.length == form.values['items'].length}

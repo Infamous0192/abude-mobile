@@ -24,7 +24,7 @@ export type Sale = {
   date: Date;
 } & BaseEntity;
 
-export type SaleRequest = {
+export type SaleDTO = {
   customer: string;
   note: string;
   source: 'outlet' | 'warehouse';
@@ -63,11 +63,13 @@ export type Purchase = {
   date: Date;
 } & BaseEntity;
 
-export type PurchaseRequest = {
+export type PurchaseDTO = {
   note: string;
   source: 'outlet' | 'warehouse';
   sourceId: number;
   date: Date;
+  supplier?: number;
+  type?: 'debit' | 'credit';
   items: Array<{
     price?: number;
     quantity: number;
@@ -83,7 +85,7 @@ export type PurchaseQuery = {
   status?: TransactionStatus[];
 } & Pagination;
 
-export type SalesSummary = {
+export type SaleSummary = {
   id: number;
   date: string;
   name: string;
@@ -91,14 +93,14 @@ export type SalesSummary = {
   total: number;
 };
 
-export type SalesSummaryQuery = {
+export type SaleSummaryQuery = {
   status?: TransactionStatus[];
   outlet?: number | string;
   startDate?: Date;
   endDate?: Date;
 };
 
-export type PurchasesSummary = {
+export type PurchaseSummary = {
   id: number;
   date: string;
   name: string;
@@ -106,7 +108,7 @@ export type PurchasesSummary = {
   total: number;
 };
 
-export type PurchasesSummaryQuery = {
+export type PurchaseSummaryQuery = {
   status?: TransactionStatus[];
   outlet?: number | string;
   startDate?: Date;

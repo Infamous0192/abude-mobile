@@ -16,7 +16,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const credsQuery = useCreds();
   const employeeQuery = useEmployee({ config: { enabled: false } });
 
-  const logoutMutation = useMutation(logout, {
+  const logoutMutation = useMutation({
+    mutationFn: logout,
     onSuccess: () => {
       queryClient.clear();
     },
@@ -31,7 +32,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     [credsQuery, employeeQuery, logoutMutation.mutateAsync]
   );
 
-  if (credsQuery.isLoading || employeeQuery.isFetching || logoutMutation.isLoading)
+  if (credsQuery.isLoading || employeeQuery.isFetching || logoutMutation.isPending)
     return <LoadingScreen />;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

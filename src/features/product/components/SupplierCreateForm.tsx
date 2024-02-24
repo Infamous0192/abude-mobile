@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
 
 import { useCreateSupplier } from '../api';
-import { SupplierRequest } from '../types';
+import { SupplierDTO } from '../types';
 
 type Props = {
   company?: number;
@@ -13,14 +13,14 @@ type Props = {
 };
 
 export const SupplierCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
-  const form = useForm<SupplierRequest>({
+  const form = useForm<SupplierDTO>({
     initialValues: {
       name: '',
       description: '',
       company,
     },
   });
-  const { mutateAsync, isLoading } = useCreateSupplier();
+  const { mutateAsync, isPending } = useCreateSupplier();
 
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(
@@ -56,11 +56,11 @@ export const SupplierCreateForm: React.FC<Props> = ({ company, onSuccess }) => {
           type="button"
           variant="default"
           onClick={() => modals.closeAll()}
-          loading={isLoading}
+          loading={isPending}
         >
           Batal
         </Button>
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={isPending}>
           Tambah
         </Button>
       </div>

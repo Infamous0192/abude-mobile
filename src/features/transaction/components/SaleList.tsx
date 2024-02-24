@@ -17,7 +17,7 @@ import { SaleStatus } from './SaleStatus';
 const SaleItem: React.FC<Sale> = (sale) => {
   return (
     <Link
-      to={`/sales/${sale.id}`}
+      to={`/sale/${sale.id}`}
       className="w-full flex items-center active:bg-gray-100 px-5 py-2 transition cursor-pointer"
     >
       <div className="flex-shrink-0">
@@ -65,7 +65,7 @@ export const SaleList: React.FC<Props> = () => {
         <Authorization role={['owner', 'superadmin']}>
           <OutletSelect
             placeholder="Pilih Outlet"
-            icon={<IconCategory size={14} />}
+            leftSection={<IconCategory size={14} />}
             value={params.outlet?.toString()}
             onChange={(v) => {
               if (v == null) return;
@@ -78,7 +78,7 @@ export const SaleList: React.FC<Props> = () => {
           />
         </Authorization>
         <DatePickerInput
-          icon={<IconCalendar size={14} />}
+          leftSection={<IconCalendar size={14} />}
           placeholder="Rentang Tanggal"
           type="range"
           clearable
@@ -109,9 +109,7 @@ export const SaleList: React.FC<Props> = () => {
         />
       </div>
       {sales?.length == 0 && <div className="px-5">Belum ada penjualan</div>}
-      {sales?.map((sale) => (
-        <SaleItem key={sale.id} {...sale} />
-      ))}
+      {sales?.map((sale) => <SaleItem key={sale.id} {...sale} />)}
       <div className="px-5 flex items-center justify-center py-4">
         {isFetching ? (
           <Loader />

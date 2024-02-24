@@ -4,11 +4,11 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Purchase, PurchaseRequest } from '../types';
+import { Purchase, PurchaseDTO } from '../../types';
 
 export type UpdatePurchaseDTO = {
   id: number;
-  data: PurchaseRequest;
+  data: PurchaseDTO;
 };
 
 export async function updatePurchase({ id, data }: UpdatePurchaseDTO) {
@@ -22,11 +22,12 @@ type UseUpdatePurchaseOptions = {
 };
 
 export function useUpdatePurchase({ config }: UseUpdatePurchaseOptions = {}) {
-  return useMutation(updatePurchase, {
+  return useMutation({
     ...config,
+    mutationFn: updatePurchase,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['purchases']);
-      queryClient.invalidateQueries(['purchase', args[1].id]);
+      queryClient.invalidateQueries({ queryKey: ['purchases'] });
+      queryClient.invalidateQueries({ queryKey: ['purchase'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

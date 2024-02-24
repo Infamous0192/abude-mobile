@@ -2,7 +2,6 @@ import { Button, Select, Tabs } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { IconAdjustments, IconCalendar, IconCategory, IconPrinter } from '@tabler/icons-react';
 import { useState } from 'react';
-import { Browser } from '@capacitor/browser';
 
 import { Navbar } from '@/components/navigation';
 import { Authorization } from '@/features/auth';
@@ -12,11 +11,11 @@ import { dayjs } from '@/lib/dayjs';
 import storage from '@/utils/storage';
 
 import { PurchasesSummaries, SalesSummaries } from '../components';
-import { PurchasesSummaryQuery, SalesSummaryQuery, TransactionStatus } from '../types';
+import { PurchaseSummaryQuery, SaleSummaryQuery, TransactionStatus } from '../types';
 
 const SalesSection: React.FC = () => {
   const { outlet } = useOutletContext();
-  const [params, setParams] = useState<SalesSummaryQuery>({
+  const [params, setParams] = useState<SaleSummaryQuery>({
     outlet: outlet?.id,
     status: ['accepted'],
     startDate: new Date(),
@@ -32,7 +31,7 @@ const SalesSection: React.FC = () => {
         <Authorization role={['owner', 'superadmin']}>
           <OutletSelect
             placeholder="Pilih Outlet"
-            icon={<IconCategory size={14} />}
+            leftSection={<IconCategory size={14} />}
             value={params.outlet?.toString()}
             onChange={(v) => {
               if (v == null) return;
@@ -48,7 +47,7 @@ const SalesSection: React.FC = () => {
           type="range"
           valueFormat="D MMMM YYYY"
           placeholder="Rentang Tanggal"
-          icon={<IconCalendar size={14} />}
+          leftSection={<IconCalendar size={14} />}
           value={[params.startDate ?? null, params.endDate ?? null]}
           allowSingleDateInRange
           onChange={([startDate, endDate]) =>
@@ -60,7 +59,7 @@ const SalesSection: React.FC = () => {
           }
         />
         <Select
-          icon={<IconAdjustments size={14} />}
+          leftSection={<IconAdjustments size={14} />}
           data={[
             { value: 'accepted', label: 'Diterima' },
             { value: 'approved', label: 'Direkap' },
@@ -81,12 +80,12 @@ const SalesSection: React.FC = () => {
               params.outlet
             }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
             target="_blank"
-            leftIcon={<IconPrinter size={16} />}
+            leftSection={<IconPrinter size={16} />}
             size="xs"
           >
             Cetak per Outlet
           </Button>
-          
+
           <Authorization role={['superadmin', 'owner']}>
             <Button
               component="a"
@@ -94,12 +93,11 @@ const SalesSection: React.FC = () => {
                 outlet?.company.id
               }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
               target="_blank"
-              leftIcon={<IconPrinter size={16} />}
+              leftSection={<IconPrinter size={16} />}
               size="xs"
             >
               Cetak Semua
             </Button>
-            
           </Authorization>
         </div>
       </div>
@@ -113,7 +111,7 @@ const SalesSection: React.FC = () => {
 
 const PurchasesSection: React.FC = () => {
   const { outlet } = useOutletContext();
-  const [params, setParams] = useState<PurchasesSummaryQuery>({
+  const [params, setParams] = useState<PurchaseSummaryQuery>({
     outlet: outlet?.id,
     status: ['accepted'],
     startDate: new Date(),
@@ -129,7 +127,7 @@ const PurchasesSection: React.FC = () => {
         <Authorization role={['owner', 'superadmin']}>
           <OutletSelect
             placeholder="Pilih Outlet"
-            icon={<IconCategory size={14} />}
+            leftSection={<IconCategory size={14} />}
             value={params.outlet?.toString()}
             onChange={(v) => {
               if (v == null) return;
@@ -145,7 +143,7 @@ const PurchasesSection: React.FC = () => {
           type="range"
           valueFormat="D MMMM YYYY"
           placeholder="Rentang Tanggal"
-          icon={<IconCalendar size={14} />}
+          leftSection={<IconCalendar size={14} />}
           value={[params.startDate ?? null, params.endDate ?? null]}
           allowSingleDateInRange
           onChange={([startDate, endDate]) =>
@@ -157,7 +155,7 @@ const PurchasesSection: React.FC = () => {
           }
         />
         <Select
-          icon={<IconAdjustments size={14} />}
+          leftSection={<IconAdjustments size={14} />}
           data={[
             { value: 'accepted', label: 'Diterima' },
             { value: 'approved', label: 'Direkap' },
@@ -177,7 +175,7 @@ const PurchasesSection: React.FC = () => {
               params.outlet
             }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
             target="_blank"
-            leftIcon={<IconPrinter size={16} />}
+            leftSection={<IconPrinter size={16} />}
             size="xs"
           >
             Cetak per Outlet
@@ -189,7 +187,7 @@ const PurchasesSection: React.FC = () => {
                 outlet?.company.id
               }/transaction/print?startDate=${startDate}&endDate=${endDate}&token=${storage.getToken()}`}
               target="_blank"
-              leftIcon={<IconPrinter size={16} />}
+              leftSection={<IconPrinter size={16} />}
               size="xs"
             >
               Cetak Semua
@@ -218,7 +216,7 @@ export const TransactionSummary: React.FC = () => {
           unstyled
           radius="xl"
           value={selected}
-          onTabChange={(v) => setSelected(v ?? '')}
+          onChange={(v) => setSelected(v ?? '')}
         >
           <Tabs.List>
             <Button

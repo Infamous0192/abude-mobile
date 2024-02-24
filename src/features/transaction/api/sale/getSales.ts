@@ -1,16 +1,16 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { PaginatedResult } from '@/types/api';
 
-import { Sale, SaleQuery } from '../types';
+import { Sale, SaleQuery } from '../../types';
 
-type SalesDTO = {
+type SalesRequest = {
   params?: SaleQuery;
 };
 
-export async function getSales({ params }: SalesDTO) {
+export async function getSales({ params }: SalesRequest) {
   const res = await axios.get<PaginatedResult<Sale>>(`/sale`, { params });
 
   return res.data;
@@ -28,12 +28,13 @@ export function useSales({ config, params }: UseSalesOptions = {}) {
     ...config,
     queryKey: ['sales', params],
     queryFn: () => getSales({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }
 
 export function useInfiniteSales({ params }: UseSalesOptions = {}) {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['sales', { ...params, infinite: true }],
     queryFn: ({ pageParam: page = 1 }) => getSales({ params: { ...params, page } }),
     getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),

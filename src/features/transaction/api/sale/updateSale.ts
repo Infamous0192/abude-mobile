@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Sale, SaleRequest } from '../types';
+import { Sale, SaleDTO } from '../../types';
 
-export type UpdateSaleDTO = {
+export type SaleUpdateRequest = {
   id: number;
-  data: SaleRequest;
+  data: SaleDTO;
 };
 
-export async function updateSale({ id, data }: UpdateSaleDTO) {
+export async function updateSale({ id, data }: SaleUpdateRequest) {
   const res = await axios.put<GeneralResponse<Sale>>(`/sale/${id}`, data);
 
   return res.data;
@@ -22,11 +22,12 @@ type UseUpdateSaleOptions = {
 };
 
 export function useUpdateSale({ config }: UseUpdateSaleOptions = {}) {
-  return useMutation(updateSale, {
+  return useMutation({
+    mutationFn: updateSale,
     ...config,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['sales']);
-      queryClient.invalidateQueries(['sale', args[1].id]);
+      queryClient.invalidateQueries({ queryKey: ['sales'] });
+      queryClient.invalidateQueries({ queryKey: ['sale'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Supplier, SupplierRequest } from '../types';
+import { Supplier, SupplierDTO } from '../types';
 
-type SupplierCreateDTO = {
-  data: SupplierRequest;
+type SupplierCreateRequest = {
+  data: SupplierDTO;
 };
 
-export async function createSupplier({ data }: SupplierCreateDTO) {
+export async function createSupplier({ data }: SupplierCreateRequest) {
   const res = await axios.post<GeneralResponse<Supplier>>(`/supplier`, data);
 
   return res.data;
@@ -21,10 +21,11 @@ type UseCreateSupplierOptions = {
 };
 
 export function useCreateSupplier({ config }: UseCreateSupplierOptions = {}) {
-  return useMutation(createSupplier, {
+  return useMutation({
     ...config,
+    mutationFn: createSupplier,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['suppliers']);
+      queryClient.invalidateQueries({ queryKey: ['suppliers'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

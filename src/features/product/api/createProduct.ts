@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Product, ProductRequest } from '../types';
+import { Product, ProductDTO } from '../types';
 
-type ProductCreateDTO = {
-  data: ProductRequest;
+type ProductCreateRequest = {
+  data: ProductDTO;
 };
 
-export async function createProduct({ data }: ProductCreateDTO) {
+export async function createProduct({ data }: ProductCreateRequest) {
   const res = await axios.post<GeneralResponse<Product>>(`/product`, data);
 
   return res.data;
@@ -21,10 +21,11 @@ type UseCreateProductOptions = {
 };
 
 export function useCreateProduct({ config }: UseCreateProductOptions = {}) {
-  return useMutation(createProduct, {
+  return useMutation({
     ...config,
+    mutationFn: createProduct,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['products']);
+      queryClient.invalidateQueries({ queryKey: ['products'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

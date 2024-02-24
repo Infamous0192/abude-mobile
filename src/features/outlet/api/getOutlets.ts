@@ -6,11 +6,11 @@ import { PaginatedResult } from '@/types/api';
 
 import { Outlet, OutletQuery } from '../types';
 
-type OutletsDTO = {
+type OutletsRequest = {
   params?: OutletQuery;
 };
 
-export async function getOutlets({ params }: OutletsDTO) {
+export async function getOutlets({ params }: OutletsRequest) {
   const res = await axios.get<PaginatedResult<Outlet>>(`/outlet`, { params });
 
   return res.data;
@@ -28,6 +28,5 @@ export function useOutlets({ config, params }: UseOutletsOptions = {}) {
     ...config,
     queryKey: ['outlets', params],
     queryFn: () => getOutlets({ params }),
-    keepPreviousData: true,
   });
 }

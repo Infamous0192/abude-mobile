@@ -6,7 +6,7 @@ export type Supplier = {
   description: string;
 } & BaseEntity;
 
-export type SupplierRequest = {
+export type SupplierDTO = {
   name: string;
   description: string;
   company?: number;
@@ -22,24 +22,22 @@ export type Product = {
   description: string;
   price: number;
   unit: string;
-  category: 'purchase' | 'sale';
-  supplier?: Supplier;
+  type: 'purchase' | 'sale';
   isDefault: boolean;
 } & BaseEntity;
 
-export type ProductRequest = {
+export type ProductDTO = {
   name: string;
   description: string;
   price: number;
   unit: string;
   company: number;
-  category?: 'purchase' | 'sale';
-  supplier?: number;
+  type?: 'purchase' | 'sale';
   isDefault: boolean;
 };
 
 export type ProductQuery = {
   keyword?: string;
   company?: number;
-  category?: 'purchase' | 'sale';
+  type?: 'purchase' | 'sale';
 } & Pagination;
