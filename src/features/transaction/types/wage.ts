@@ -1,5 +1,5 @@
-import { Account } from '@/features/account';
 import { Company } from '@/features/company';
+import { Employee } from '@/features/employee';
 import { Outlet } from '@/features/outlet';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
@@ -15,7 +15,7 @@ export type Wage = {
   notes: string;
   company?: Company;
   outlet: Outlet;
-  account: Account;
+  employee: Employee;
 } & BaseEntity;
 
 export type WageDTO = {
@@ -23,14 +23,14 @@ export type WageDTO = {
   type?: 'debit' | 'credit' | null;
   date?: Date;
   notes?: string;
-  account?: number | null;
+  employee?: number | null;
   company?: number;
   outlet?: number;
 };
 
 export type WageQuery = {
   status?: WageStatus[];
-  account?: number | string;
+  employee?: number | string;
   company?: number | string;
   outlet?: number | string;
   startDate?: Date;

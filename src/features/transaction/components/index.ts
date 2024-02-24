@@ -13,3 +13,4 @@ export * from './PurchasesSummaries';
 export * from './SaleStatusBadge';
 export * from './PurchaseStatusBadge';
 export * from './ExpenseList';
+export * from './WageList';

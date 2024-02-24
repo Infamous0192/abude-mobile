@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
 
-import { ExpenseList } from '../components';
+import { ExpenseList, WageList } from '../components';
 
 export const Expenses: React.FC = () => {
   const navigate = useNavigate();
@@ -68,17 +68,32 @@ export const Expenses: React.FC = () => {
         />
       </div>
 
-      <ExpenseList
-        outlet={outlet?.id}
-        limit={20}
-        startDate={date[0] || undefined}
-        endDate={date[1] || undefined}
-      />
+      {selected == 'general' ? (
+        <ExpenseList
+          outlet={outlet?.id}
+          limit={20}
+          startDate={date[0] || undefined}
+          endDate={date[1] || undefined}
+        />
+      ) : (
+        <WageList
+          outlet={outlet?.id}
+          limit={20}
+          startDate={date[0] || undefined}
+          endDate={date[1] || undefined}
+        />
+      )}
 
       <div className="max-w-md bottom-0 fixed bg-white py-4 w-full border-t border-gray-200 px-5">
-        <Button leftSection={<IconPlus size={20} />} fullWidth component={Link} to="/expense/add">
-          Tambah Pengeluaran
-        </Button>
+        {selected == 'general' ? (
+          <Button leftSection={<IconPlus size={20} />} fullWidth component={Link} to="/expense/add">
+            Tambah Pengeluaran
+          </Button>
+        ) : (
+          <Button leftSection={<IconPlus size={20} />} fullWidth component={Link} to="/wage/add">
+            Tambah Kasbon
+          </Button>
+        )}
       </div>
     </main>
   );

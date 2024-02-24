@@ -27,6 +27,8 @@ const { PurchaseDetail } = lazyImport(() => import('@/features/transaction'), 'P
 const { Expenses } = lazyImport(() => import('@/features/transaction'), 'Expenses');
 const { ExpenseCreate } = lazyImport(() => import('@/features/transaction'), 'ExpenseCreate');
 const { ExpenseDetail } = lazyImport(() => import('@/features/transaction'), 'ExpenseDetail');
+const { WageCreate } = lazyImport(() => import('@/features/transaction'), 'WageCreate');
+const { WageDetail } = lazyImport(() => import('@/features/transaction'), 'WageDetail');
 const { PurchaseRecapitulation } = lazyImport(
   () => import('@/features/transaction'),
   'PurchaseRecapitulation'
@@ -58,8 +60,10 @@ export const AppRoutes: React.FC = () => {
         <Route path="purchase/add" element={<PurchaseCreate />} />
 
         <Route path="expense" element={<Expenses />} />
-        <Route path="purchase/:id" element={<ExpenseDetail />} />
         <Route path="expense/add" element={<ExpenseCreate />} />
+        <Route path="expense/:id" element={<ExpenseDetail />} />
+        <Route path="wage/add" element={<WageCreate />} />
+        <Route path="wage/:id" element={<WageDetail />} />
 
         <Route path="handover" element={<Handovers />} />
         <Route path="handover/create" element={<HandoverCreate />} />

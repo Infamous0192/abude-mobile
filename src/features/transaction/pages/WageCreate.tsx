@@ -2,29 +2,29 @@ import { Button, NumberInput, Select, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconCalendar, IconCategory } from '@tabler/icons-react';
+import { IconCalendar, IconUser } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 
 import { Navbar } from '@/components/navigation';
-import { AccountSelect } from '@/features/account';
+import { EmployeeSelect } from '@/features/employee';
 import { useOutletContext } from '@/features/outlet';
 
-import { useCreateExpense } from '../api';
-import { ExpenseDTO } from '../types';
+import { useCreateWage } from '../api';
+import { WageDTO } from '../types';
 
-const initialValues: ExpenseDTO = {
+const initialValues: WageDTO = {
   amount: 0,
   date: new Date(),
   type: null,
   notes: '',
-  account: null,
+  employee: null,
 };
 
-export const ExpenseCreate: React.FC = () => {
+export const WageCreate: React.FC = () => {
   const navigate = useNavigate();
   const { outlet } = useOutletContext();
-  const createMutation = useCreateExpense();
-  const form = useForm<ExpenseDTO>({
+  const createMutation = useCreateWage();
+  const form = useForm<WageDTO>({
     initialValues: {
       ...initialValues,
       company: outlet?.company.id,
@@ -44,7 +44,7 @@ export const ExpenseCreate: React.FC = () => {
         onSuccess: () => {
           notifications.show({
             color: 'green',
-            message: 'Pengeluaran berhasil dibuat',
+            message: 'Kasbon berhasil dibuat',
           });
           form.setValues({
             ...initialValues,
@@ -58,7 +58,7 @@ export const ExpenseCreate: React.FC = () => {
 
   return (
     <main className="pt-14">
-      <Navbar title="Tambah Pengeluaran" />
+      <Navbar title="Tambah Kasbon" />
 
       <form onSubmit={handleSubmit} className="">
         <div className="space-y-2.5 px-5 mt-2">
@@ -78,15 +78,11 @@ export const ExpenseCreate: React.FC = () => {
               { value: 'credit', label: 'Kredit' },
             ]}
           />
-          <AccountSelect
-            {...form.getInputProps('account')}
-            label="Jenis"
-            placeholder="Pilih Jenis"
-            leftSection={<IconCategory size={14} />}
-            params={{
-              category: 4,
-              company: outlet?.company.id,
-            }}
+          <EmployeeSelect
+            {...form.getInputProps('employee')}
+            label="Pegawai"
+            placeholder="Pilih Pegawai"
+            leftSection={<IconUser size={14} />}
           />
           <NumberInput
             {...form.getInputProps('amount')}

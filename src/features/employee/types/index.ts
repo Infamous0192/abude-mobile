@@ -10,6 +10,10 @@ export type Employee = {
   user: User;
 } & BaseEntity;
 
+export type EmployeeQuery = {
+  keyword?: string;
+} & Pagination;
+
 export type Shift = {
   name: string;
   description: string;
