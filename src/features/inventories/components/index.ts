@@ -6,3 +6,4 @@ export * from './SupplierCreateForm';
 export * from './SupplierUpdateForm';
 export * from './ProductPick';
 export * from './SupplierSelect';
+export * from './SummaryList';

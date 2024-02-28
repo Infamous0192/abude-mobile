@@ -21,6 +21,7 @@ const { Turnovers } = lazyImport(() => import('@/features/turnover'), 'Turnovers
 const { Products } = lazyImport(() => import('@/features/inventories'), 'Products');
 const { Suppliers } = lazyImport(() => import('@/features/inventories'), 'Suppliers');
 const { Inventories } = lazyImport(() => import('@/features/inventories'), 'Inventories');
+const { StockSummaries } = lazyImport(() => import('@/features/inventories'), 'StockSummaries');
 
 const { Transactions } = lazyImport(() => import('@/features/transaction'), 'Transactions');
 const { SaleCreate } = lazyImport(() => import('@/features/transaction'), 'SaleCreate');
@@ -54,6 +55,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="inventory" element={<Inventories />} />
         </Route>
 
+        <Route path="stock/summary" element={<StockSummaries />} />
         <Route path="transaction/summary" element={<TransactionSummary />} />
         <Route path="purchase/summary" element={<PurchaseRecapitulation />} />
 
