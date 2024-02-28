@@ -1,4 +1,4 @@
-import { Product } from '@/features/product';
+import { Product } from '@/features/inventories';
 import { formatCurrency } from '@/utils/format';
 
 import { SaleDTO } from '../types';

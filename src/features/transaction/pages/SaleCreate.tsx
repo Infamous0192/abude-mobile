@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
-import { Product, ProductPick, useProducts } from '@/features/product';
+import { Product, ProductPick, useProducts } from '@/features/inventories';
 
 import { useCreateSale } from '../api';
 import { SaleItemList, SaleSubmit, SaleSummary } from '../components';

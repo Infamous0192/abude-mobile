@@ -1,5 +1,5 @@
 import { User } from '@/features/auth';
-import { Product } from '@/features/product';
+import { Product } from '@/features/inventories';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 

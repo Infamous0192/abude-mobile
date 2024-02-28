@@ -7,7 +7,7 @@ import { IconChevronLeft, IconCirclePlus } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { useOutletContext } from '@/features/outlet';
-import { Product, ProductPick, SupplierSelect, useProducts } from '@/features/product';
+import { Product, ProductPick, SupplierSelect, useProducts } from '@/features/inventories';
 import { formatCurrency } from '@/utils/format';
 
 import { useCreatePurchase } from '../api';

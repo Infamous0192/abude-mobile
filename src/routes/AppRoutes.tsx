@@ -9,8 +9,7 @@ const { Home } = lazyImport(() => import('@/features/misc'), 'Home');
 const { DataMaster } = lazyImport(() => import('@/features/misc'), 'DataMaster');
 const { DataPengeluaran } = lazyImport(() => import('@/features/misc'), 'DataPengeluaran');
 const { Profile } = lazyImport(() => import('@/features/employee'), 'Profile');
-const { Products } = lazyImport(() => import('@/features/product'), 'Products');
-const { Suppliers } = lazyImport(() => import('@/features/product'), 'Suppliers');
+
 const { Attendances } = lazyImport(() => import('@/features/employee'), 'Attendances');
 const { Outlets } = lazyImport(() => import('@/features/outlet'), 'Outlets');
 
@@ -18,6 +17,10 @@ const { Handovers } = lazyImport(() => import('@/features/handover'), 'Handovers
 const { HandoverCreate } = lazyImport(() => import('@/features/handover'), 'HandoverCreate');
 
 const { Turnovers } = lazyImport(() => import('@/features/turnover'), 'Turnovers');
+
+const { Products } = lazyImport(() => import('@/features/inventories'), 'Products');
+const { Suppliers } = lazyImport(() => import('@/features/inventories'), 'Suppliers');
+const { Inventories } = lazyImport(() => import('@/features/inventories'), 'Inventories');
 
 const { Transactions } = lazyImport(() => import('@/features/transaction'), 'Transactions');
 const { SaleCreate } = lazyImport(() => import('@/features/transaction'), 'SaleCreate');
@@ -48,6 +51,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="profile" element={<Profile />} />
           <Route path="data-master" element={<DataMaster />} />
           <Route path="pengeluaran" element={<DataPengeluaran />} />
+          <Route path="inventory" element={<Inventories />} />
         </Route>
 
         <Route path="transaction/summary" element={<TransactionSummary />} />
@@ -71,6 +75,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="turnover" element={<Turnovers />} />
 
         <Route path="attendance" element={<Attendances />} />
+
         <Route path="product" element={<Products />} />
         <Route path="supplier" element={<Suppliers />} />
 

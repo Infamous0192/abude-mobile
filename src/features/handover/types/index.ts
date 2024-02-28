@@ -1,7 +1,7 @@
 import { User } from '@/features/auth';
 import { Shift } from '@/features/employee';
 import { Outlet } from '@/features/outlet';
-import { Product } from '@/features/product';
+import { Product } from '@/features/inventories';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 

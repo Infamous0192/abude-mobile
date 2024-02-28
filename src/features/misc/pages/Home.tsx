@@ -51,7 +51,7 @@ export const Home: React.FC = () => {
             {
               title: 'Bukti Transaksi',
               href: '/turnover',
-              icon: '/images/briefcase.svg',
+              icon: '/images/pembelian.svg',
             },
             {
               title: 'Laporan Serah Terima',
@@ -67,6 +67,16 @@ export const Home: React.FC = () => {
               title: 'Kehadiran',
               href: '/development',
               icon: '/images/attendance.svg',
+            },
+            {
+              title: 'Data Master',
+              href: '/data-master',
+              icon: '/images/cog.svg',
+            },
+            {
+              title: 'Inventaris',
+              href: '/inventory',
+              icon: '/images/briefcase.svg',
             },
           ]}
         />

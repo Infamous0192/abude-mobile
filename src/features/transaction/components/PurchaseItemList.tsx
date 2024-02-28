@@ -1,7 +1,7 @@
 import { NumberInput, TextInput } from '@mantine/core';
 import { useState } from 'react';
 
-import { Product } from '@/features/product';
+import { Product } from '@/features/inventories';
 
 import { PurchaseDTO } from '../types';
 
