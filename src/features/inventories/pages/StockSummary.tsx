@@ -1,11 +1,12 @@
 import { Button } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 
 import { Navbar } from '@/components/navigation';
 
 import { SummaryList } from '../components';
 
-export const StockSummaries: React.FC = () => {
+export const StockSummary: React.FC = () => {
   return (
     <main className="pt-14">
       <Navbar title="Rekapitulasi Stok" position="center" />
@@ -18,7 +19,7 @@ export const StockSummaries: React.FC = () => {
 
       <footer className="max-w-md bottom-0 fixed bg-white py-4 w-full border-t border-gray-50 px-5">
         <div className="flex items-center justify-between">
-          <Button fullWidth leftSection={<IconPlus size={16} />}>
+          <Button fullWidth leftSection={<IconPlus size={16} />} component={Link} to="/stock/recap">
             Tambah Rekapitulasi
           </Button>
         </div>
