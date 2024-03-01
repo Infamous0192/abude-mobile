@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Turnover, TurnoverRequest } from '../types';
+import { Turnover, TurnoverDTO } from '../types';
 
-export type UpdateTurnoverDTO = {
+type TurnoverUpdateRequest = {
   id: number;
-  data: TurnoverRequest;
+  data: TurnoverDTO;
 };
 
-export async function updateTurnover({ id, data }: UpdateTurnoverDTO) {
+export async function updateTurnover({ id, data }: TurnoverUpdateRequest) {
   const res = await axios.put<GeneralResponse<Turnover>>(`/turnover/${id}`, data);
 
   return res.data;
@@ -22,11 +22,12 @@ type UseUpdateTurnoverOptions = {
 };
 
 export function useUpdateTurnover({ config }: UseUpdateTurnoverOptions = {}) {
-  return useMutation(updateTurnover, {
+  return useMutation({
     ...config,
+    mutationFn: updateTurnover,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['turnovers']);
-      queryClient.invalidateQueries(['turnover', args[1].id]);
+      queryClient.invalidateQueries({ queryKey: ['turnovers'] });
+      queryClient.invalidateQueries({ queryKey: ['turnover'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

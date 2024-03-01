@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -6,11 +6,11 @@ import { PaginatedResult } from '@/types/api';
 
 import { Turnover, TurnoverQuery } from '../types';
 
-type TurnoversDTO = {
+type TurnoversRequest = {
   params?: TurnoverQuery;
 };
 
-export async function getTurnovers({ params }: TurnoversDTO) {
+export async function getTurnovers({ params }: TurnoversRequest) {
   const res = await axios.get<PaginatedResult<Turnover>>(`/turnover`, { params });
 
   return res.data;
@@ -28,12 +28,13 @@ export function useTurnovers({ config, params }: UseTurnoversOptions = {}) {
     ...config,
     queryKey: ['turnovers', params],
     queryFn: () => getTurnovers({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }
 
 export function useInfiniteTurnovers({ params }: UseTurnoversOptions = {}) {
-  return useInfiniteQuery<ExtractFnReturnType<QueryFnType>>({
+  return useInfiniteQuery({
+    initialPageParam: 1,
     queryKey: ['turnovers', params],
     queryFn: ({ pageParam: page = 1 }) => getTurnovers({ params: { ...params, page } }),
     getNextPageParam: ({ metadata }) => (metadata.hasNext ? metadata.page + 1 : undefined),

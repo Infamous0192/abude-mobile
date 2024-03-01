@@ -9,7 +9,7 @@ import { OutletSelect } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 
 import { useCreateTurnover, useUpdateTurnover } from '../api';
-import { Turnover, TurnoverRequest } from '../types';
+import { Turnover, TurnoverDTO } from '../types';
 
 type Props = {
   turnover?: Turnover;
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export const TurnoverForm: React.FC<Props> = ({ turnover, outlet, onSuccess }) => {
-  const form = useForm<TurnoverRequest>({
+  const form = useForm<TurnoverDTO>({
     initialValues: {
       date: turnover?.date ? new Date(turnover.date) : new Date(),
       evidence: turnover?.evidence ?? '',
@@ -112,7 +112,7 @@ export const TurnoverForm: React.FC<Props> = ({ turnover, outlet, onSuccess }) =
       <div className="space-y-2 mt-4">
         <Button
           type="submit"
-          loading={createMutation.isLoading || updateMutation.isLoading}
+          loading={createMutation.isPending || updateMutation.isPending}
           fullWidth
           size="xs"
         >
@@ -122,7 +122,7 @@ export const TurnoverForm: React.FC<Props> = ({ turnover, outlet, onSuccess }) =
           type="button"
           variant="default"
           onClick={() => modals.closeAll()}
-          loading={createMutation.isLoading || updateMutation.isLoading}
+          loading={createMutation.isPending || updateMutation.isPending}
           fullWidth
           size="xs"
         >

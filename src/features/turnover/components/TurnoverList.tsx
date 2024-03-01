@@ -1,4 +1,4 @@
-import { ActionIcon, Anchor, Button, Table } from '@mantine/core';
+import { ActionIcon, Anchor, Button, Loader, Table } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
@@ -80,45 +80,59 @@ export const TurnoverList: React.FC<TurnoverQuery> = (params) => {
   return (
     <>
       <div className="overflow-scroll">
-        <Table fontSize="xs">
-          <thead>
-            <tr>
-              <th>Tanggal</th>
-              <th>Pemasukan</th>
-              <th>Pengeluaran</th>
-              <th>Link</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Tanggal</Table.Th>
+              <Table.Th>Pemasukan</Table.Th>
+              <Table.Th>Pengeluaran</Table.Th>
+              <Table.Th>Link</Table.Th>
+              <Table.Th></Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
             {turnovers?.map((turnover) => (
-              <tr key={turnover.id}>
-                <td>{dayjs(turnover.date).format('DD/MM/YYYY')}</td>
-                <td className="text-right">{formatCurrency(turnover.income ?? 0)}</td>
-                <td className="text-right">{formatCurrency(turnover.expense ?? 0)}</td>
-                <td>
+              <Table.Tr key={turnover.id}>
+                <Table.Td>{dayjs(turnover.date).format('DD/MM/YYYY')}</Table.Td>
+                <Table.Td className="text-right">{formatCurrency(turnover.income ?? 0)}</Table.Td>
+                <Table.Td className="text-right">{formatCurrency(turnover.expense ?? 0)}</Table.Td>
+                <Table.Td>
                   <Anchor href={turnover.evidence} target="_blank">
                     Lihat
                   </Anchor>
-                </td>
-                <td className="flex items-center space-x-2">
-                  <ActionIcon size="xs" radius="lg" color="blue" onClick={handleUpdate(turnover)}>
-                    <IconEdit />
+                </Table.Td>
+                <Table.Td className="flex items-center space-x-2">
+                  <ActionIcon
+                    size="sm"
+                    variant="subtle"
+                    radius="lg"
+                    color="blue"
+                    onClick={handleUpdate(turnover)}
+                  >
+                    <IconEdit size={16} />
                   </ActionIcon>
-                  <ActionIcon size="xs" radius="lg" color="red" onClick={handleDelete(turnover)}>
-                    <IconTrash />
+                  <ActionIcon
+                    size="sm"
+                    variant="subtle"
+                    radius="lg"
+                    color="red"
+                    onClick={handleDelete(turnover)}
+                  >
+                    <IconTrash size={16} />
                   </ActionIcon>
-                </td>
-              </tr>
+                </Table.Td>
+              </Table.Tr>
             ))}
-          </tbody>
+          </Table.Tbody>
         </Table>
       </div>
 
       <div className="mt-4">
-        {turnovers?.length == 0 && <div>Data tidak ditemukan</div>}
+        {!isFetching && turnovers?.length == 0 && <div>Data tidak ditemukan</div>}
         {isFetching ? (
-          <div className="text-center mt-2">loading...</div>
+          <div className="flex items-center justify-center py-2">
+            <Loader type="dots" />
+          </div>
         ) : (
           hasNextPage && (
             <Button variant="subtle" fullWidth onClick={() => fetchNextPage()}>

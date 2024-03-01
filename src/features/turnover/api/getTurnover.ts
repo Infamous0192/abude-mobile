@@ -5,11 +5,11 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
 import { Turnover } from '../types';
 
-type TurnoverDTO = {
+type TurnoverRequest = {
   id: number;
 };
 
-export async function getTurnover({ id }: TurnoverDTO) {
+export async function getTurnover({ id }: TurnoverRequest) {
   const res = await axios.get<Turnover>(`/turnover/${id}`);
 
   return res.data;

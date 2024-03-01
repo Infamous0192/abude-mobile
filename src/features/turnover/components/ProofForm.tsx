@@ -8,31 +8,31 @@ import { IconCheck } from '@tabler/icons-react';
 import { OutletSelect } from '@/features/outlet';
 import { dayjs } from '@/lib/dayjs';
 
-import { useCreateHandoverProof, useUpdateHandoverProof } from '../api';
-import { HandoverProof, HandoverProofRequest } from '../types';
+import { useCreateProof, useUpdateProof } from '../api';
+import { Proof, ProofDTO } from '../types';
 
 type Props = {
-  handoverProof?: HandoverProof;
+  proof?: Proof;
   outlet?: number;
   onSuccess?: VoidFunction;
 };
 
-export const HandoverProofForm: React.FC<Props> = ({ handoverProof, outlet, onSuccess }) => {
-  const form = useForm<HandoverProofRequest>({
+export const ProofForm: React.FC<Props> = ({ proof, outlet, onSuccess }) => {
+  const form = useForm<ProofDTO>({
     initialValues: {
-      date: handoverProof?.date ? new Date(handoverProof.date) : new Date(),
-      evidence: handoverProof?.evidence ?? '',
-      outlet: handoverProof?.outlet.id ?? outlet,
+      date: proof?.date ? new Date(proof.date) : new Date(),
+      evidence: proof?.evidence ?? '',
+      outlet: proof?.outlet.id ?? outlet,
     },
   });
-  const createMutation = useCreateHandoverProof();
-  const updateMutation = useUpdateHandoverProof();
+  const createMutation = useCreateProof();
+  const updateMutation = useUpdateProof();
 
   const handleSubmit = form.onSubmit(async (values) => {
-    if (handoverProof) {
+    if (proof) {
       await updateMutation.mutateAsync(
         {
-          id: handoverProof.id,
+          id: proof.id,
           data: {
             ...values,
             outlet: values.outlet ? parseInt(values.outlet.toString()) : undefined,
@@ -112,7 +112,7 @@ export const HandoverProofForm: React.FC<Props> = ({ handoverProof, outlet, onSu
       <div className="space-y-2 mt-4">
         <Button
           type="submit"
-          loading={createMutation.isLoading || updateMutation.isLoading}
+          loading={createMutation.isPending || updateMutation.isPending}
           fullWidth
           size="xs"
         >
@@ -122,7 +122,7 @@ export const HandoverProofForm: React.FC<Props> = ({ handoverProof, outlet, onSu
           type="button"
           variant="default"
           onClick={() => modals.closeAll()}
-          loading={createMutation.isLoading || updateMutation.isLoading}
+          loading={createMutation.isPending || updateMutation.isPending}
           fullWidth
           size="xs"
         >

@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Turnover, TurnoverRequest } from '../types';
+import { Turnover, TurnoverDTO } from '../types';
 
-type TurnoverCreateDTO = {
-  data: TurnoverRequest;
+type TurnoverCreateRequest = {
+  data: TurnoverDTO;
 };
 
-export async function createTurnover({ data }: TurnoverCreateDTO) {
+export async function createTurnover({ data }: TurnoverCreateRequest) {
   const res = await axios.post<GeneralResponse<Turnover>>(`/turnover`, data);
 
   return res.data;
@@ -21,10 +21,11 @@ type UseCreateTurnoverOptions = {
 };
 
 export function useCreateTurnover({ config }: UseCreateTurnoverOptions = {}) {
-  return useMutation(createTurnover, {
+  return useMutation({
     ...config,
+    mutationFn: createTurnover,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['turnovers']);
+      queryClient.invalidateQueries({ queryKey: ['turnovers'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

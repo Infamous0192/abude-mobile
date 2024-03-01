@@ -10,7 +10,7 @@ export type Turnover = {
   outlet: Outlet;
 } & BaseEntity;
 
-export type TurnoverRequest = {
+export type TurnoverDTO = {
   date?: Date | string;
   evidence?: string;
   outlet?: number | string;
@@ -22,19 +22,19 @@ export type TurnoverQuery = {
   endDate?: Date;
 } & Pagination;
 
-export type HandoverProof = {
+export type Proof = {
   date: Date;
   evidence: string;
   outlet: Outlet;
 } & BaseEntity;
 
-export type HandoverProofRequest = {
+export type ProofDTO = {
   date?: Date | string;
   evidence?: string;
   outlet?: number | string;
 };
 
-export type HandoverProofQuery = {
+export type ProofQuery = {
   outlet?: number | string;
   startDate?: Date;
   endDate?: Date;

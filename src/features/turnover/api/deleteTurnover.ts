@@ -6,11 +6,11 @@ import { GeneralResponse } from '@/types/api';
 
 import { Turnover } from '../types';
 
-type TurnoverDeleteDTO = {
+type TurnoverDeleteRequest = {
   id: number;
 };
 
-export async function deleteTurnover({ id }: TurnoverDeleteDTO) {
+export async function deleteTurnover({ id }: TurnoverDeleteRequest) {
   const res = await axios.delete<GeneralResponse<Turnover>>(`/turnover/${id}`);
 
   return res.data;
@@ -21,10 +21,11 @@ type UseDeleteTurnoverOptions = {
 };
 
 export function useDeleteTurnover({ config }: UseDeleteTurnoverOptions = {}) {
-  return useMutation(deleteTurnover, {
+  return useMutation({
     ...config,
+    mutationFn: deleteTurnover,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['turnovers']);
+      queryClient.invalidateQueries({ queryKey: ['turnovers'] });
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Authorization, useAuth } from '@/features/auth';
 import { OutletSelect, useOutletContext } from '@/features/outlet';
 
-import { HandoverProofForm, HandoverProofList, TurnoverForm, TurnoverList } from '../components';
+import { ProofForm, ProofList, TurnoverForm, TurnoverList } from '../components';
 import { TurnoverQuery } from '../types';
 
 export const Turnovers: React.FC = () => {
@@ -34,7 +34,7 @@ export const Turnovers: React.FC = () => {
     } else if (tab === 'handover') {
       modals.open({
         title: 'Tambah Bukti',
-        children: <HandoverProofForm outlet={creds?.role == 'employee' ? outlet?.id : undefined} />,
+        children: <ProofForm outlet={creds?.role == 'employee' ? outlet?.id : undefined} />,
         fullScreen: true,
       });
     }
@@ -108,7 +108,7 @@ export const Turnovers: React.FC = () => {
         {tab === 'turnover' ? (
           <TurnoverList outlet={outlet?.id} {...params} />
         ) : (
-          <HandoverProofList outlet={outlet?.id} {...params} />
+          <ProofList outlet={outlet?.id} {...params} />
         )}
       </section>
 
