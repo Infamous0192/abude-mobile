@@ -1,10 +1,10 @@
 import { Product } from '@/features/inventories';
 import { formatCurrency } from '@/utils/format';
 
-import { PurchaseDTO } from '../types';
+import { SaleDTO } from '../types';
 
 type ItemProps = {
-  items: PurchaseDTO['items'];
+  items: SaleDTO['items'];
   product: Product;
 };
 
@@ -16,21 +16,20 @@ const TransactionItem: React.FC<ItemProps> = ({ product, items }) => {
       <div>
         <div className="text-gray-700 font-bold">{product.name}</div>
         <div className="text-gray-500 text-xs font-medium">
-          {item?.quantity} x {formatCurrency(item?.price || product.price)}
+          {item?.quantity} {product.unit} x {formatCurrency(product.price)}
         </div>
       </div>
-      <div>{formatCurrency((item?.price || product.price) * (item?.quantity || 1))}</div>
+      <div>{formatCurrency(product.price * (item?.quantity ?? 1))}</div>
     </div>
   );
 };
 
 type Props = {
-  items: PurchaseDTO['items'];
-  total: number;
+  items: SaleDTO['items'];
   products: Product[];
 };
 
-export const PurchaseSummary: React.FC<Props> = ({ total, items, products }) => {
+export const SaleItems: React.FC<Props> = ({ items, products }) => {
   if (items.length == 0) return null;
 
   return (
@@ -44,7 +43,11 @@ export const PurchaseSummary: React.FC<Props> = ({ total, items, products }) => 
 
         <div className="flex items-center justify-between border-t text-base border-dashed border-gray-400 pt-3">
           <div>Total</div>
-          <div>{formatCurrency(total)}</div>
+          <div>
+            {formatCurrency(
+              items.reduce((prev, curr) => prev + curr.quantity * (curr.price || 0), 0)
+            )}
+          </div>
         </div>
       </div>
     </section>

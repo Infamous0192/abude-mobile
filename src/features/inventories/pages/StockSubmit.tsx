@@ -13,7 +13,7 @@ import { formatCurrency } from '@/utils/format';
 import { useCreateRecap, useStockSummary } from '../api';
 import { RecapitulationDTO } from '../types';
 
-export const StockSummary: React.FC = () => {
+export const StockSubmit: React.FC = () => {
   const { outlet } = useOutletContext();
   const { data, isLoading, isError } = useStockSummary({ params: { outlet: outlet?.id } });
   const { mutateAsync } = useCreateRecap();

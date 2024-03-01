@@ -13,10 +13,8 @@ type ItemProps = {
 };
 
 const SaleItem: React.FC<ItemProps> = ({ product, value, onChange }) => {
-  function handleChange(v: number | '') {
-    if (v === '') return;
-
-    onChange(v);
+  function handleChange(v: number | string) {
+    onChange(Number(v));
   }
 
   return (

@@ -11,7 +11,7 @@ import { Product, ProductPick, useProducts } from '@/features/inventories';
 import { useOutletContext } from '@/features/outlet';
 
 import { useCreateSale } from '../api';
-import { SaleItemList, SaleSubmit, SaleSummary } from '../components';
+import { SaleItemList, SaleSubmit, SaleItems } from '../components';
 import { SaleDTO } from '../types';
 
 const initialValues: Omit<SaleDTO, 'sourceId' | 'date'> = {
@@ -152,7 +152,7 @@ export const SaleCreate: React.FC = () => {
         </div>
       </section>
 
-      <SaleSummary items={form.values['items']} products={products} />
+      <SaleItems items={form.values['items']} products={products} />
 
       <SaleSubmit items={form.values['items']} onSubmit={handleSubmit} />
     </main>

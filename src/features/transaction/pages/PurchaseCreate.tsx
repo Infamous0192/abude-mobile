@@ -11,7 +11,7 @@ import { useOutletContext } from '@/features/outlet';
 import { formatCurrency } from '@/utils/format';
 
 import { useCreatePurchase } from '../api';
-import { PurchaseItemList, PurchaseSummary } from '../components';
+import { PurchaseItemList, PurchaseItems } from '../components';
 import { PurchaseDTO } from '../types';
 
 const initialValues: Omit<PurchaseDTO, 'sourceId' | 'date'> = {
@@ -146,7 +146,7 @@ export const PurchaseCreate: React.FC = () => {
         </div>
       </section>
 
-      <PurchaseSummary total={total} items={form.values['items']} products={products} />
+      <PurchaseItems total={total} items={form.values['items']} products={products} />
 
       <div className="max-w-md bottom-0 fixed bg-white py-4 w-full border-t border-gray-50 px-5">
         <div className="flex items-center justify-between">

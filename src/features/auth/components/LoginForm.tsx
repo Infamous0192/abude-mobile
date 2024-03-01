@@ -54,7 +54,7 @@ export const LoginForm: React.FC = () => {
         </Anchor>
       </div>
 
-      <Button type="submit" fullWidth loading={loginMutation.isLoading}>
+      <Button type="submit" fullWidth loading={loginMutation.isPending}>
         Masuk
       </Button>
     </form>

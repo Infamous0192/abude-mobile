@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { Outlet } from '@/features/outlet';
 import { axios } from '@/lib/axios';
@@ -27,6 +27,6 @@ export function useEmployeeOutlet({ id = 'me', config }: UseEmployeesOptions = {
     ...config,
     queryKey: ['employee-outlets', id],
     queryFn: () => getEmployeeOutlet({ id }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }

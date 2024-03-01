@@ -1,5 +1,5 @@
-export * from './PurchaseSummary';
-export * from './SaleSummary';
+export * from './PurchaseItems';
+export * from './SaleItems';
 export * from './SaleSubmit';
 export * from './SaleItemList';
 export * from './SaleList';
