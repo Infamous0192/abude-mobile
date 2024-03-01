@@ -2,9 +2,14 @@ import { IconAdjustments, IconDownload, IconFile3d } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { Navbar } from '@/components/navigation';
+import { useOutletContext } from '@/features/outlet';
 import { formatCurrency } from '@/utils/format';
 
+import { StockList } from '../components';
+
 export const Inventories: React.FC = () => {
+  const { outlet } = useOutletContext();
+
   return (
     <main className="py-14">
       <Navbar title="Inventaris" backButton={false} />
@@ -59,30 +64,7 @@ export const Inventories: React.FC = () => {
           <h2 className="text-lg font-bold">Persediaan</h2>
         </div>
 
-        <div className="rounded-lg bg-white shadow-lg p-4">
-          <div className="flex pb-1.5 mb-1.5 border-b border-gray-200">
-            <div className="flex-grow">
-              <div className="text-xs text-blue-600">Bahan Baku</div>
-              <div className="text-base text-gra-900 font-bold">Teh Celup</div>
-            </div>
-            <div className="flex-shrink-0 text-right">
-              <div className="text-xs text-gray-600">Harga Rerata</div>
-              <div className="text-sm font-bold">{formatCurrency(50000)}</div>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-x-2">
-            <div>
-              <div className="text-xs text-gray-600">Total Persediaan</div>
-              <div className="text-sm font-bold">
-                {Number(5255).toLocaleString('id-ID')} <span className="text-xs">pcs</span>
-              </div>
-            </div>
-            <div>
-              <div className="text-xs text-gray-600">Total Aset</div>
-              <div className="text-sm font-bold">{formatCurrency(50000)}</div>
-            </div>
-          </div>
-        </div>
+        <StockList outlet={outlet?.id} />
       </section>
     </main>
   );

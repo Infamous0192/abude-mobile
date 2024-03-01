@@ -17,6 +17,11 @@ export type SupplierQuery = {
   company?: number;
 } & Pagination;
 
+export type Category = {
+  name: string;
+  description: string;
+} & BaseEntity;
+
 export type Product = {
   name: string;
   description: string;
@@ -41,3 +46,37 @@ export type ProductQuery = {
   company?: number;
   type?: 'purchase' | 'sale';
 } & Pagination;
+
+export type Stock = {
+  product: Product;
+  category: Category;
+  amount: number;
+  totalValue: number;
+  averagePrice: number;
+};
+
+export type StockQuery = {
+  product?: number;
+  outlet?: number;
+} & Pagination;
+
+export type StockSummary = {
+  product: Product;
+  available: number;
+  totalValue: number;
+  stockIn: number;
+  valueIn: number;
+  stockOut: number;
+  valueOut: number;
+};
+
+export type Recapitulation = {
+  awe: string;
+};
+
+export type RecapitulationDTO = {
+  notes?: string;
+  employee?: string;
+  date?: Date;
+  outlet?: number;
+};

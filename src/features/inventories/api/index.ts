@@ -8,3 +8,6 @@ export * from './deleteProduct';
 export * from './getProduct';
 export * from './getProducts';
 export * from './updateProduct';
+export * from './getStocks';
+export * from './getStockSummary';
+export * from './createRecap';

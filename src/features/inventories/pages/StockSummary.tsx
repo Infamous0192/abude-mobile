@@ -9,7 +9,7 @@ import { SummaryList } from '../components';
 export const StockSummary: React.FC = () => {
   return (
     <main className="pt-14">
-      <Navbar title="Rekapitulasi Stok" position="center" />
+      <Navbar title="Rekapitulasi Stok" position="center" to="/inventory" />
 
       <div className="p-4">
         <div className="font-bold mb-2.5">Riwayat Rekapitulasi</div>

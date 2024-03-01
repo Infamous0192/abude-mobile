@@ -7,3 +7,4 @@ export * from './SupplierUpdateForm';
 export * from './ProductPick';
 export * from './SupplierSelect';
 export * from './SummaryList';
+export * from './StockList';
