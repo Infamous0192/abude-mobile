@@ -26,7 +26,7 @@ export const Inventories: React.FC = () => {
             <h3 className="px-2 font-semibold text-gray-600">Pembelian</h3>
           </Link>
           <Link
-            to="/stock/summary"
+            to="/stock/recap"
             className="transition flex flex-col items-center bg-white rounded-lg py-4 shadow-lg shadow-gray-200 border border-gray-100 hover:border-blue-400 active:border-blue-400"
           >
             <div className="p-2 block w-fit rounded-md bg-green-100 text-green-600 mb-2">

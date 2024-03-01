@@ -11,3 +11,5 @@ export * from './updateProduct';
 export * from './getStocks';
 export * from './getStockSummary';
 export * from './createRecap';
+export * from './getRecaps';
+export * from './getRecap';

@@ -1,86 +1,46 @@
-import { Button, Table, TextInput, Textarea } from '@mantine/core';
+import { Table, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { useForm } from '@mantine/form';
-import { modals } from '@mantine/modals';
-import { notifications } from '@mantine/notifications';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
 import { Navbar } from '@/components/navigation';
-import { useOutletContext } from '@/features/outlet';
 import { formatCurrency } from '@/utils/format';
 
-import { useCreateRecap, useStockSummary } from '../api';
-import { RecapitulationDTO } from '../types';
+import { useRecap } from '../api';
 
 export const StockRecap: React.FC = () => {
-  const { outlet } = useOutletContext();
-  const { data, isLoading, isError } = useStockSummary();
-  const { mutateAsync } = useCreateRecap();
-  const navigate = useNavigate();
-  const form = useForm<RecapitulationDTO>({
-    initialValues: {
-      date: new Date(),
-      employee: undefined,
-      notes: undefined,
-      outlet: outlet?.id,
-    },
-  });
+  const { id } = useParams<'id'>();
+  const { data, isLoading, isError } = useRecap({ id: id as string });
 
-  function handleSubmit() {
-    modals.openConfirmModal({
-      title: 'Buat Rekapitulasi',
-      children: <div className="text-sm">Apakah anda yakin data yang dimasukan sudah benar?</div>,
-      centered: true,
-      closeOnConfirm: false,
-      onConfirm: async () => {
-        await mutateAsync(
-          { data: form.values },
-          {
-            onSuccess: () => {
-              notifications.show({
-                message: 'Rekapitulasi berhasil dibuat',
-                color: 'green',
-              });
-              navigate('/stock/recap');
-            },
-            onError: ({ response }) => {
-              form.setErrors((response?.data as any).errors);
-            },
-            onSettled: () => {
-              modals.closeAll();
-            },
-          }
-        );
-      },
-    });
-  }
-
-  if (isLoading || isError) return <LoadingScreen />;
+  if (isLoading || isError || !data) return <LoadingScreen />;
 
   return (
     <main className="pt-14">
-      <Navbar title="Tambah Rekapitulasi" position="center" />
+      <Navbar title="Kembali" position="left" to="/stock/recap" />
 
       <div className="bg-white px-5 py-4 my-1">
         <div className="space-y-2">
           <DateInput
-            {...form.getInputProps('date')}
             label="Tanggal"
             placeholder="Masukan Tanggal"
             readOnly
             variant="filled"
             valueFormat="D MMMM YYYY"
+            defaultValue={new Date(data.date)}
           />
           <TextInput
-            {...form.getInputProps('employee')}
+            defaultValue={data.employee}
             label="Penanggung Jawab"
             placeholder="Masukan Penanggung Jawab"
+            readOnly
+            variant="filled"
           />
           <Textarea
-            {...form.getInputProps('notes')}
+            defaultValue={data.notes}
             label="Catatan"
             placeholder="Masukan Catatan"
+            readOnly
+            variant="filled"
           />
         </div>
       </div>
@@ -101,14 +61,14 @@ export const StockRecap: React.FC = () => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {data?.length == 0 && (
+            {data.items.length == 0 && (
               <Table.Tr>
                 <Table.Td colSpan={5} className="py-2 text-center">
                   Tidak ada mutasi
                 </Table.Td>
               </Table.Tr>
             )}
-            {data?.map((v) => (
+            {data.items.map((v) => (
               <Table.Tr key={`s_${v.product.id}`}>
                 <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
                 <Table.Td>{v.available}</Table.Td>
@@ -137,14 +97,14 @@ export const StockRecap: React.FC = () => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {data?.length == 0 && (
+            {data.items.length == 0 && (
               <Table.Tr>
                 <Table.Td colSpan={5} className="py-2 text-center">
                   Tidak ada mutasi
                 </Table.Td>
               </Table.Tr>
             )}
-            {data?.map((v) => (
+            {data.items.map((v) => (
               <Table.Tr key={`s_${v.product.id}`}>
                 <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
                 <Table.Td>{formatCurrency(v.totalValue)}</Table.Td>
@@ -156,14 +116,6 @@ export const StockRecap: React.FC = () => {
           </Table.Tbody>
         </Table>
       </div>
-
-      <footer className="max-w-md bottom-0 fixed bg-white py-4 w-full border-t border-gray-50 px-5">
-        <div className="flex items-center justify-between">
-          <Button fullWidth onClick={handleSubmit}>
-            Konfirmasi
-          </Button>
-        </div>
-      </footer>
     </main>
   );
 };

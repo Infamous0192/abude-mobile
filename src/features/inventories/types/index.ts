@@ -1,3 +1,4 @@
+import { Outlet } from '@/features/outlet';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
@@ -70,9 +71,24 @@ export type StockSummary = {
   valueOut: number;
 };
 
-export type Recapitulation = {
-  awe: string;
+export type RecapitulationItem = {
+  available: number;
+  totalValue: number;
+  stockIn: number;
+  valueIn: number;
+  stockOut: number;
+  valueOut: number;
+  product: Product;
 };
+
+export type Recapitulation = {
+  code: string;
+  date: Date;
+  notes: string;
+  employee: string;
+  items: RecapitulationItem[];
+  outlet: Outlet;
+} & BaseEntity;
 
 export type RecapitulationDTO = {
   notes?: string;
@@ -80,3 +96,7 @@ export type RecapitulationDTO = {
   date?: Date;
   outlet?: number;
 };
+
+export type RecapitulationQuery = {
+  outlet?: number | string;
+} & Pagination;
