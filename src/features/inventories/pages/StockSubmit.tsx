@@ -66,7 +66,7 @@ export const StockSubmit: React.FC = () => {
   if (isLoading || isError) return <LoadingScreen />;
 
   return (
-    <main className="pt-14">
+    <main className="pt-14 pb-24">
       <Navbar title="Tambah Rekapitulasi" position="center" to="/stock/recap" />
 
       <div className="bg-white px-5 py-4 my-1">
@@ -97,35 +97,37 @@ export const StockSubmit: React.FC = () => {
           <h4 className="font-bold">Mutasi Persediaan</h4>
         </div>
 
-        <Table striped withRowBorders={false} stickyHeader withColumnBorders>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Barang</Table.Th>
-              <Table.Th>Persediaan Awal</Table.Th>
-              <Table.Th>Barang Masuk</Table.Th>
-              <Table.Th>Barang Keluar</Table.Th>
-              <Table.Th>Persediaan Akhir</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {data?.length == 0 && (
+        <div className="relative overflow-x-auto">
+          <Table striped withRowBorders={false} stickyHeader withColumnBorders>
+            <Table.Thead>
               <Table.Tr>
-                <Table.Td colSpan={5} className="py-2 text-center">
-                  Tidak ada mutasi
-                </Table.Td>
+                <Table.Th>Barang</Table.Th>
+                <Table.Th>Persediaan Awal</Table.Th>
+                <Table.Th>Barang Masuk</Table.Th>
+                <Table.Th>Barang Keluar</Table.Th>
+                <Table.Th>Persediaan Akhir</Table.Th>
               </Table.Tr>
-            )}
-            {data?.map((v) => (
-              <Table.Tr key={`s_${v.product.id}`}>
-                <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
-                <Table.Td>{v.available}</Table.Td>
-                <Table.Td>{v.stockIn}</Table.Td>
-                <Table.Td>{v.stockOut}</Table.Td>
-                <Table.Td>{v.available + v.stockIn - v.stockOut}</Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {data?.length == 0 && (
+                <Table.Tr>
+                  <Table.Td colSpan={5} className="py-2 text-center">
+                    Tidak ada mutasi
+                  </Table.Td>
+                </Table.Tr>
+              )}
+              {data?.map((v) => (
+                <Table.Tr key={`s_${v.product.id}`}>
+                  <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
+                  <Table.Td>{v.available}</Table.Td>
+                  <Table.Td>{v.stockIn}</Table.Td>
+                  <Table.Td>{v.stockOut}</Table.Td>
+                  <Table.Td>{v.available + v.stockIn - v.stockOut}</Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </div>
       </div>
 
       <div className="bg-white my-2">
@@ -133,35 +135,37 @@ export const StockSubmit: React.FC = () => {
           <h4 className="font-bold">Mutasi Saldo</h4>
         </div>
 
-        <Table striped withRowBorders={false} stickyHeader withColumnBorders>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Barang</Table.Th>
-              <Table.Th>Saldo Awal</Table.Th>
-              <Table.Th>Penjualan</Table.Th>
-              <Table.Th>Pembelian</Table.Th>
-              <Table.Th>Saldo Akhir</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {data?.length == 0 && (
+        <div className="relative overflow-x-auto">
+          <Table striped withRowBorders={false} stickyHeader withColumnBorders>
+            <Table.Thead>
               <Table.Tr>
-                <Table.Td colSpan={5} className="py-2 text-center">
-                  Tidak ada mutasi
-                </Table.Td>
+                <Table.Th>Barang</Table.Th>
+                <Table.Th>Saldo Awal</Table.Th>
+                <Table.Th>Penjualan</Table.Th>
+                <Table.Th>Pembelian</Table.Th>
+                <Table.Th>Saldo Akhir</Table.Th>
               </Table.Tr>
-            )}
-            {data?.map((v) => (
-              <Table.Tr key={`s_${v.product.id}`}>
-                <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
-                <Table.Td>{formatCurrency(v.totalValue)}</Table.Td>
-                <Table.Td>{formatCurrency(v.valueIn)}</Table.Td>
-                <Table.Td>{formatCurrency(v.valueOut)}</Table.Td>
-                <Table.Td>{formatCurrency(v.totalValue + v.valueIn - v.valueOut)}</Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {data?.length == 0 && (
+                <Table.Tr>
+                  <Table.Td colSpan={5} className="py-2 text-center">
+                    Tidak ada mutasi
+                  </Table.Td>
+                </Table.Tr>
+              )}
+              {data?.map((v) => (
+                <Table.Tr key={`s_${v.product.id}`}>
+                  <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
+                  <Table.Td>{formatCurrency(v.totalValue)}</Table.Td>
+                  <Table.Td>{formatCurrency(v.valueIn)}</Table.Td>
+                  <Table.Td>{formatCurrency(v.valueOut)}</Table.Td>
+                  <Table.Td>{formatCurrency(v.totalValue + v.valueIn - v.valueOut)}</Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </div>
       </div>
 
       <footer className="max-w-md bottom-0 fixed bg-white py-4 w-full border-t border-gray-50 px-5">

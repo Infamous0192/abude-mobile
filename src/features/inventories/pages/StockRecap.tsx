@@ -50,35 +50,37 @@ export const StockRecap: React.FC = () => {
           <h4 className="font-bold">Mutasi Persediaan</h4>
         </div>
 
-        <Table striped withRowBorders={false} stickyHeader withColumnBorders>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Barang</Table.Th>
-              <Table.Th>Persediaan Awal</Table.Th>
-              <Table.Th>Barang Masuk</Table.Th>
-              <Table.Th>Barang Keluar</Table.Th>
-              <Table.Th>Persediaan Akhir</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {data.items.length == 0 && (
+        <div className="relative overflow-x-auto">
+          <Table striped withRowBorders={false} stickyHeader withColumnBorders>
+            <Table.Thead>
               <Table.Tr>
-                <Table.Td colSpan={5} className="py-2 text-center">
-                  Tidak ada mutasi
-                </Table.Td>
+                <Table.Th>Barang</Table.Th>
+                <Table.Th>Persediaan Awal</Table.Th>
+                <Table.Th>Barang Masuk</Table.Th>
+                <Table.Th>Barang Keluar</Table.Th>
+                <Table.Th>Persediaan Akhir</Table.Th>
               </Table.Tr>
-            )}
-            {data.items.map((v) => (
-              <Table.Tr key={`s_${v.product.id}`}>
-                <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
-                <Table.Td>{v.available}</Table.Td>
-                <Table.Td>{v.stockIn}</Table.Td>
-                <Table.Td>{v.stockOut}</Table.Td>
-                <Table.Td>{v.available + v.stockIn - v.stockOut}</Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {data.items.length == 0 && (
+                <Table.Tr>
+                  <Table.Td colSpan={5} className="py-2 text-center">
+                    Tidak ada mutasi
+                  </Table.Td>
+                </Table.Tr>
+              )}
+              {data.items.map((v) => (
+                <Table.Tr key={`s_${v.product.id}`}>
+                  <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
+                  <Table.Td>{v.available}</Table.Td>
+                  <Table.Td>{v.stockIn}</Table.Td>
+                  <Table.Td>{v.stockOut}</Table.Td>
+                  <Table.Td>{v.available + v.stockIn - v.stockOut}</Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </div>
       </div>
 
       <div className="bg-white my-2">
@@ -86,35 +88,37 @@ export const StockRecap: React.FC = () => {
           <h4 className="font-bold">Mutasi Saldo</h4>
         </div>
 
-        <Table striped withRowBorders={false} stickyHeader withColumnBorders>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Barang</Table.Th>
-              <Table.Th>Saldo Awal</Table.Th>
-              <Table.Th>Penjualan</Table.Th>
-              <Table.Th>Pembelian</Table.Th>
-              <Table.Th>Saldo Akhir</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {data.items.length == 0 && (
+        <div className="relative overflow-x-auto">
+          <Table striped withRowBorders={false} stickyHeader withColumnBorders>
+            <Table.Thead>
               <Table.Tr>
-                <Table.Td colSpan={5} className="py-2 text-center">
-                  Tidak ada mutasi
-                </Table.Td>
+                <Table.Th>Barang</Table.Th>
+                <Table.Th>Saldo Awal</Table.Th>
+                <Table.Th>Penjualan</Table.Th>
+                <Table.Th>Pembelian</Table.Th>
+                <Table.Th>Saldo Akhir</Table.Th>
               </Table.Tr>
-            )}
-            {data.items.map((v) => (
-              <Table.Tr key={`s_${v.product.id}`}>
-                <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
-                <Table.Td>{formatCurrency(v.totalValue)}</Table.Td>
-                <Table.Td>{formatCurrency(v.valueIn)}</Table.Td>
-                <Table.Td>{formatCurrency(v.valueOut)}</Table.Td>
-                <Table.Td>{formatCurrency(v.totalValue + v.valueIn - v.valueOut)}</Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {data.items.length == 0 && (
+                <Table.Tr>
+                  <Table.Td colSpan={5} className="py-2 text-center">
+                    Tidak ada mutasi
+                  </Table.Td>
+                </Table.Tr>
+              )}
+              {data.items.map((v) => (
+                <Table.Tr key={`s_${v.product.id}`}>
+                  <Table.Td className="whitespace-nowrap">{v.product.name}</Table.Td>
+                  <Table.Td>{formatCurrency(v.totalValue)}</Table.Td>
+                  <Table.Td>{formatCurrency(v.valueIn)}</Table.Td>
+                  <Table.Td>{formatCurrency(v.valueOut)}</Table.Td>
+                  <Table.Td>{formatCurrency(v.totalValue + v.valueIn - v.valueOut)}</Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </div>
       </div>
     </main>
   );
