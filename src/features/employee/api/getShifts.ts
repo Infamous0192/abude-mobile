@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
@@ -28,6 +28,6 @@ export function useShifts({ config, params }: UseShiftsOptions = {}) {
     ...config,
     queryKey: ['shifts', params],
     queryFn: () => getShifts({ params }),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 }

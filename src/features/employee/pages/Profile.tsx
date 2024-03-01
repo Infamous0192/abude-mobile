@@ -1,4 +1,3 @@
-import { UnstyledButton } from '@mantine/core';
 import { IconChevronRight, IconLogout, IconSettings, IconUser } from '@tabler/icons-react';
 
 import { useAuth } from '@/features/auth';
@@ -17,7 +16,7 @@ export const Profile: React.FC = () => {
       </section>
 
       <section className="w-full mt-8 px-5">
-        <UnstyledButton className="flex w-full items-center py-2">
+        <button className="bg-transparent text-left flex w-full items-center py-2">
           <div className="bg-blue-50 text-blue-600 rounded-lg p-2">
             <IconSettings className="w-6 h-6" />
           </div>
@@ -25,8 +24,11 @@ export const Profile: React.FC = () => {
           <div className="rounded-lg">
             <IconChevronRight className="w-6 h-6" />
           </div>
-        </UnstyledButton>
-        <UnstyledButton onClick={() => logout()} className="flex w-full items-center py-2">
+        </button>
+        <button
+          onClick={() => logout()}
+          className="bg-transparent text-left flex w-full items-center py-2"
+        >
           <div className="bg-red-50 text-red-600 rounded-lg p-2">
             <IconLogout className="w-6 h-6" />
           </div>
@@ -34,7 +36,7 @@ export const Profile: React.FC = () => {
           <div className="rounded-lg">
             <IconChevronRight className="w-6 h-6" />
           </div>
-        </UnstyledButton>
+        </button>
       </section>
     </main>
   );

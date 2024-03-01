@@ -51,7 +51,7 @@ export const HandoverList: React.FC<HandoverListProps> = (params) => {
             className="bg-white w-full rounded-md shadow-md shadow-gray-200 border border-gray-200 p-3"
           >
             <div className="w-full flex items-center justify-between">
-              <Badge color="gray" radius="sm">
+              <Badge variant="light" color="gray" radius="sm">
                 {handover.shift.name || 'Shift'}
               </Badge>
 

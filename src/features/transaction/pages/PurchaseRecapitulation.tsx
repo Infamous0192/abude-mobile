@@ -9,7 +9,7 @@ import { OutletSelect, useOutletContext } from '@/features/outlet';
 import { formatCurrency } from '@/utils/format';
 
 import { usePurchasesSummary } from '../api';
-import { PurchaseSummary, PurchaseSummaryQuery, TransactionStatus } from '../types';
+import { PurchaseSummary, PurchaseSummaryQuery } from '../types';
 
 export const PurchaseRecapitulation: React.FC = () => {
   const { outlet } = useOutletContext();
@@ -74,8 +74,8 @@ export const PurchaseRecapitulation: React.FC = () => {
   );
 
   return (
-    <main className="bg-gray-50">
-      <Navbar title="Rekapitulasi Pembelian" withBorder to="/" />
+    <main className="bg-gray-50 py-14">
+      <Navbar title="Rekapitulasi Pembelian" to="/" />
 
       <section className="px-5 space-y-2">
         <Authorization role={['owner', 'superadmin']}>
@@ -119,7 +119,7 @@ export const PurchaseRecapitulation: React.FC = () => {
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: [v as TransactionStatus] });
+            setParams({ ...params, status: [v as any] });
           }}
         />
       </section>

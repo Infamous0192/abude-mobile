@@ -6,11 +6,11 @@ import { GeneralResponse } from '@/types/api';
 
 import { Handover } from '../types';
 
-type HandoverDeleteDTO = {
+type HandoverDeleteRequest = {
   id: number;
 };
 
-export async function deleteHandover({ id }: HandoverDeleteDTO) {
+export async function deleteHandover({ id }: HandoverDeleteRequest) {
   const res = await axios.delete<GeneralResponse<Handover>>(`/handover/${id}`);
 
   return res.data;

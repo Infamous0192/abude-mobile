@@ -4,13 +4,13 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Handover, HandoverRequest } from '../types';
+import { Handover, HandoverDTO } from '../types';
 
-type HandoverCreateDTO = {
-  data: HandoverRequest;
+type HandoverCreateRequest = {
+  data: HandoverDTO;
 };
 
-export async function createHandover({ data }: HandoverCreateDTO) {
+export async function createHandover({ data }: HandoverCreateRequest) {
   const res = await axios.post<GeneralResponse<Handover>>(`/handover`, data);
 
   return res.data;

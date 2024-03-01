@@ -50,7 +50,7 @@ export const SaleDetail: React.FC = () => {
   if (isLoading || isError || !data) return <LoadingScreen />;
 
   return (
-    <main className="bg-white min-h-screen pb-6 relative">
+    <main className="py-14">
       <Navbar />
 
       <section className="flex flex-col items-center justify-center mt-8">

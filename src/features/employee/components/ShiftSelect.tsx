@@ -1,27 +1,34 @@
-import { Select, SelectProps } from '@mantine/core';
+import { SelectProps, Select } from '@mantine/core';
+import { useMemo } from 'react';
 
-import { useShifts } from '@/features/employee';
-import { dayjs } from '@/lib/dayjs';
+import { useShifts } from '../api';
+import { Shift, ShiftQuery } from '../types';
 
 type Props = {
-  company?: number;
-} & Omit<SelectProps, 'data'>;
+  onChange?: (id: number | null) => void;
+  onSelected?: (shift: Shift | null) => void;
+  params?: ShiftQuery;
+} & Omit<SelectProps, 'data' | 'onChange'>;
 
-export const ShiftSelect: React.FC<Props> = (props) => {
-  const { data } = useShifts({ params: { limit: -1, company: props.company } });
+export const ShiftSelect: React.FC<Props> = ({ onChange, onSelected, params, ...props }) => {
+  const { data, isLoading } = useShifts({ params: { ...params, limit: -1 } });
 
-  return (
-    <Select
-      {...props}
-      data={[
-        ...(data?.result ?? []).map(({ id, name, startTime, endTime }) => ({
-          value: id.toString(),
-          label: `${name} (${dayjs(startTime, 'HH:mm:ss').format('HH.mm')} - ${dayjs(
-            endTime,
-            'HH:mm:ss'
-          ).format('HH.mm')})`,
-        })),
-      ]}
-    />
-  );
+  const shifts = useMemo(() => {
+    if (!data) return [];
+
+    return data.result.map(({ id, name }) => ({
+      label: name,
+      value: id.toString(),
+    }));
+  }, [data]);
+
+  function handleChange(v: string | null) {
+    if (onChange) onChange(v ? parseInt(v) : null);
+
+    if (onSelected && v) {
+      onSelected(data?.result.filter(({ id }) => id == parseInt(v!)).at(0) || null);
+    }
+  }
+
+  return <Select {...props} data={shifts} disabled={isLoading} onChange={handleChange} />;
 };

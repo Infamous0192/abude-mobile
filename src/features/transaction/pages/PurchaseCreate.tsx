@@ -1,13 +1,13 @@
-import { ActionIcon, Button, Select, Textarea } from '@mantine/core';
+import { Button, Select, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconChevronLeft, IconCirclePlus } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
+import { IconCirclePlus } from '@tabler/icons-react';
 
-import { useOutletContext } from '@/features/outlet';
+import { Navbar } from '@/components/navigation';
 import { Product, ProductPick, SupplierSelect, useProducts } from '@/features/inventories';
+import { useOutletContext } from '@/features/outlet';
 import { formatCurrency } from '@/utils/format';
 
 import { useCreatePurchase } from '../api';
@@ -94,15 +94,8 @@ export const PurchaseCreate: React.FC = () => {
   }
 
   return (
-    <main className="mb-32">
-      <header className="px-4 sticky top-0 z-10 bg-white py-3.5">
-        <Link to="/" className="flex items-center">
-          <ActionIcon variant="transparent">
-            <IconChevronLeft className="text-gray-800" />
-          </ActionIcon>
-          <div className="font-bold ml-4">Pembelian</div>
-        </Link>
-      </header>
+    <main className="mb-32 py-14">
+      <Navbar title="Pembelian" />
 
       <section className="px-5 mt-3 space-y-3">
         <DateInput

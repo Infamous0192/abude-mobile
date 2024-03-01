@@ -1,14 +1,14 @@
-import { ActionIcon, Button, TextInput, Textarea } from '@mantine/core';
+import { Button, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconChevronLeft, IconCirclePlus } from '@tabler/icons-react';
+import { IconCirclePlus } from '@tabler/icons-react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-import { useOutletContext } from '@/features/outlet';
+import { Navbar } from '@/components/navigation';
 import { Product, ProductPick, useProducts } from '@/features/inventories';
+import { useOutletContext } from '@/features/outlet';
 
 import { useCreateSale } from '../api';
 import { SaleItemList, SaleSubmit, SaleSummary } from '../components';
@@ -106,15 +106,8 @@ export const SaleCreate: React.FC = () => {
   }
 
   return (
-    <main className="mb-32">
-      <header className="px-4 sticky top-0 z-10 bg-white py-3.5">
-        <Link to="/" className="flex items-center">
-          <ActionIcon variant="transparent">
-            <IconChevronLeft className="text-gray-800" />
-          </ActionIcon>
-          <div className="font-bold ml-4">Penjualan</div>
-        </Link>
-      </header>
+    <main className="mb-32 py-14">
+      <Navbar title="Penjualan" />
 
       <section className="px-5 space-y-3 pb-3 mt-3">
         <DateInput

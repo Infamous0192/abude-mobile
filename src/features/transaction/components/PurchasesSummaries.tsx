@@ -117,8 +117,8 @@ export const PurchasesSummaries: React.FC<Props> = ({
                   </Table.Tr>
                 ))}
               {productSummary()?.map((item) => (
-                <Table.Tr key={item.id} className="font-bold">
-                  <Table.Td colSpan={2} className=" text-center">
+                <Table.Tr key={item.id}>
+                  <Table.Td colSpan={2} className="text-center">
                     {item.name}
                   </Table.Td>
                   <Table.Td className="">{item.quantity}</Table.Td>

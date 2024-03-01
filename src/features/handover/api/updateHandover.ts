@@ -4,11 +4,11 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Handover, HandoverRequest } from '../types';
+import { Handover, HandoverDTO } from '../types';
 
 export type UpdateHandoverDTO = {
   id: number;
-  data: HandoverRequest;
+  data: HandoverDTO;
 };
 
 export async function updateHandover({ id, data }: UpdateHandoverDTO) {

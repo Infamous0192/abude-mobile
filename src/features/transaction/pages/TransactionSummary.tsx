@@ -11,7 +11,7 @@ import { dayjs } from '@/lib/dayjs';
 import storage from '@/utils/storage';
 
 import { PurchasesSummaries, SalesSummaries } from '../components';
-import { PurchaseSummaryQuery, SaleSummaryQuery, TransactionStatus } from '../types';
+import { PurchaseSummaryQuery, SaleSummaryQuery } from '../types';
 
 const SalesSection: React.FC = () => {
   const { outlet } = useOutletContext();
@@ -69,7 +69,7 @@ const SalesSection: React.FC = () => {
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: [v as TransactionStatus] });
+            setParams({ ...params, status: [v as any] });
           }}
         />
 
@@ -165,7 +165,7 @@ const PurchasesSection: React.FC = () => {
           onChange={(v) => {
             if (v == null) return;
 
-            setParams({ ...params, status: [v as TransactionStatus] });
+            setParams({ ...params, status: [v as any] });
           }}
         />
         <div className="flex items-center justify-end space-x-2">
@@ -207,8 +207,8 @@ export const TransactionSummary: React.FC = () => {
   const [selected, setSelected] = useState('sale');
 
   return (
-    <main>
-      <Navbar title="Statistik Harian" withBorder to="/" />
+    <main className="py-14">
+      <Navbar title="Statistik Harian" to="/" />
 
       <div className="px-5">
         <Tabs

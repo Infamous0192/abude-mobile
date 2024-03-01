@@ -1,7 +1,7 @@
 import { User } from '@/features/auth';
 import { Shift } from '@/features/employee';
-import { Outlet } from '@/features/outlet';
 import { Product } from '@/features/inventories';
+import { Outlet } from '@/features/outlet';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
@@ -27,7 +27,7 @@ export type Handover = {
   user: User;
 } & BaseEntity;
 
-export type HandoverRequest = {
+export type HandoverDTO = {
   note: string;
   cashReceived: number;
   cashReturned: number;

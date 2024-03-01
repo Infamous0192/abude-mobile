@@ -5,11 +5,11 @@ import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 
 import { Handover } from '../types';
 
-type HandoverDTO = {
+type HandoverRequest = {
   id: number;
 };
 
-export async function getHandover({ id }: HandoverDTO) {
+export async function getHandover({ id }: HandoverRequest) {
   const res = await axios.get<Handover>(`/handover/${id}`);
 
   return res.data;

@@ -11,13 +11,13 @@ import { useOutletContext } from '@/features/outlet';
 import { PurchasesSummaries, SalesSummaries } from '@/features/transaction';
 
 import { useCreateHandover } from '../api';
-import { HandoverRequest } from '../types';
+import { HandoverDTO } from '../types';
 
 export const HandoverCreate: React.FC = () => {
   const { outlet } = useOutletContext();
   const navigate = useNavigate();
-  const { mutateAsync, isLoading } = useCreateHandover();
-  const form = useForm<HandoverRequest>({
+  const { mutateAsync, isPending } = useCreateHandover();
+  const form = useForm<HandoverDTO>({
     initialValues: {
       cashReceived: 0,
       cashReturned: 0,
@@ -58,8 +58,8 @@ export const HandoverCreate: React.FC = () => {
   }
 
   return (
-    <main className="pb-12">
-      <Navbar title="Laporan Serah Terima" withBorder />
+    <main className="py-16">
+      <Navbar title="Buat Laporan" />
 
       <section className="px-5 space-y-2">
         <DateInput
@@ -71,12 +71,12 @@ export const HandoverCreate: React.FC = () => {
 
         <ShiftSelect
           {...form.getInputProps('shift')}
-          company={outlet?.company.id}
-          value={form.values['shift'] != 0 ? form.values['shift'].toString() : ''}
-          onChange={(v) => form.setFieldValue('shift', parseInt(v ?? ''))}
-          required
+          params={{
+            company: outlet?.company.id,
+          }}
           label="Shift"
           placeholder="Pilih Shift"
+          required
         />
 
         <NumberInput
@@ -84,6 +84,8 @@ export const HandoverCreate: React.FC = () => {
           required
           label="Total Setoran"
           leftSection={<span className="text-xs">Rp</span>}
+          thousandSeparator="."
+          decimalSeparator=","
         />
 
         <Textarea
@@ -117,7 +119,7 @@ export const HandoverCreate: React.FC = () => {
       </section>
 
       <div className="fixed bottom-0 w-full max-w-md px-5 bg-white py-4">
-        <Button fullWidth onClick={handleSubmit} loading={isLoading}>
+        <Button fullWidth onClick={handleSubmit} loading={isPending}>
           Simpan
         </Button>
       </div>

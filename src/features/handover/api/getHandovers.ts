@@ -6,11 +6,11 @@ import { PaginatedResult } from '@/types/api';
 
 import { Handover, HandoverQuery } from '../types';
 
-type HandoversDTO = {
+type HandoversRequest = {
   params?: HandoverQuery;
 };
 
-export async function getHandovers({ params }: HandoversDTO) {
+export async function getHandovers({ params }: HandoversRequest) {
   const res = await axios.get<PaginatedResult<Handover>>(`/handover`, { params });
 
   return res.data;
